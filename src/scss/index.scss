@@ -1,5 +1,11 @@
+@import "core/reset";
 @import "core/core";
 
 @import "components/layouts";
-@import "components/header"
+@import "components/footer";
+@import "components/header";
+@import "components/button";
+
+@import "pages/index.scss";
+@import "pages/404.scss";
 

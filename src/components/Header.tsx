@@ -1,10 +1,13 @@
+import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 
 const Header = () => {
     return (
         <div>
-            <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_black.png" alt="logo" />
+            <Link to="/">
+                <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_black.png" alt="logo" />
+            </Link>
         </div>
     );
 }
