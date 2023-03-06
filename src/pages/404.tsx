@@ -1,25 +1,23 @@
 import * as React from "react"
 import { Link, HeadFC, PageProps } from "gatsby"
+import MainLayout from "../layouts/MainLayout"
+import Button from "../components/Button"
 
 
 const NotFoundPage: React.FC<PageProps> = () => {
   return (
     <main >
-      <h1>404</h1>
-      <p>page not found</p>
-      <p >
-        Sorry 😔, we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <br />
-            Try creating a page in <code >src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/">Go home</Link>.
-      </p>
+        <MainLayout>
+            <div className="container error-page">
+                <div className="wrapper">
+                    <h1>404</h1>
+                    <p>page not found</p>
+                    <Link to="/">
+                        <Button name={"Back to home page"} size={"medium"} type={"primary"} />
+                    </Link>
+                </div>
+            </div>
+        </MainLayout>
     </main>
   )
 }
