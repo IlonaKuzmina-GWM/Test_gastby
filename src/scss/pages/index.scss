@@ -1,3 +1,115 @@
+.hero-section {
+  position: relative;
+  height: 100vh;
+
+  .hero-background-image {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-content {
+    padding: 200px 0 50px;
+    width: 80%;
+    position: relative;
+    z-index: 1;
+    color: $white;
+    text-align: center;
+    margin: 0 auto;
+
+    .hero-title {
+      font-size: 82px;
+      font-weight: 700;
+      line-height: 96px;
+    }
+
+    .hero-search-input {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid $white;
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 24px 30px;
+      font-size: 20px;
+      color: $white;
+      margin-top: 40px;
+      max-width: 463px;
+      width: 100%;
+    }
+  }
+
+  .white-gradient {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25vh;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $white 83.65%);
+  }
+
+  .review-pop-up {
+    position: absolute;
+    max-width: 304px;
+    padding: 22px 30px;
+    font-size: 16px;
+    color: $white;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid $white;
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    right: 0;
+    text-align: start;
+
+    .review-avatar {
+      position: absolute;
+      top: -30px;
+      right: 0;
+    }
+
+    .review-name {
+      font-size: 24px;
+    }
+  }
+}
+
+.item-section {
+
+  padding: 60px 0;
+  .wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .item {
+    display: flex;
+  }
+
+  .item-content{
+    margin-left: 30px;
+
+    h5{
+      font-weight: 500;
+      font-size: 27px;
+    }
+
+    p{
+      font-weight: 500;
+      font-size: 17px;
+      color: $text_secondary;
+    }
+  }
+}
+
+.latest-auto-section{
+  padding: 60px 0;
+
+  h2{
+    font-size: 75px;
+    line-height: 89px;
+    font-weight: 600;
+    max-width: 562px;
+    margin-bottom: 30px;
+  }
+}
+
 .site-visite {
   background: #262626;
   padding: 70px 0;
@@ -14,6 +126,8 @@
 
   p {
     color: $text_secondary;
+    margin-top: 15px;
+    margin-bottom: 35px;
   }
 
   .gold-text {

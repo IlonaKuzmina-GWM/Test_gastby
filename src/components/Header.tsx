@@ -4,13 +4,16 @@ import React from "react";
 
 const Header = () => {
     return (
-        <div className="container">
-            <Link to="/">
-                <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_black.png" alt="logo" />
-            </Link>
-            <Link to="/">Home</Link>
-            <Link to="/shop">Shop</Link>
+        <div className="header">
+            <div className="container header">
+                <Link to="/">
+                    <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_invert.png" alt="logo" />
+                </Link>
+                <Link to="/">Home</Link>
+                <Link to="/shop">Shop</Link>
+            </div>
         </div>
+
     );
 }
 
