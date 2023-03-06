@@ -1,0 +1,23 @@
+$orange_primary: #F8BC49;
+$orange_secondary: #D2C86C;
+$green_primary: #25D0BC;
+$green_secondary: #27CFBA;
+$dark: #323A44;
+$white: #ffffff;
+
+html{
+    overflow-x: hidden;
+}
+body{
+    font-family: 'Arimo', sans-serif;
+    font-weight: normal;
+    color: $dark;
+    overflow-x: hidden;
+}
+a:hover{
+    text-decoration: none;
+}
+
+.w-100{
+    width: 100%
+}

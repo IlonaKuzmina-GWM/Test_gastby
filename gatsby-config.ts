@@ -12,7 +12,7 @@ const config: GatsbyConfig = {
   plugins: [{
     resolve: 'gatsby-source-wordpress',
     options: {
-      "url": "http://app-prkatuo.nsncl0rmht-wg96gxe2m3oy.p.temp-site.link/graphql."
+      url: process.env.WPGRAPHQL_URL || "http://app-prkatuo.nsncl0rmht-wg96gxe2m3oy.p.temp-site.link/graphql"
     }
   }, "gatsby-plugin-image", "gatsby-plugin-sharp", "gatsby-transformer-sharp", "gatsby-plugin-sass", "gatsby-plugin-google-gtag", "gatsby-plugin-sitemap", {
     resolve: 'gatsby-plugin-manifest',
