@@ -8,6 +8,7 @@
   transition: all 0.7s ease;
   width:max-content;
   text-transform: capitalize;
+  font-weight: 700;
 }
 
 .small {
@@ -27,7 +28,7 @@
 
   &:hover {
     box-shadow: -1px 6px 10px 0 rgba(120, 60, 20, 0.2);
-    opacity: 0.7;
+    opacity: 0.9;
   }
 }
 
