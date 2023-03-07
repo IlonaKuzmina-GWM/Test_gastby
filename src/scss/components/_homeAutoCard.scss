@@ -1,0 +1,42 @@
+.auto-card-wrapper {
+  background: #ffffff;
+  box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
+  border-radius: 25.8353px;
+  max-width: 388px;
+
+  .auto-card-image {
+    border-radius: 25.8353px 25.8353px 0 0;
+  }
+
+  .auto-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 16px 80px;
+    gap: 16.15px;
+
+    .auto-card-title {
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    .auto-card-price {
+      font-size: 32px;
+    }
+
+    .label-wrapper {
+      display: flex;
+      gap: 15px;
+    }
+
+    .label-wrapper div {
+      padding: 6.45883px 12.9177px;
+      background: #f6fff6;
+      border: 1.61471px solid #dcb47a;
+      border-radius: 19.3765px;
+      color: #dcb47a;
+      font-size: 22.6059px;
+      line-height: 100%;
+    }
+  }
+}

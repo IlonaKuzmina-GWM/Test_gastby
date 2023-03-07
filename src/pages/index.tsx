@@ -3,6 +3,7 @@ import { HeadFC, Link, PageProps } from "gatsby";
 import MainLayout from "../layouts/MainLayout";
 import Button from "../components/Button";
 import { StaticImage } from "gatsby-plugin-image";
+import HomeAutoCard from "../components/HomeAutoCard";
 
 
 const IndexPage = () => {
@@ -22,7 +23,9 @@ const IndexPage = () => {
             vēl papildus bla bla bla :D </p>
           <form className="hero-search-form" action="">
             <input type="search" placeholder="Meklēt auto" className="hero-search-input" />
-            <button type="submit"> <StaticImage src={"../images/search.png"} alt={"Search"} /></button>
+            <button type="submit">
+              <StaticImage src={"../images/search.png"} alt={"Search"} />
+            </button>
           </form>
 
 
@@ -72,10 +75,32 @@ const IndexPage = () => {
         <div className="container">
           <h2>Jaunākie auto
             piedāvājumi</h2>
-          <Link to="/shop"><p>Skatīt visus auto</p></Link>
+          <div className="arrow-wrapper">
+            <Link to="/shop"><p>Skatīt visus auto</p></Link>
+            <StaticImage className="arrow" src={"../images/arrow-right.png"} alt={"Arrow"} width={25}></StaticImage>
+          </div>
         </div>
+
         <div className="auto-card-container">
-          <div className="auto-card"></div>
+          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
+          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
+          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
+          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
+        </div>
+      </section>
+
+      <section className="one-more-section">
+        <h2 className="section-title">Interior Plant Reference</h2>
+        <p className="section-text">make your home so comfortable with refreshing plants</p>
+
+        <div className="items-grid-container grid-one container">
+          <div className="item"><Link to="/shop"></Link></div>
+          <div className="item"></div>
+        </div>
+
+        <div className="items-grid-container grid-two container">
+          <div className="item"></div>
+          <Link to="/shop"><div className="item"></div></Link>
         </div>
       </section>
 
