@@ -21,19 +21,52 @@
       font-size: 82px;
       font-weight: 700;
       line-height: 96px;
+      margin-bottom: 20px;
     }
 
-    .hero-search-input {
+    .hero-search-form {
+      display: flex;
+      justify-content: space-between;
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid $white;
       backdrop-filter: blur(10px);
       border-radius: 50px;
-      padding: 24px 30px;
+      padding: 2px;
       font-size: 20px;
       color: $white;
       margin-top: 40px;
       max-width: 463px;
       width: 100%;
+      margin: 40px auto;
+
+      .hero-search-input {
+        border: none;
+        background: transparent;
+        margin: 0;
+        padding: 12px 8px 12px 30px;
+        font-size: 20px;
+        color: $text_secondary;
+        border: 1px solid transparent;
+        border-radius: inherit;
+        width: 100%;
+        color: $white;
+      }
+
+      .hero-search-input::placeholder {
+        color: $white;
+      }
+
+      button {
+        background: #525a55;
+        margin: 10px 12px;
+        border-radius: 50%;
+        min-width: 50px;
+        width: 50px;
+        height: 50px;
+        border: none;
+        padding-top: 7px;
+        cursor: pointer;
+      }
     }
   }
 
@@ -62,6 +95,8 @@
       position: absolute;
       top: -30px;
       right: 0;
+      width: 62px;
+      height: 62px;
     }
 
     .review-name {
@@ -71,7 +106,6 @@
 }
 
 .item-section {
-
   padding: 60px 0;
   .wrapper {
     flex-direction: row;
@@ -80,17 +114,18 @@
 
   .item {
     display: flex;
+    margin: 20px;
   }
 
-  .item-content{
+  .item-content {
     margin-left: 30px;
 
-    h5{
+    h5 {
       font-weight: 500;
       font-size: 27px;
     }
 
-    p{
+    p {
       font-weight: 500;
       font-size: 17px;
       color: $text_secondary;
@@ -98,19 +133,24 @@
   }
 }
 
-.latest-auto-section{
+.latest-auto-section {
   padding: 60px 0;
 
-  h2{
+  h2 {
     font-size: 75px;
     line-height: 89px;
     font-weight: 600;
     max-width: 562px;
     margin-bottom: 30px;
   }
+
+  a{
+    color: $text_secondary;
+    text-decoration: none;
+  }
 }
 
-.site-visite {
+.site-visite-section {
   background: #262626;
   padding: 70px 0;
   color: $white;
@@ -132,5 +172,161 @@
 
   .gold-text {
     color: $gold_primary;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .hero-section {
+    .hero-content {
+      padding: 100px 0 50px;
+      width: 90%;
+
+      .hero-title {
+        font-size: 52px;
+        line-height: 56px;
+      }
+
+      .hero-search-form {
+        display: flex;
+        justify-content: space-between;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid $white;
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 2px;
+        font-size: 20px;
+        color: $white;
+        margin-top: 40px;
+        max-width: 463px;
+        width: 100%;
+        margin: 40px auto;
+
+        .hero-search-input {
+          border: none;
+          background: transparent;
+          margin: 0;
+          padding: 12px 8px 12px 30px;
+          font-size: 20px;
+          color: $text_secondary;
+          border: 1px solid transparent;
+          border-radius: inherit;
+          width: 100%;
+          color: $white;
+        }
+
+        .hero-search-input::placeholder {
+          color: $white;
+        }
+
+        button {
+          background: #525a55;
+          margin: 10px 12px;
+          border-radius: 50%;
+          min-width: 50px;
+          width: 50px;
+          height: 50px;
+          border: none;
+          padding-top: 7px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .review-pop-up {
+      max-width: 304px;
+      padding: 22px 30px;
+      right: 0;
+      bottom: -150px;
+    }
+  }
+
+  .item-section {
+    .wrapper {
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  .site-visite-section{
+    text-align: center;
+    h2{
+      font-size: 45px;
+      line-height: 60px;
+    }
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .hero-section {
+    .hero-content {
+      padding: 100px 20px 50px;
+      width: 100%;
+
+      .hero-title {
+        font-size: 38px;
+        line-height: 42px;
+      }
+
+      .hero-search-form {
+        margin-bottom: 40px;
+
+        .hero-search-input {
+          padding: 8px 6px 8px 15px;
+          font-size: 18px;
+        }
+
+        button {
+          background: #525a55;
+          margin: 2px 12px;
+          border-radius: 50%;
+          min-width: 50px;
+          width: 50px;
+          height: 50px;
+          border: none;
+          padding-top: 7px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .review-pop-up {
+      max-width: 304px;
+      padding: 42px 15px 15px;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      text-align: center;
+
+      .review-avatar {
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .item-section {
+    .item {
+      display: flex;
+      margin: 10px;
+      width: 100%;
+    }
+
+    .item-image{
+      max-width: 50px;
+      width: 50px;
+    }
+  
+    .item-content {
+      margin-left: 10px;
+  
+      h5 {
+        font-size: 22px;
+        line-height: 25px;
+        margin-bottom: 10px;
+      }
+  
+    }
   }
 }

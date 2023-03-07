@@ -20,7 +20,11 @@ const IndexPage = () => {
             piedāvājuma portāls</h1>
           <p>atrodi sev piemērotu auto ātri, vienkārši un
             vēl papildus bla bla bla :D </p>
-          <input type="text" placeholder="Meklēt auto" className="hero-search-input" />
+          <form className="hero-search-form" action="">
+            <input type="search" placeholder="Meklēt auto" className="hero-search-input" />
+            <button type="submit"> <StaticImage src={"../images/search.png"} alt={"Search"} /></button>
+          </form>
+
 
           <div className="review-pop-up">
             <StaticImage
@@ -32,6 +36,8 @@ const IndexPage = () => {
             <h5 className="review-name">Andris Bērziņš</h5>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro beatae error laborum.</p>
           </div>
+
+
         </div>
         <div className="white-gradient"></div>
       </section>
@@ -42,18 +48,18 @@ const IndexPage = () => {
             <StaticImage className="item-image" src={"../images/laiks.png"} alt={"Icon"} objectFit="contain"></StaticImage>
             <div className="item-content">
               <h5>Laiks ir nauda</h5>
-              <p>Laika nauda.. naudas arī nav..</p>
+              <p>Laika nav.. naudas arī nav..</p>
             </div>
           </div>
           <div className="item">
-            <StaticImage className="item-image" src={"../images/izdevigi.png"} alt={"Icon"}></StaticImage>
+            <StaticImage className="item-image" src={"../images/izdevigi.png"} alt={"Icon"} objectFit="contain"></StaticImage>
             <div className="item-content">
               <h5>Izvēlies izdevīgāko</h5>
               <p>Atrodi sev izdevīgāko auto</p>
             </div>
           </div>
           <div className="item">
-            <StaticImage className="item-image" src={"../images/ask-me.png"} alt={"Icon"}></StaticImage>
+            <StaticImage className="item-image" src={"../images/ask-me.png"} alt={"Icon"} objectFit="contain"></StaticImage>
             <div className="item-content">
               <h5>Vēl kaut kas</h5>
               <p>Lorem Ipsums</p>
@@ -73,7 +79,7 @@ const IndexPage = () => {
         </div>
       </section>
 
-      <section className="site-visite">
+      <section className="site-visite-section">
         <div className="container wrapper">
           <h2>Ready for a <span className="gold-text">Site visit ?</span></h2>
           <p>Lorem ipsum dolo elit Lorem ipsum dolo</p>

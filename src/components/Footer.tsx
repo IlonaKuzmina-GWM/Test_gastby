@@ -7,10 +7,13 @@ const Footer = () => {
         <div className="footer container">
             <div className="wrapper first-line">
                 <div className="column column-one wrapper">
-                    <h3>Saņem ’karstākos’ piedāvājumus <br/> e-pastā</h3>
+                    <h3>Saņem ’karstākos’ piedāvājumus <br /> e-pastā</h3>
                     <div>
-                        <input type="email" name="" id="" placeholder="Tavs e-pasts" />
-                        <Button name={"Abonēt"} size={"small"} type={"primary"}/>
+                        <form className="first-line-form" action="">
+                            <input type="email" name="" id="" placeholder="Tavs e-pasts" />
+                            <Button name={"Abonēt"} size={"small"} type={"primary"} />
+                        </form>
+
                     </div>
 
                 </div>
@@ -21,7 +24,7 @@ const Footer = () => {
                 </div>
 
                 <div className="column colum-three wrapper">
-                    <h3>Noderīgas <br/>saites</h3>
+                    <h3>Noderīgas <br />saites</h3>
                     <NavLinks></NavLinks>
                 </div>
 

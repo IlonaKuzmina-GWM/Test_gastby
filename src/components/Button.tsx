@@ -8,7 +8,7 @@ type ButtonProps = {
 
 const Button: FC<ButtonProps> = ({name, size, type}) => {
     return ( 
-    <button className={`main-btn ${size} ${type}`}>
+    <button className={`main-btn ${size} ${type}`} type="submit">
         {name}
     </button>);
 }
