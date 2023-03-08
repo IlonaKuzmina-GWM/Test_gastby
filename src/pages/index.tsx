@@ -1,12 +1,19 @@
 import * as React from "react";
-import { HeadFC, Link, PageProps } from "gatsby";
+import { graphql, HeadFC, Link, PageProps } from "gatsby";
 import MainLayout from "../layouts/MainLayout";
 import Button from "../components/Button";
 import { StaticImage } from "gatsby-plugin-image";
 import HomeAutoCard from "../components/HomeAutoCard";
 
 
-const IndexPage = () => {
+type HomeProps = {
+  data: any;
+};
+
+const IndexPage:React.FC<HomeProps> = ({data}) => {
+const postTitle = data.allWpPost.nodes[0].title;
+console.log(postTitle)
+
   return (
     <MainLayout>
       <section className="hero-section">
@@ -82,7 +89,7 @@ const IndexPage = () => {
         </div>
 
         <div className="auto-card-container">
-          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
+          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={postTitle} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
@@ -118,3 +125,13 @@ const IndexPage = () => {
 export default IndexPage;
 
 export const Head: HeadFC = () => <title>Pirkt Auto</title>;
+
+export const query = graphql`
+query MyQuery {
+  allWpPost {
+    nodes {
+      title
+    }
+  }
+}
+`

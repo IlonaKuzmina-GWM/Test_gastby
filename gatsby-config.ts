@@ -25,6 +25,14 @@ const config: GatsbyConfig = {
         icon: `src/images/icon.png`
       },
     },
+    {
+      resolve: `gatsby-source-wordpress`,
+      options: {
+        url:
+          process.env.WPGRAPHQL_URL ||
+          `http://app-prkatuo.nsncl0rmht-wg96gxe2m3oy.p.temp-site.link/graphql`,
+      },
+    },
   ],
 };
 
