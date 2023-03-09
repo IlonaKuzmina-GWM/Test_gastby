@@ -4,7 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import Button from "../components/Button";
 import { StaticImage } from "gatsby-plugin-image";
 import HomeAutoCard from "../components/HomeAutoCard";
-import TooltipBoot from "../components/tooltip";
+import TooltipBoot from "../components/Tooltip";
 
 type HomeProps = {
   data: any;
