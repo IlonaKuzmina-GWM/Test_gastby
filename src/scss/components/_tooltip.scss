@@ -1,0 +1,33 @@
+.tooltip-wrapper {
+  position: absolute;
+  bottom: -15%;
+  left: 15%;
+
+  .btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid $white;
+    backdrop-filter: blur(2px);
+
+    .white-dot {
+      width: 16px;
+      height: 16px;
+      background: $white;
+      margin: 10px auto;
+      border-radius: 50%;
+    }
+  }
+}
+.popover {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid $white;
+  backdrop-filter: blur(2px);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+
+  color: $white;
+}

@@ -4,15 +4,14 @@ import MainLayout from "../layouts/MainLayout";
 import Button from "../components/Button";
 import { StaticImage } from "gatsby-plugin-image";
 import HomeAutoCard from "../components/HomeAutoCard";
-
+import TooltipBoot from "../components/tooltip";
 
 type HomeProps = {
   data: any;
 };
 
-const IndexPage:React.FC<HomeProps> = ({data}) => {
-const postTitle = data.allWpPost.nodes[0].title;
-console.log(postTitle)
+const IndexPage: React.FC<HomeProps> = ({ data }) => {
+  const postTitle = data.allWpPost.nodes[0].title;
 
   return (
     <MainLayout>
@@ -35,7 +34,6 @@ console.log(postTitle)
             </button>
           </form>
 
-
           <div className="review-pop-up">
             <StaticImage
               style={{ position: "absolute" }}
@@ -47,13 +45,14 @@ console.log(postTitle)
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro beatae error laborum.</p>
           </div>
 
+          <TooltipBoot></TooltipBoot>
 
         </div>
         <div className="white-gradient"></div>
       </section>
 
       <section className="item-section ">
-        <div className="container wrapper">
+        <div className="container-lg wrapper">
           <div className="item">
             <StaticImage className="item-image" src={"../images/laiks.png"} alt={"Icon"} objectFit="contain"></StaticImage>
             <div className="item-content">
@@ -79,7 +78,7 @@ console.log(postTitle)
       </section>
 
       <section className="latest-auto-section">
-        <div className="container">
+        <div className="container-lg">
           <h2>Jaunākie auto
             piedāvājumi</h2>
           <div className="arrow-wrapper">
@@ -94,25 +93,26 @@ console.log(postTitle)
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
         </div>
+
       </section>
 
       <section className="one-more-section">
         <h2 className="section-title">Interior Plant Reference</h2>
         <p className="section-text">make your home so comfortable with refreshing plants</p>
 
-        <div className="items-grid-container grid-one container">
+        <div className="items-grid-container grid-one container-lg">
           <div className="item"><Link to="/shop"></Link></div>
           <div className="item"></div>
         </div>
 
-        <div className="items-grid-container grid-two container">
+        <div className="items-grid-container grid-two container-lg">
           <div className="item"></div>
           <Link to="/shop"><div className="item"></div></Link>
         </div>
       </section>
 
       <section className="site-visite-section">
-        <div className="container wrapper">
+        <div className="container-lg wrapper">
           <h2>Ready for a <span className="gold-text">Site visit ?</span></h2>
           <p>Lorem ipsum dolo elit Lorem ipsum dolo</p>
           <Button name={"View Now"} size={"medium"} type={"primary"} />
