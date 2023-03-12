@@ -39,13 +39,13 @@ const Header = () => {
         //     </div>
         // </nav>
 
-
-        <Navbar bg="transparent" expand={"lg"} className="fixed-top container-lg header">
+        <Navbar bg={"transparent"} expand={"lg"} className="fixed-top container-lg header">
             <Container fluid>
                 <Navbar.Brand href="/">
                     <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_invert.png" alt="logo" />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
+                
                 <Navbar.Offcanvas
                     id={`offcanvasNavbar-expand-lg`}
                     aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
@@ -56,25 +56,13 @@ const Header = () => {
                             <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_black.png" alt="logo" />
                         </Offcanvas.Title>
                     </Offcanvas.Header>
+
                     <Offcanvas.Body>
                         <Nav className="justify-content-end flex-grow-1 pe-3 ">
-                            <Nav.Link href="/" className="text-white fs-5 px-4">Home</Nav.Link>
-                            <Nav.Link href="/shop" className="text-white fs-5 px-4">Shop</Nav.Link>
-                            <Nav.Link href="/about" className="text-white fs-5 px-4">About Us</Nav.Link>
-                            <Nav.Link href="/contact" className="text-white fs-5 px-4">Contact</Nav.Link>
-                            {/* <NavDropdown
-                                    title="Dropdown"
-                                    id={`offcanvasNavbarDropdown-expand-lg`}
-                                >
-                                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action4">
-                                        Another action
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action5">
-                                        Something else here
-                                    </NavDropdown.Item>
-                                </NavDropdown>*/}
+                            <Nav.Link href="/" className="fs-5 px-4 link">Home</Nav.Link>
+                            <Nav.Link href="/shop" className="fs-5 px-4 link">Shop</Nav.Link>
+                            <Nav.Link href="/about" className="fs-5 px-4 link">About Us</Nav.Link>
+                            <Nav.Link href="/contact" className="fs-5 px-4 link">Contact</Nav.Link>
                         </Nav>
                         {/* <Form className="d-flex">
                                 <Form.Control
@@ -89,7 +77,6 @@ const Header = () => {
                 </Navbar.Offcanvas>
             </Container>
         </Navbar>
-
     );
 }
 

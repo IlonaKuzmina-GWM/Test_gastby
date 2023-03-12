@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import FilterCategories from "../components/FilterCategories";
 import HomeAutoCard from "../components/HomeAutoCard";
 import MainLayout from "../layouts/MainLayout";
 
@@ -16,7 +17,8 @@ const ShopPage = () => {
                         <svg className="bi pe-none me-2" width="30" height="24"><use xlinkHref="#bootstrap"></use></svg>
                         <span className="fs-5 fw-semibold">Filters</span>
                     </a>
-                    <ul className="list-unstyled ps-0">
+                    <FilterCategories eventkey={0} />
+                    {/* <ul className="list-unstyled ps-0">
                         <li className="mb-1">
                             <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
                                 New or Used
@@ -55,7 +57,7 @@ const ShopPage = () => {
                             </div>
                         </li>
                         <li className="border-top my-3"></li>
-                    </ul>
+                    </ul> */}
                 </div>
 
                 <Container>

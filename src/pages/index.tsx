@@ -96,18 +96,47 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
       </section>
 
-      <section className="one-more-section">
+      <section className="one-more-section container-lg">
         <h2 className="section-title">Interior Plant Reference</h2>
         <p className="section-text">make your home so comfortable with refreshing plants</p>
 
-        <div className="items-grid-container grid-one container-lg">
-          <div className="item"><Link to="/shop"></Link></div>
-          <div className="item"></div>
+        <div className="row justify-content-between px-3 mt-5">
+          <div className="d-flex item col-md-7 mb-5">
+            <StaticImage
+              style={{ position: "absolute" }}
+              src={"../images/1.jpg"}
+              alt={"image"}
+              className={"item-image"}
+            />
+            <Link to="/shop" className=""></Link>
+            <p>Jauni auto</p>
+          </div>
+          <div className="d-flex item col-md-4 mb-5">
+            <StaticImage
+              style={{ position: "absolute" }}
+              src={"../images/2.webp"}
+              alt={"image"}
+              className={"item-image"}
+            /></div>
         </div>
-
-        <div className="items-grid-container grid-two container-lg">
-          <div className="item"></div>
-          <Link to="/shop"><div className="item"></div></Link>
+        <div className="row justify-content-between px-3">
+          <div className="d-flex item col-md-4 mb-5">
+            <StaticImage
+              style={{ position: "absolute" }}
+              src={"../images/3.jpg"}
+              alt={"image"}
+              className={"item-image"}
+            /></div>
+          <div className="d-flex item col-md-7 mb-5">
+            <StaticImage
+              style={{ position: "absolute" }}
+              src={"../images/4.jpg"}
+              alt={"image"}
+              className={"item-image"}
+            />
+            <Link to="/shop"></Link>
+            <p>Mazlietoti auto</p>
+          </div>
         </div>
       </section>
 
