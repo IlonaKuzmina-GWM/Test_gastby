@@ -1,26 +1,21 @@
 .shop-page-container {
   padding-top: 72px;
-  // display: grid;
-  // grid-template-columns: 20% 80%;
   display: flex;
   width: 100%;
   margin: 0 auto;
-  column-gap: 30px;
+  column-gap: 10px;
 
   .filters-container {
-    background-color: palevioletred;
-    min-width: 25%;
+    // background-color: palevioletred;
+    width: 40%;
+    max-width: 350px;
   }
 
   .auto-cards-container {
-    display: flex;
-    column-gap: 15px;
-    row-gap: 15px;
-
-    // display: grid;
-    // grid-template-columns: repeat(4, 1fr);
-    // row-gap: 20px;
-    // column-gap: 20px;
+    .small-info-text {
+      font-size: 14px;
+      color: $text_secondary;
+    }
   }
 }
 

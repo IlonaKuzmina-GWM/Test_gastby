@@ -15,7 +15,7 @@ export default function HTML(props) {
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         ></link>
 
         <link
@@ -37,7 +37,7 @@ export default function HTML(props) {
         <script
           src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
           integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         ></script>
         {props.preBodyComponents}
         <div key={`body`} id="___gatsby" dangerouslySetInnerHTML={{ __html: props.body }} />

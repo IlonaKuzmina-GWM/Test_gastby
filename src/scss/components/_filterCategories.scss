@@ -1,0 +1,33 @@
+.filters-accordion {
+  .filter-results {
+    span {
+      font-size: 14px;
+      white-space: nowrap;
+      color: $text_secondary;
+    }
+
+    button {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 5px 10px;
+      margin-right: 0;
+    }
+  }
+
+  .accordion-button:not(.collapsed) {
+    color: $white;
+    background-color: rgb(220, 180, 122, 0.7);
+  }
+
+  .accordion-button:not(.collapsed)::after {
+    background-image: url("../images/accordion-after.png");
+    background-size: 17px 10px;
+    width: 17px;
+    height: 10px;
+  }
+
+  .form-check-input:checked {
+    background-color: $gold_primary;
+    border-color: $gold_primary;
+  }
+}

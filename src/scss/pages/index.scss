@@ -382,6 +382,14 @@
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .hero-section {
+    .review-pop-up {
+      display: none;
+    }
+  }
+}
+
 @media only screen and (max-width: 425px) {
   .hero-section {
     .hero-content {
@@ -415,20 +423,20 @@
       }
     }
 
-    .review-pop-up {
-      max-width: 304px;
-      padding: 42px 15px 15px;
-      right: 0;
-      left: 0;
-      margin: 0 auto;
-      text-align: center;
+    // .review-pop-up {
+    //   max-width: 304px;
+    //   padding: 42px 15px 15px;
+    //   right: 0;
+    //   left: 0;
+    //   margin: 0 auto;
+    //   text-align: center;
 
-      .review-avatar {
-        right: 0;
-        left: 0;
-        margin: 0 auto;
-      }
-    }
+    //   .review-avatar {
+    //     right: 0;
+    //     left: 0;
+    //     margin: 0 auto;
+    //   }
+    // }
   }
 
   .item-section {
