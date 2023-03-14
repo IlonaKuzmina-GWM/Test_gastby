@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from './Button';
@@ -10,6 +10,17 @@ type FilterCategoriesProps = {
 }
 
 const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey }) => {
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(50000);
+
+    const handleMinPriceChange = (e: { target: { value: string; }; }) => {
+        setMinPrice(parseInt(e.target.value));
+    };
+
+    const handleMaxPriceChange = (e: { target: { value: string; }; }) => {
+        setMaxPrice(parseInt(e.target.value));
+    };
+
 
 
     return (
@@ -26,8 +37,20 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
 
             <Row>
                 <Col>
-                    <label htmlFor="customRange3" className="form-label">Cena</label>
-                    <input type="range" className="form-range" min="0" max="30000" step="100" id="customRange3"></input>
+                    {/* <label htmlFor="customRange3" className="form-label">Cena</label>
+                    <input type="range" className="form-range" min="0" max="30000" step="100" id="customRange3"></input> */}
+                    <div className="price-range-selector">
+                        <label htmlFor="minPrice">Min:</label>
+                        <input type="range" id="minPrice" name="minPrice" min="0" max="100000" step="500" value={minPrice} onChange={handleMinPriceChange} />
+                        <br />
+                        <label htmlFor="maxPrice">Max:</label>
+                        <input type="range" id="maxPrice" name="maxPrice" min="0" max="100000" step="500" value={maxPrice} onChange={handleMaxPriceChange} />
+
+                        <div className="price-stats">
+                            <span>Min: ${minPrice}</span>
+                            <span>Max: ${maxPrice}</span>
+                        </div>
+                    </div>
                 </Col>
             </Row>
 
