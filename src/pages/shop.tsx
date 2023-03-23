@@ -1,10 +1,11 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 
 const ShopPage = () => {
+
     return (
         <MainLayout>
             <div className="shop-page-container">
@@ -17,13 +18,16 @@ const ShopPage = () => {
                 </div>
 
                 <Container className="auto-cards-container px-1 p-3">
-                    <Row className="d-flex align-items-center pb-2 mt-3 border-bottom"> <p className="small-info-text">"5" šitik daudz auto mums ir :D</p></Row>
-                    <Row className="justify-content-start">
-                        <ShopAutoCard imageUrl={"./static/images/Escultures1.png"} title={"Good auto"} price={1500} handleClick={() => { console.log("card1") }}></ShopAutoCard>
-                        <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                        <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                        <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                        <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
+                    <Row className="d-flex align-items-center mt-2 border-bottom">
+                        <p className="small-info-text">"7" šitik daudz auto mums ir :D</p>
+                    </Row>
+
+                    <Row xs={1} md={2} lg={3} xl={4} className="g-4">
+                        {Array.from({ length: 7 }).map((_, idx) => (
+                            <Col>
+                                <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
+                            </Col>
+                        ))}
                     </Row>
                 </Container>
             </div>

@@ -2,7 +2,6 @@
   background: #ffffff;
   box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
   border-radius: 0.375rem;
-  width: 15rem;
 
   .shop-card-image {
     border-radius: 0.375rem 0.375rem 0 0;
@@ -16,7 +15,5 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .shop-auto-card {
-    width: 18rem;
-  }
+  
 }

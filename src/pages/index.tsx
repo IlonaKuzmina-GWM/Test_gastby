@@ -87,13 +87,14 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="auto-card-container">
+        <div className="auto-card-container owl-carousel owl-theme">
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={postTitle} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
           <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
+          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
+          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
         </div>
-
       </section>
 
       <section className="one-more-section container-lg">

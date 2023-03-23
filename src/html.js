@@ -43,6 +43,10 @@ export default function HTML(props) {
         <div key={`body`} id="___gatsby" dangerouslySetInnerHTML={{ __html: props.body }} />
         {props.postBodyComponents}
       </body>
+
+      <script type="text/javascript" src="js/jquery-3.6.1.min.j"></script>
+      <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+      <script type="text/javascript" src="js/custom.js"></script>
     </html>
   );
 }
