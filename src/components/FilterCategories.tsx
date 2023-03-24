@@ -76,7 +76,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
                 </Form> */}
             </Accordion.Item>
             <Accordion.Item eventKey="1">
-                <Accordion.Header>Jauni vai mazlietoti</Accordion.Header>
+                <Accordion.Header className='accordion-title'>Jauni vai mazlietoti</Accordion.Header>
                 <Accordion.Body>
                     <Form>
                         <Form.Group className="" controlId="formBasicEmail">
@@ -96,7 +96,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
-                <Accordion.Header>Marka</Accordion.Header>
+                <Accordion.Header className='accordion-title'>Marka</Accordion.Header>
                 <Accordion.Body>
                     <Form>
                         <Form.Group className="" controlId="formBasicEmail">
@@ -116,7 +116,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="3">
-                <Accordion.Header>Atrašanās vieta</Accordion.Header>
+                <Accordion.Header className='accordion-title'>Atrašanās vieta</Accordion.Header>
                 <Accordion.Body>
                     <Form>
                         <Form.Group className="" controlId="formBasicEmail">
@@ -136,7 +136,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="4">
-                <Accordion.Header>Dzinēja tips</Accordion.Header>
+                <Accordion.Header className='accordion-title'>Dzinēja tips</Accordion.Header>
                 <Accordion.Body>
                     <Form>
                         <Form.Group className="" controlId="formBasicEmail">
@@ -156,7 +156,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="5">
-                <Accordion.Header>Piedziņa</Accordion.Header>
+                <Accordion.Header className='accordion-title'>Piedziņa</Accordion.Header>
                 <Accordion.Body>
                     <Form>
                         <Form.Group className="" controlId="formBasicEmail">

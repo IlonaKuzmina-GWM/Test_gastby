@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { StaticImage } from "gatsby-plugin-image";
 import HomeAutoCard from "../components/HomeAutoCard";
 import TooltipBoot from "../components/Tooltip";
+import CarCarousel from "../components/CarCarousel";
 
 type HomeProps = {
   data: any;
@@ -87,13 +88,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="auto-card-container owl-carousel owl-theme">
-          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={postTitle} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
-          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
-          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
-          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
-          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
-          <HomeAutoCard imageUrl={"../images/Escultures.png"} title={"Modern Picture"} price={1500} labels={<><div>Label1</div><div>label2</div></>}></HomeAutoCard>
+        <div className="auto-card-container">
+          <CarCarousel></CarCarousel>
         </div>
       </section>
 
@@ -101,7 +97,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
         <h2 className="section-title">Interior Plant Reference</h2>
         <p className="section-text">make your home so comfortable with refreshing plants</p>
 
-        <div className="row justify-content-between px-3 mt-5">
+        <div className="row justify-content-between px-3 mt-5 first-items-container">
           <div className="d-flex item col-md-7 mb-5">
             <StaticImage
               style={{ position: "absolute" }}
@@ -120,7 +116,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
               className={"item-image"}
             /></div>
         </div>
-        <div className="row justify-content-between px-3">
+        <div className="row justify-content-between px-3 second-items-container">
           <div className="d-flex item col-md-4 mb-5">
             <StaticImage
               style={{ position: "absolute" }}

@@ -1,0 +1,33 @@
+.single-car-container {
+  padding-top: 40px;
+  margin-top: 70px;
+
+  .item {
+    width: 100%;
+    border-radius: 25px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    span {
+      background-color: $gold-primary;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+  }
+
+  .carousel-indicators {
+    display: none;
+  }
+
+  .row-title {
+    border: 0 2px 0 0 solid aqua;
+  }
+
+  .checkout-container {
+    background: #ffffff;
+    box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
+    border-radius: 0.375rem;
+  }
+}

@@ -13,19 +13,19 @@ type ShopAutoCardProps = {
 
 const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, price, handleClick, imageUrl }) => {
     return (
-        <Card border="light" className="shop-auto-card px-0 m-2">
-            <Nav.Link href="/shop">
+        <Card border="light" className="shop-auto-card px-0 m-2 mb-3">
+            <Nav.Link href="/single">
             {/* <Card.Img variant="top" src={imageUrl} /> */}
             {/* <Card.Img variant="top" src={"../images/Escultures.png"}></Card.Img> */}
             <StaticImage className="shop-card-image" src={"../images/Escultures1.png"} alt={"Auto"} />
             <Card.Body className="px-4">
-                <Card.Text>€ {price}</Card.Text>
+                <Card.Text className="mb-0">€ {price}</Card.Text>
                 <Card.Title>{title}</Card.Title>
-                <Card.Text>
+                {/* <Card.Text>
                     This is a longer card with supporting text below as a natural
                     lead-in to additional content. This content is a little bit
                     longer.
-                </Card.Text>
+                </Card.Text> */}
                 <Row className="justify-content-end">
                     <Button name={"Skatīt"} size={""} type={"primary"}></Button>
                 </Row>

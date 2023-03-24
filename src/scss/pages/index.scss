@@ -139,11 +139,10 @@
   margin-bottom: 100px;
 
   h2 {
-    font-size: 75px;
-    line-height: 89px;
-    font-weight: 600;
+    // font-size: 75px;
+    // line-height: 89px;
+    // font-weight: 600;
     max-width: 562px;
-    margin-bottom: 30px;
   }
 
   .arrow-wrapper {
@@ -174,6 +173,10 @@
       font-size: 30px;
     }
 
+    p {
+      margin-bottom: 0;
+    }
+
     &:hover a {
       text-decoration: underline;
     }
@@ -181,8 +184,6 @@
 
   .auto-card-container {
     margin-top: 40px;
-    display: flex;
-    column-gap: 60px;
   }
 }
 
@@ -190,10 +191,10 @@
   text-align: center;
   margin-bottom: 100px;
 
-  .section-title {
-    font-size: 64px;
-    line-height: 75px;
-  }
+  // .section-title {
+  //   font-size: 64px;
+  //   line-height: 75px;
+  // }
 
   .section-text {
     font-size: 24px;
@@ -206,7 +207,7 @@
     position: relative;
     text-align: center;
     background: #525a55;
-    padding: 0;
+    padding: 0 20px;
     height: 50vh;
     align-items: center;
     justify-content: center;
@@ -274,11 +275,6 @@
     align-items: center;
   }
 
-  h2 {
-    font-size: 62px;
-    font-weight: 600;
-  }
-
   p {
     color: $text_secondary;
     margin-top: 15px;
@@ -305,11 +301,6 @@
     .hero-content {
       padding: 100px 0 50px;
       width: 90%;
-
-      .hero-title {
-        font-size: 52px;
-        line-height: 56px;
-      }
 
       .hero-search-form {
         display: flex;
@@ -375,17 +366,41 @@
 
   .site-visite-section {
     text-align: center;
-    h2 {
-      font-size: 45px;
-      line-height: 60px;
+  }
+
+  .one-more-section {
+    .item p {
+      font-size: 52px;
+      line-height: 56px;
     }
   }
 }
 
 @media only screen and (max-width: 768px) {
   .hero-section {
+    .hero-content {
+      .hero-title {
+        font-size: 52px;
+        line-height: 56px;
+      }
+    }
     .review-pop-up {
       display: none;
+    }
+  }
+
+  .latest-auto-section {
+
+    h2 {
+      margin: 0 auto 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+
+  .one-more-section{
+    .second-items-container {
+      flex-direction: column-reverse;
     }
   }
 }
@@ -459,6 +474,22 @@
         line-height: 25px;
         margin-bottom: 10px;
       }
+    }
+  }
+
+  .one-more-section {
+    .item {
+      p {
+        font-size: 38px;
+        line-height: 42px;
+      }
+    }
+  }
+
+  .latest-auto-section {
+
+    h2 {
+      text-align: center;
     }
   }
 }
