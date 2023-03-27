@@ -1,7 +1,7 @@
 import React from "react";
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+// import OwlCarousel from 'react-owl-carousel';
+// import 'owl.carousel/dist/assets/owl.carousel.css';
+// import 'owl.carousel/dist/assets/owl.theme.default.css';
 import HomeAutoCard from "./HomeAutoCard";
 import ShopAutoCard from "./ShopAutoCard";
 
@@ -29,7 +29,7 @@ const CarCarousel = () => {
     return (
         <div>
             <div className='container-fluid' >
-                <OwlCarousel
+                {/* <OwlCarousel
                     responsive={responsiveOptions}
                     className="owl-theme"
                     loop
@@ -47,7 +47,7 @@ const CarCarousel = () => {
                     <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 8"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
                     <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 9"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
                     <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                </OwlCarousel>
+                </OwlCarousel> */}
             </div>
 
         </div>
