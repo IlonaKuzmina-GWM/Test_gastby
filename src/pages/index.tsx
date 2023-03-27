@@ -1,5 +1,5 @@
 import * as React from "react";
-import { graphql, HeadFC, Link, PageProps } from "gatsby";
+import { graphql, HeadFC, Link } from "gatsby";
 import MainLayout from "../layouts/MainLayout";
 import Button from "../components/Button";
 import { StaticImage } from "gatsby-plugin-image";

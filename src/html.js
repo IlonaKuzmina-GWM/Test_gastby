@@ -47,8 +47,6 @@ export default function HTML(props) {
           crossOrigin="anonymous"
         ></link>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
         {/* Use maximum-scale and user-scalable at your own risk. It disables pinch/zoom. Think about usability/accessibility before including. */}
         <meta
           name="viewport"
