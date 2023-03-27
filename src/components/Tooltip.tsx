@@ -19,7 +19,7 @@ const TooltipBoot = () => {
                 placement={"top"}
                 overlay={
                     popover}
-                    trigger={"hover"}>
+                trigger={"hover"}>
                 <Button variant="light"><div className='white-dot'></div></Button>
             </OverlayTrigger>
         </div>);

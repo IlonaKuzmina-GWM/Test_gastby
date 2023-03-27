@@ -25,27 +25,6 @@ export default function HTML(props) {
           type="font/woff2"
           crossOrigin="anonymous"
         ></link>
-        <link
-          rel="preload"
-          href="/fonts/WorkSans-Bold.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/WorkSans-Medium.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/WorkSans-SemiBold.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        ></link>
 
         {/* Use maximum-scale and user-scalable at your own risk. It disables pinch/zoom. Think about usability/accessibility before including. */}
         <meta

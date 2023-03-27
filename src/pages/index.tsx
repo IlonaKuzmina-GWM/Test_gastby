@@ -12,7 +12,6 @@ type HomeProps = {
 };
 
 const IndexPage: React.FC<HomeProps> = ({ data }) => {
-  const postTitle = data.allWpPost.nodes[0].title;
 
   return (
     <MainLayout>
@@ -152,12 +151,3 @@ export default IndexPage;
 
 export const Head: HeadFC = () => <title>Pirkt Auto</title>;
 
-export const query = graphql`
-query MyQuery {
-  allWpPost {
-    nodes {
-      title
-    }
-  }
-}
-`

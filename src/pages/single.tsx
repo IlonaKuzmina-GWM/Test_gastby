@@ -4,6 +4,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import { Carousel, Col, Container, Dropdown, Row } from "react-bootstrap";
 import ShopAutoCard from "../components/ShopAutoCard";
 import Button from "../components/Button";
+import { HeadFC } from "gatsby";
 
 const SingleCarPage = () => {
     return (
@@ -125,3 +126,5 @@ const SingleCarPage = () => {
 }
 
 export default SingleCarPage;
+
+export const Head: HeadFC = () => <title>Pirkt Auto</title>;
