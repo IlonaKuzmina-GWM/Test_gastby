@@ -151,3 +151,21 @@ export default IndexPage;
 
 export const Head: HeadFC = () => <title>Pirkt Auto</title>;
 
+// export const query = graphql`
+// query MyQuery {
+//   allWpCarCategory {
+//     nodes {
+//       wpParent {
+//         node {
+//           name
+//           wpChildren {
+//             nodes {
+//               name
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// `;

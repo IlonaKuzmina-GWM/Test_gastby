@@ -24,7 +24,7 @@ const ShopPage = () => {
 
                     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
                         {Array.from({ length: 7 }).map((_, idx) => (
-                            <Col>
+                            <Col key={idx}>
                                 <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
                             </Col>
                         ))}

@@ -1,11 +1,16 @@
-import React from "react";
+import { StaticImage } from "gatsby-plugin-image";
+import React, { useEffect, useState } from "react";
 // import OwlCarousel from 'react-owl-carousel';
-// import 'owl.carousel/dist/assets/owl.carousel.css';
-// import 'owl.carousel/dist/assets/owl.theme.default.css';
 import HomeAutoCard from "./HomeAutoCard";
 import ShopAutoCard from "./ShopAutoCard";
 
 const CarCarousel = () => {
+    const [carusel, setCarusel] = useState(false)
+
+    useEffect(() => {
+        setCarusel(true)
+    }, [carusel]);
+
     const responsiveOptions = {
         0: {
             items: 1,
@@ -27,9 +32,9 @@ const CarCarousel = () => {
     };
 
     return (
-        <div>
+        <div className="car-carousel-container">
             <div className='container-fluid' >
-                {/* <OwlCarousel
+                {/* {carusel ? <OwlCarousel
                     responsive={responsiveOptions}
                     className="owl-theme"
                     loop
@@ -47,9 +52,8 @@ const CarCarousel = () => {
                     <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 8"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
                     <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 9"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
                     <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                </OwlCarousel> */}
+                </OwlCarousel> : null} */}
             </div>
-
         </div>
     );
 }

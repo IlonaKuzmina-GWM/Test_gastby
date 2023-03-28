@@ -5,6 +5,12 @@ export default function HTML(props) {
   return (
     <html {...props.htmlAttributes} lang="lv">
       <head>
+        {/* <script
+          src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossOrigin="anonymous"
+        /> */}
+
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta name="description" content=" " />
@@ -17,10 +23,34 @@ export default function HTML(props) {
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossOrigin="anonymous"
         ></link>
-
+{/* 
+        <link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.min.css" />
+        <link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.theme.default.css" />
+        <link rel="stylesheet" href="/bower_components/owl.carousel/dist/assets/owl.carousel.min.css" /> */}
         <link
           rel="preload"
           href="/fonts/WorkSans-Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        ></link>
+        <link
+          rel="preload"
+          href="/fonts/WorkSans-Bold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        ></link>
+        <link
+          rel="preload"
+          href="/fonts/WorkSans-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        ></link>
+        <link
+          rel="preload"
+          href="/fonts/WorkSans-SemiBold.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"

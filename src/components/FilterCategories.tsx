@@ -1,3 +1,4 @@
+import { useStaticQuery, graphql } from 'gatsby';
 import React, { FC, useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
@@ -10,8 +11,38 @@ type FilterCategoriesProps = {
 }
 
 const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey }) => {
+
+    const data = useStaticQuery(
+        graphql`
+    query FilterQuery {
+  allWpCarCategory {
+    nodes {
+      wpParent {
+        node {
+          name
+          wpChildren {
+            nodes {
+              name
+              slug
+              databaseId
+              cars {
+                nodes {
+                  databaseId
+                }
+              }
+            }
+          }
+          databaseId
+        }
+      }
+    }
+  }
+}
+    `)
+
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(50000);
+    const filters = data.allWpCarCategory.nodes;
 
     const handleMinPriceChange = (e: { target: { value: string; }; }) => {
         setMinPrice(parseInt(e.target.value));
@@ -21,7 +52,14 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
         setMaxPrice(parseInt(e.target.value));
     };
 
+    const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: { wpParent: { node: { databaseId: string | number; }; }; }) => {
+        if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
+            unique[category.wpParent.node.databaseId] = category;
+        }
+        return unique;
+    }, {});
 
+    console.log(uniqueCategories)
 
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className='filters-accordion'>
@@ -54,127 +92,20 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
                 </Col>
             </Row>
 
-
-            <Accordion.Item eventKey="0" className=''>
-                {/* <p>Cena</p>
-
-       
-                <Form>
-                    <Form.Group className="" controlId="">
-                        <Form.Control
-                            type='number'
-                            name=''
-                            placeholder='' />
-
-                    </Form.Group>
-                    <Form.Group className="" controlId="">
-                        <Form.Control
-                            type='number'
-                            name=''
-                            placeholder='' />
-                    </Form.Group>
-                </Form> */}
-            </Accordion.Item>
-            <Accordion.Item eventKey="1">
-                <Accordion.Header className='accordion-title'>Jauni vai mazlietoti</Accordion.Header>
-                <Accordion.Body>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"Visi"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"Jauni"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"Mazlietoti"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2">
-                <Accordion.Header className='accordion-title'>Marka</Accordion.Header>
-                <Accordion.Body>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"1"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"2"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"3"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="3">
-                <Accordion.Header className='accordion-title'>Atrašanās vieta</Accordion.Header>
-                <Accordion.Body>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"1"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"2"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"3"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="4">
-                <Accordion.Header className='accordion-title'>Dzinēja tips</Accordion.Header>
-                <Accordion.Body>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"1"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"2"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"3"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="5">
-                <Accordion.Header className='accordion-title'>Piedziņa</Accordion.Header>
-                <Accordion.Body>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"1"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"2"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                    <Form>
-                        <Form.Group className="" controlId="formBasicEmail">
-                            <Form.Check type="checkbox" label={"3"} value={"new"} />
-                        </Form.Group>
-                    </Form>
-                </Accordion.Body>
-            </Accordion.Item>
+            {Object.values(uniqueCategories).map((category: any, index: any) => (
+                <Accordion.Item key={index} eventKey={index.toString()}>
+                    <Accordion.Header className='accordion-title'>{category.wpParent.node.name}</Accordion.Header>
+                    <Accordion.Body>
+                        {category.wpParent.node.wpChildren.nodes.map((subcategory: any, index: any) => (
+                            <Form key={index}>
+                                <Form.Group className="" controlId="formBasicEmail">
+                                    <Form.Check type="checkbox" label={subcategory.name} value={subcategory.cars.nodes.databaseId} />
+                                </Form.Group>
+                            </Form>
+                        ))}
+                    </Accordion.Body>
+                </Accordion.Item>
+            ))}
         </Accordion >);
 }
 

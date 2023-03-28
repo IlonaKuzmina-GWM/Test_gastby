@@ -10,7 +10,7 @@ const config: GatsbyConfig = {
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   flags: {
-    DEV_SSR: true
+    DEV_SSR: true,
   },
   plugins: [
     "gatsby-plugin-sass",
@@ -24,15 +24,13 @@ const config: GatsbyConfig = {
         short_name: `PirktAuto`,
         theme_color: `#DCB47A`,
         display: `standalone`,
-        icon: `src/images/icon.png`
+        icon: `src/images/icon.png`,
       },
     },
     {
       resolve: `gatsby-source-wordpress`,
       options: {
-        url:
-          process.env.WPGRAPHQL_URL ||
-          `http://app-prkatuo.nsncl0rmht-wg96gxe2m3oy.p.temp-site.link/graphql`,
+        url: process.env.WPGRAPHQL_URL || `http://app-prkatuo.nsncl0rmht-wg96gxe2m3oy.p.temp-site.link/graphql`,
       },
     },
   ],
