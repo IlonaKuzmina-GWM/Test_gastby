@@ -11,6 +11,7 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   flags: {
     DEV_SSR: true,
+    PARALLEL_QUERY_RUNNING: true,
   },
   plugins: [
     "gatsby-plugin-sass",
