@@ -1,11 +1,11 @@
-exports.onCreateWebpackConfig = ({ actions }:any) => {
-  const { setWebpackConfig } = actions;
-  setWebpackConfig({
-    externals: {
-      jquery: "jQuery", // important: 'Q' capitalized
-    },
-  });
-};
+// exports.onCreateWebpackConfig = ({ actions }:any) => {
+//   const { setWebpackConfig } = actions;
+//   setWebpackConfig({
+//     externals: {
+//       jquery: "jQuery", // important: 'Q' capitalized
+//     },
+//   });
+// };
 // import { CreatePagesArgs } from "gatsby";
 // import { FetchingData, WpPost } from "./src/types/fetchingDataTypes";
 

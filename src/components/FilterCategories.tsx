@@ -12,9 +12,8 @@ type FilterCategoriesProps = {
 
 const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey }) => {
 
-    const data = useStaticQuery(
-        graphql`
-    query FilterQuery {
+    const data = useStaticQuery(graphql`
+query FilterQuery {
   allWpCarCategory {
     nodes {
       wpParent {
@@ -38,7 +37,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey })
     }
   }
 }
-    `)
+`)
 
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(50000);
