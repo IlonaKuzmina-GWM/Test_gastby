@@ -9,11 +9,12 @@ type FilterCategoriesProps = {
     subcategries?: string[];
     eventkey: number;
     filteredParamaterCounter: number;
+    isChecked: boolean;
     clearFilteredValues: () => void;
     filteredCategoryHandler: (category: string) => void;
 }
 
-const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, filteredParamaterCounter, clearFilteredValues, filteredCategoryHandler }) => {
+const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, filteredParamaterCounter, isChecked, clearFilteredValues, filteredCategoryHandler }) => {
     const data = useStaticQuery(graphql`
      {
       allWpCarCategory {

@@ -11,27 +11,37 @@ type ShopProps = {
 
 const ShopPage: FC<ShopProps> = ({ data }) => {
     const allWpCars = data.allWpCar.nodes
-    const [filter, setFilter] = useState<string[]>([])
+    const [filteredValues, setFilteredValues] = useState<string[]>([])
+    const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
+    const [isChecked, setIsChecked] = useState<boolean>(false);
 
     const clearFilteredValues = () => {
-        setFilter([])
+        setFilteredValues([]);
+        setIsChecked(false)
     }
 
     const filteredCategoryHandler = (categoryId: string) => {
-        if (filter.includes(categoryId)) {
-            setFilter(filter.filter(id => id !== categoryId));
+        const isChecked = filteredValues.includes(categoryId);
+
+        if (isChecked) {
+            const updateCategories = filteredValues.filter((id) => id !== categoryId);
+            setFilteredValues(updateCategories)
         } else {
-            setFilter([...filter, categoryId]);
+            const updateCategories = [...filteredValues, categoryId];
+            setFilteredValues(updateCategories)
         }
     }
 
+
+    console.log(filteredValues)
+
     const filteredCars = allWpCars.filter((car: any) => {
-        if (filter.length === 0) {
+        if (filteredValues.length === 0) {
             return true
         }
 
         for (let category of car.carCategories.nodes) {
-            if (filter.includes(category.parentDatabaseId)) {
+            if (filteredValues.includes(category.parentDatabaseId?.toString())) {
                 return true
             }
         }
@@ -46,7 +56,11 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
                         <svg className="bi pe-none" width="30" height="24"><use xlinkHref="#bootstrap"></use></svg>
                         <span className="fs-5 fw-semibold">Filtrs</span>
                     </a>
-                    <FilterCategories eventkey={0} clearFilteredValues={clearFilteredValues} filteredCategoryHandler={filteredCategoryHandler} filteredParamaterCounter={filter.length} />
+                    <FilterCategories eventkey={0} 
+                    clearFilteredValues={clearFilteredValues} 
+                    filteredCategoryHandler={filteredCategoryHandler} 
+                    filteredParamaterCounter={filteredValues.length} 
+                    isChecked={false} />
                 </div>
 
                 <Container className="auto-cards-container px-1 p-3">
@@ -58,10 +72,10 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
                         {filteredCars.map((car: any) => (
                             <Col>
                                 <ShopAutoCard
+                                    slug={filteredCars.slug}
                                     gatsbyImageData={car.featuredImage.node.gatsbyImage}
                                     title={car.title}
-                                    price={1500}
-                                    handleClick={() => { }} />
+                                    price={1500} />
                             </Col>
                         ))}
                     </Row>
