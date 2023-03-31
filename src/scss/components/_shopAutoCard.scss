@@ -2,13 +2,17 @@
   background: #ffffff;
   box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
   border-radius: 0.375rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 330px;
+  height: 100%;
 
   .shop-card-image {
     width: 100%;
     border-radius: 0.375rem 0.375rem 0 0;
   }
 
-  .shop-auto-card img{
+  .shop-auto-card img {
     width: 100%;
   }
 
@@ -16,9 +20,9 @@
     font-size: 16px;
     font-weight: 500;
     padding: 5px 20px;
+    margin-top: auto;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  
 }
