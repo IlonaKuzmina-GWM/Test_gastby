@@ -21,11 +21,6 @@ const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, price, handleClick, imageU
             <Card.Body className="px-4">
                 <Card.Text className="mb-0">€ {price}</Card.Text>
                 <Card.Title>{title}</Card.Title>
-                {/* <Card.Text>
-                    This is a longer card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
-                </Card.Text> */}
                 <Row className="justify-content-end">
                     <Button name={"Skatīt"} size={""} type={"primary"}></Button>
                 </Row>

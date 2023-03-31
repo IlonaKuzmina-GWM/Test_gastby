@@ -13,31 +13,30 @@ type FilterCategoriesProps = {
 const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey }) => {
 
     const data = useStaticQuery(graphql`
-query FilterQuery {
-  allWpCarCategory {
-    nodes {
-      wpParent {
-        node {
-          name
-          wpChildren {
-            nodes {
+     {
+      allWpCarCategory {
+        nodes {
+          wpParent {
+            node {
               name
-              slug
-              databaseId
-              cars {
+              wpChildren {
                 nodes {
+                  name
+                  slug
                   databaseId
+                  cars {
+                    nodes {
+                      databaseId
+                    }
+                  }
                 }
               }
+              databaseId
             }
           }
-          databaseId
         }
       }
-    }
-  }
-}
-`)
+    }`)
 
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(50000);
@@ -58,7 +57,7 @@ query FilterQuery {
         return unique;
     }, {});
 
-    console.log(uniqueCategories)
+    // console.log(uniqueCategories)
 
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className='filters-accordion'>
