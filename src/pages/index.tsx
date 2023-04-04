@@ -11,7 +11,7 @@ type HomeProps = {
   data: any;
 };
 
-const IndexPage: React.FC<HomeProps> = ({ data }) => {
+const IndexPage: React.FC<HomeProps> = ({ }) => {
 
   return (
     <MainLayout>
@@ -150,22 +150,3 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 export default IndexPage;
 
 export const Head: HeadFC = () => <title>Pirkt Auto</title>;
-
-// export const query = graphql`
-// query MyQuery {
-//   allWpCarCategory {
-//     nodes {
-//       wpParent {
-//         node {
-//           name
-//           wpChildren {
-//             nodes {
-//               name
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// `;

@@ -1,12 +1,18 @@
-import React from "react";
-import MainLayout from "../layouts/MainLayout";
+import { HeadFC, graphql } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
+import React, { FC } from "react";
 import { Carousel, Col, Container, Dropdown, Row } from "react-bootstrap";
-import ShopAutoCard from "../components/ShopAutoCard";
+import MainLayout from "../layouts/MainLayout";
 import Button from "../components/Button";
-import { HeadFC } from "gatsby";
+import { AllWpCarNode } from "../types/allWpCarTypes";
 
-const SingleCarPage = () => {
+type SingleCarProps = {
+    data: AllWpCarNode;
+}
+
+const SingleCar: FC<SingleCarProps> = ({ data }) => {
+    const car = data;
+
     return (
         <MainLayout>
             <Container className=" single-car-container">
@@ -71,14 +77,14 @@ const SingleCarPage = () => {
                             </Col>
                             <Row md={3}>
                                 {/* <Col>
-                                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                                </Col>
-                                <Col>
-                                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                                </Col>
-                                <Col>
-                                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                                </Col> */}
+                                <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
+                            </Col>
+                            <Col>
+                                <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
+                            </Col>
+                            <Col>
+                                <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
+                            </Col> */}
                             </Row>
                         </Row>
                     </Col>
@@ -117,7 +123,6 @@ const SingleCarPage = () => {
                                 <p>Kas te paredzēts?</p>
                             </Row>
                         </Container>
-
                     </Col>
                 </Row>
             </Container>
@@ -125,6 +130,34 @@ const SingleCarPage = () => {
     );
 }
 
-export default SingleCarPage;
+export default SingleCar;
 
 export const Head: HeadFC = () => <title>Pirkt Auto</title>;
+
+export const query = graphql`
+query CarDetails($slug: String){
+  wpCar(slug: {eq:$slug}) {
+    title
+    carInfo {
+      carGallery {
+        gatsbyImage(
+          cropFocus: CENTER
+          fit: COVER
+          formats: WEBP
+          placeholder: BLURRED
+          width: 500
+        )
+      }
+      carPrice
+    }
+    databaseId
+    slug
+    carCategories {
+      nodes {
+        name
+        databaseId
+      }
+    }
+  }
+}
+`

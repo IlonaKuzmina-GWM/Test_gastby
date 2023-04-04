@@ -4,16 +4,19 @@ import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 import { graphql } from "gatsby";
+import { AllWpCarNode, FetchingData } from "../types/allWpCarTypes";
 
 type ShopProps = {
-    data?: any;
+    data: FetchingData;
 }
 
 const ShopPage: FC<ShopProps> = ({ data }) => {
-    const allWpCars = data.allWpCar.nodes
+    const allWpCars = data.allWpCar.nodes;
     const [filteredValues, setFilteredValues] = useState<string[]>([])
     const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
     const [isChecked, setIsChecked] = useState<boolean>(false);
+
+    console.log("ship page data", data)
 
     const clearFilteredValues = () => {
         setFilteredValues([]);
@@ -35,14 +38,16 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
 
     console.log(filteredValues)
 
-    const filteredCars = allWpCars.filter((car: any) => {
+    const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
+        console.log(car)
+
         if (filteredValues.length === 0) {
-            return true
+            return true;
         }
 
         for (let category of car.carCategories.nodes) {
-            if (filteredValues.includes(category.parentDatabaseId?.toString())) {
-                return true
+            if (filteredValues.includes(category.databaseId?.toString())) {
+                return true;
             }
         }
         return false;
@@ -56,11 +61,11 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
                         <svg className="bi pe-none" width="30" height="24"><use xlinkHref="#bootstrap"></use></svg>
                         <span className="fs-5 fw-semibold">Filtrs</span>
                     </a>
-                    <FilterCategories eventkey={0} 
-                    clearFilteredValues={clearFilteredValues} 
-                    filteredCategoryHandler={filteredCategoryHandler} 
-                    filteredParamaterCounter={filteredValues.length} 
-                    isChecked={false} />
+                    <FilterCategories eventkey={0}
+                        clearFilteredValues={clearFilteredValues}
+                        filteredCategoryHandler={filteredCategoryHandler}
+                        filteredParamaterCounter={filteredValues.length}
+                        isChecked={false} />
                 </div>
 
                 <Container className="auto-cards-container px-1 p-3">
@@ -70,12 +75,12 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
 
                     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
                         {filteredCars.map((car: any) => (
-                            <Col>
+                            <Col key={car.id}>
                                 <ShopAutoCard
-                                    slug={filteredCars.slug}
+                                    slug={car.slug}
                                     gatsbyImageData={car.featuredImage.node.gatsbyImage}
                                     title={car.title}
-                                    price={1500} />
+                                    price={car.carInfo.carPrice} />
                             </Col>
                         ))}
                     </Row>
@@ -88,17 +93,18 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
 export default ShopPage;
 
 export const query = graphql`
-query MyQuery {
+query AllCarsDetails {
     allWpCar {
     nodes {
       carCategories {
         nodes {
           name
-          parentDatabaseId
+          databaseId
         }
       }
       slug
       title
+      id
       featuredImage {
         node {
           gatsbyImage(
@@ -111,5 +117,9 @@ query MyQuery {
           )
         }
       }
-    }}
+      carInfo {
+        carPrice
+      }
+    }
+  }
 }`
