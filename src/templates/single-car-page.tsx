@@ -7,11 +7,12 @@ import Button from "../components/Button";
 import { AllWpCarNode } from "../types/allWpCarTypes";
 
 type SingleCarProps = {
-    data: AllWpCarNode;
+    pageContext: any;
 }
 
-const SingleCar: FC<SingleCarProps> = ({ data }) => {
-    const car = data;
+const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
+
+    console.log(pageContext)
 
     return (
         <MainLayout>
@@ -43,13 +44,13 @@ const SingleCar: FC<SingleCarProps> = ({ data }) => {
 
                         <Row className="mt-2">
                             <Col className="border-top border-dark-subtle">
-                                <h3 className=""> Reason to love this "CAR"</h3>
+                                <h3 className=""> Reason to love this {pageContext.title} </h3>
                             </Col>
                         </Row>
 
                         <Row className="mt-2">
                             <Col className="border-top border-dark-subtle">
-                                <h3>About this new 2024 Gmc Pickup Truck</h3>
+                                <h3>About this new </h3>
                             </Col>
                         </Row>
 
@@ -93,11 +94,11 @@ const SingleCar: FC<SingleCarProps> = ({ data }) => {
                         <Container className="checkout-container p-4">
                             <Row>
                                 <Col xs={8}>
-                                    <h3 className="mb-0">Super car title</h3>
+                                    <h3 className="mb-0"></h3>
                                     <p className="">Versija</p>
                                 </Col>
                                 <Col xs={4}>
-                                    <p>$ 15 000</p>
+                                    <p>$ 15000</p>
                                 </Col>
                             </Row>
 
@@ -134,30 +135,30 @@ export default SingleCar;
 
 export const Head: HeadFC = () => <title>Pirkt Auto</title>;
 
-export const query = graphql`
-query CarDetails($slug: String){
-  wpCar(slug: {eq:$slug}) {
-    title
-    carInfo {
-      carGallery {
-        gatsbyImage(
-          cropFocus: CENTER
-          fit: COVER
-          formats: WEBP
-          placeholder: BLURRED
-          width: 500
-        )
-      }
-      carPrice
-    }
-    databaseId
-    slug
-    carCategories {
-      nodes {
-        name
-        databaseId
-      }
-    }
-  }
-}
-`
+// export const query = graphql`
+// query CarDetails($slug: String){
+//   wpCar(slug: {eq:$slug}) {
+//     title
+//     carInfo {
+//       carGallery {
+//         gatsbyImage(
+//           cropFocus: CENTER
+//           fit: COVER
+//           formats: WEBP
+//           placeholder: BLURRED
+//           width: 500
+//         )
+//       }
+//       carPrice
+//     }
+//     databaseId
+//     slug
+//     carCategories {
+//       nodes {
+//         name
+//         databaseId
+//       }
+//     }
+//   }
+// }
+// `

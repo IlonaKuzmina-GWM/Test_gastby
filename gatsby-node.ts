@@ -1,30 +1,58 @@
-// import { CreatePagesArgs } from "gatsby";
-// import { AllWpCarNode, FetchingData } from "./src/types/allWpCarTypes";
+import { CreatePagesArgs } from "gatsby";
+import { AllWpCarNode, FetchingData } from "./src/types/allWpCarTypes";
 
-// const path = require("path");
+const path = require("path");
 
-// exports.createPages = async ({ graphql, actions }: CreatePagesArgs) => {
-//   const {data} = await graphql(`
-//     query CarInfoToTemplatePage {
-//       allWpCar {
-//         nodes {
-//           slug
-//         }
-//       }
-//     }
-//   `);
+exports.createPages = async ({ graphql, actions }: CreatePagesArgs) => {
+  const { createPage } = actions;
+  const queryResults = await graphql(`
+    query allWpCarData {
+      allWpCar {
+        nodes {
+          carCategories {
+            nodes {
+              name
+              databaseId
+            }
+          }
+          slug
+          title
+          databaseId
+          id
+          featuredImage {
+            node {
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 300, height: 200)
+            }
+          }
+          carInfo {
+            carPrice
+            carGallery {
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500)
+            }
+          }
+        }
+      }
+    }
+  `);
 
-//   if (!data) {
-//     return;
-//   }
+  if (!queryResults) {
+    return;
+  }
 
-//   const allWpCar = data;
+  const singleCarTempalte = path.resolve(`src/templates/single-car-page.tsx`);
+  queryResults.data.allWpCar.nodes.forEach((node: { slug: any }) => {
+    createPage({
+      path: `/${node.slug}`,
+      component: singleCarTempalte,
+      context: node,
+    });
+  });
 
-//   allWpCar.nodes.forEach((node: FetchingData) => {
-//     actions.createPage({
-//       path: path.join("/", node.slug),
-//       component: path.resolve("./src/templates/single-car-page.tsx"),
-//       context: { slug: node.slug },
-//     });
-//   });
-// };
+  //   allWpCarData.forEach((car: FetchingData) => {
+  //     actions.createPage({
+  //       path: path.join("/", car.slug),
+  //       component: path.resolve("./src/templates/single-car-page.tsx"),
+  //       context: { slug: car.slug },
+  //     });
+  //   });
+};
