@@ -8,6 +8,7 @@ exports.createPages = async ({ graphql, actions }: any) => {
     query allWpCarData {
       allWpCar {
         nodes {
+          content
           carCategories {
             nodes {
               wpParent {
@@ -36,13 +37,13 @@ exports.createPages = async ({ graphql, actions }: any) => {
           id
           featuredImage {
             node {
-              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500)
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500, height:250)
             }
           }
           carInfo {
             carPrice
             carGallery {
-              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500)
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500, height:250)
             }
           }
         }

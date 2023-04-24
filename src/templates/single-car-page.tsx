@@ -11,9 +11,21 @@ type SingleCarProps = {
 }
 
 const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
-    const singleCarGallery = pageContext.carInfo.carGallery
+
+    const singleCarInformation = pageContext
+    const singleCarGallery = singleCarInformation.carInfo.carGallery
 
     const countImagesInGallery = singleCarGallery.length;
+
+    console.log(singleCarInformation)
+
+    // uzrakstīt kodu, kur nokļūst līdz categorijai ar databaseId:316 un izmapo kādas pirmās 5 vai trīs lietas. un tās trīs lietas 
+
+    // const wayThisCarSpecial = pageContext.carCategories.nodes.find((cat: any) => (
+    //     cat.wpParent.node.databasedId === 316
+    // ))
+
+    // console.log(wayThisCarSpecial)
 
     return (
         <MainLayout>
@@ -34,39 +46,56 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             </Carousel>
                         </Row>
 
-                        <Row className="mt-2">
+                        <Row className="mt-5">
                             <Col className="border-top border-dark-subtle">
-                                <h3 className=""> Reason to love this {pageContext.title} </h3>
+                                <h3 className=""> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
+
                             </Col>
                         </Row>
 
                         <Row className="mt-2">
                             <Col className="border-top border-dark-subtle">
-                                <h3>About this new </h3>
+                                <h3>Vairāk par {singleCarInformation.title} </h3>
+                                
+                                <div className="">
+                                    <h6>Durvju skaits:</h6>
+                                    <p></p>
+                                </div>
+                                <div className="">
+                                    <h6>Ātrumkārba:</h6>
+                                    <p></p>
+                                </div>
+                                <div className="">
+                                    <h6>Dzinējs:</h6>
+                                    <p></p>
+                                </div>
+                                <div className="">
+                                    <h6>Gads:</h6>
+                                    {/* {singleCarInformation.carCategories.nodes.map((categori)=>(
+                                        if(categori.wpParent.node.databasedId === 304) {
+                                            categori.wpParent.node.wpChildren
+                                        }
+                                        
+                                    ))} */}
+                                    <p></p>
+                                </div>
+                                <div className="">
+                                    <h6>Virsbūves tips:</h6>
+                                    <p></p>
+                                </div>
                             </Col>
                         </Row>
 
                         <Row className="mt-2">
                             <Col className="border-top border-dark-subtle">
-                                <h3>Pricing Disclaimer</h3>
-                                <p>We make every effort to provide accurate information, but please verify options and price with us before purchasing.
-                                    What is included:
-                                    All prices of new GMC vehicles include freight.
-                                    All prices include applicable rebates and incentives. Additional rebates and incentives may also apply to those who qualify. Any incentives or prices may depend on manufacturer incentive program time periods, which can vary or expire.
-                                    What is not included:
-                                    Prices do not include tax, tags, title, registration, electronic filing fee and processing fee of $899 in Virginia, $500 in Maryland, and $699 in Delaware.
-                                    Other considerations
-                                    Due to supply chain and factory production issues, we may not know when some vehicles will be in stock. Vehicles advertised online, if reserved, may be cancelled and have any deposit fully refunded if the customer chooses not to lease or purchase the vehicle.
-                                    Prices may not be compatible with "special factory financing" from the manufacturer. MSRP is the Manufacturer's Suggested Retail Price only. Actual dealer pricing may vary.
-                                    Due to availability, some images and options shown may be stock images or examples and may not reflect exact vehicle color, trim, options, or other specifications.
-                                    All vehicles are subject to prior sale.
-                                    All financing is subject to approved credit.</p>
+                                <h3>Apraksts</h3>
+                                <div className="blog__text" dangerouslySetInnerHTML={{ __html: singleCarInformation.content }} />
                             </Col>
                         </Row>
 
                         <Row className="mt-2">
                             <Col className="border-top border-dark-subtle">
-                                <h3>Recommended for you</h3>
+                                <h3> Recommended for you</h3>
                             </Col>
                             <Row md={3}>
                                 {/* <Col>
