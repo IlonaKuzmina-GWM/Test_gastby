@@ -16,7 +16,7 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
     const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
     const [isChecked, setIsChecked] = useState<boolean>(false);
 
-    console.log("ship page data", data)
+    // console.log("ship page data", data)
 
     const clearFilteredValues = () => {
         setFilteredValues([]);
@@ -36,10 +36,10 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
     }
 
 
-    console.log(filteredValues)
+    // console.log(filteredValues)
 
     const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
-        console.log(car)
+        // console.log(car)
 
         if (filteredValues.length === 0) {
             return true;

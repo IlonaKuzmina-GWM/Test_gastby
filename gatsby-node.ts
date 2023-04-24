@@ -3,16 +3,31 @@ import { AllWpCarNode, FetchingData } from "./src/types/allWpCarTypes";
 
 const path = require("path");
 
-exports.createPages = async ({ graphql, actions }: CreatePagesArgs) => {
-  const { createPage } = actions;
-  const queryResults = await graphql(`
+exports.createPages = async ({ graphql, actions }: any) => {
+  const { data } = await graphql(`
     query allWpCarData {
       allWpCar {
         nodes {
           carCategories {
             nodes {
-              name
-              databaseId
+              wpParent {
+                node {
+                  name
+                  wpChildren {
+                    nodes {
+                      name
+                      slug
+                      databaseId
+                      cars {
+                        nodes {
+                          databaseId
+                        }
+                      }
+                    }
+                  }
+                  databaseId
+                }
+              }
             }
           }
           slug
@@ -21,7 +36,7 @@ exports.createPages = async ({ graphql, actions }: CreatePagesArgs) => {
           id
           featuredImage {
             node {
-              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 300, height: 200)
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500)
             }
           }
           carInfo {
@@ -35,24 +50,20 @@ exports.createPages = async ({ graphql, actions }: CreatePagesArgs) => {
     }
   `);
 
-  if (!queryResults) {
+  if (!data) {
     return;
   }
 
+  const { allWpCar } = data;
+
   const singleCarTempalte = path.resolve(`src/templates/single-car-page.tsx`);
-  queryResults.data.allWpCar.nodes.forEach((node: { slug: any }) => {
-    createPage({
+  const brokerPage = path.resolve("src/templates/broker-page.tsx");
+
+  allWpCar.nodes.forEach((node: { slug: any }) => {
+    actions.createPage({
       path: `/${node.slug}`,
       component: singleCarTempalte,
       context: node,
     });
   });
-
-  //   allWpCarData.forEach((car: FetchingData) => {
-  //     actions.createPage({
-  //       path: path.join("/", car.slug),
-  //       component: path.resolve("./src/templates/single-car-page.tsx"),
-  //       context: { slug: car.slug },
-  //     });
-  //   });
 };

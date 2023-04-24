@@ -1,5 +1,5 @@
 import { useStaticQuery, graphql } from 'gatsby';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from './Button';
@@ -60,6 +60,31 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
         return unique;
     }, {});
 
+    // const getUniqueCategories = (filters: any[]) => {
+    //     const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: { wpParent: { node: { databaseId: string | number; wpChildren: { nodes: any[]; }; name: string; }; }; }) => {
+    //         if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
+    //             unique[category.wpParent.node.databaseId] = category;
+    //         }
+
+    //         return unique;
+    //     }, {});
+
+    //     const jaunsMazlietotsCategory = Object.values(uniqueCategories).find((category: any) => category.wpParent.node.name === "Jauns/mazlietots");
+
+    //     if (jaunsMazlietotsCategory) {
+    //         const hasVisasSubcategory = jaunsMazlietotsCategory.wpParent.node.wpChildren.nodes.some((node: any) => node.name === "visas");
+    //         if (!hasVisasSubcategory) {
+    //             const visasSubcategory = {
+    //                 name: "visas",
+    //                 databaseId: "new_subcategory_id"
+    //             };
+    //             jaunsMazlietotsCategory.wpParent.node.wpChildren.nodes.push(visasSubcategory);
+    //         }
+    //     }
+
+    //     return uniqueCategories;
+    // }
+
 
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className='filters-accordion'>
@@ -84,14 +109,13 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
                         <label htmlFor="maxPrice">Max:</label>
                         <input type="range" id="maxPrice" name="maxPrice" min="0" max="100000" step="500" value={maxPrice} onChange={handleMaxPriceChange} />
 
-                        <div className="price-stats">
+                        <div className="price-stats mb-3">
                             <span>Min: ${minPrice}</span>
                             <span>Max: ${maxPrice}</span>
                         </div>
                     </div>
                 </Col>
             </Row>
-
             {Object.values(uniqueCategories).map((category: any, index: any) => (
                 <Accordion.Item key={index} eventKey={index.toString()}>
                     <Accordion.Header className='accordion-title'>{category.wpParent.node.name}</Accordion.Header>

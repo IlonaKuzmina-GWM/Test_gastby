@@ -1,5 +1,5 @@
 import { HeadFC, graphql } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
+import { GatsbyImage, IGatsbyImageData, StaticImage } from "gatsby-plugin-image";
 import React, { FC } from "react";
 import { Carousel, Col, Container, Dropdown, Row } from "react-bootstrap";
 import MainLayout from "../layouts/MainLayout";
@@ -11,8 +11,9 @@ type SingleCarProps = {
 }
 
 const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
+    const singleCarGallery = pageContext.carInfo.carGallery
 
-    console.log(pageContext)
+    const countImagesInGallery = singleCarGallery.length;
 
     return (
         <MainLayout>
@@ -21,24 +22,15 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                     <Col md={12} lg={8}>
                         <Row className="mb-2">
                             <Carousel>
-                                <Carousel.Item>
-                                    <StaticImage className="item" src={"../images/Escultures1.png"} alt={"Auto"} />
-                                    <Carousel.Caption>
-                                        <h3>Pirmā bilde</h3>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <StaticImage className="item" src={"../images/Escultures1.png"} alt={"Auto"} />
-                                    <Carousel.Caption>
-                                        <h3>Otrā bilde</h3>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <StaticImage className="item" src={"../images/Escultures1.png"} alt={"Auto"} />
-                                    <Carousel.Caption>
-                                        <h3>Trešā bilde</h3>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
+                                {singleCarGallery.map((image: { gatsbyImage: IGatsbyImageData }, index: number) => (
+                                    <Carousel.Item key={index}>
+                                        <GatsbyImage className="item" image={image.gatsbyImage} alt={"Auto"} />
+                                        <Carousel.Caption>
+                                            <h3>{singleCarGallery.lenght}</h3>
+                                            <h3>{index + 1} of {countImagesInGallery}</h3>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                ))}
                             </Carousel>
                         </Row>
 
