@@ -11,24 +11,9 @@ exports.createPages = async ({ graphql, actions }: any) => {
           content
           carCategories {
             nodes {
-              wpParent {
-                node {
-                  name
-                  wpChildren {
-                    nodes {
-                      name
-                      slug
-                      databaseId
-                      cars {
-                        nodes {
-                          databaseId
-                        }
-                      }
-                    }
-                  }
-                  databaseId
-                }
-              }
+              name
+              databaseId
+              parentDatabaseId
             }
           }
           slug
@@ -37,13 +22,13 @@ exports.createPages = async ({ graphql, actions }: any) => {
           id
           featuredImage {
             node {
-              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500, height:250)
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500, height: 500)
             }
           }
           carInfo {
             carPrice
             carGallery {
-              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500, height:250)
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500, height: 500)
             }
           }
         }

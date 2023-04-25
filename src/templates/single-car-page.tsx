@@ -1,35 +1,59 @@
-import { HeadFC, graphql } from "gatsby";
-import { GatsbyImage, IGatsbyImageData, StaticImage } from "gatsby-plugin-image";
+import { HeadFC, graphql, useStaticQuery } from "gatsby";
+import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import React, { FC } from "react";
 import { Carousel, Col, Container, Dropdown, Row } from "react-bootstrap";
-import MainLayout from "../layouts/MainLayout";
 import Button from "../components/Button";
+import ShopAutoCard from "../components/ShopAutoCard";
+import MainLayout from "../layouts/MainLayout";
 import { AllWpCarNode } from "../types/allWpCarTypes";
 
 type SingleCarProps = {
     pageContext: any;
-}
+};
 
 const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
+    const recommendedForYou = useStaticQuery(graphql`
+    {
+      allWpCar {
+        nodes {
+          slug
+          title
+          id
+          featuredImage {
+            node {
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 300, height: 200)
+            }
+          }
+          carInfo {
+            carPrice
+          }
+        }
+      }
+    }
+  `);
 
-    const singleCarInformation = pageContext
-    const singleCarGallery = singleCarInformation.carInfo.carGallery
+    const singleCarInformation = pageContext;
+    const singleCarGallery = singleCarInformation.carInfo.carGallery;
 
     const countImagesInGallery = singleCarGallery.length;
 
     console.log(singleCarInformation)
 
-    // uzrakstīt kodu, kur nokļūst līdz categorijai ar databaseId:316 un izmapo kādas pirmās 5 vai trīs lietas. un tās trīs lietas 
+    // uzrakstīt kodu, kur nokļūst līdz categorijai ar databaseId:316 un izmapo kādas pirmās 5 vai trīs lietas. un tās trīs lietas
 
     // const wayThisCarSpecial = pageContext.carCategories.nodes.find((cat: any) => (
     //     cat.wpParent.node.databasedId === 316
     // ))
 
-    // console.log(wayThisCarSpecial)
-
     return (
         <MainLayout>
             <Container className=" single-car-container">
+                <Row>
+                    <Col>
+                        <h1>{singleCarInformation.title}</h1>
+                    </Col>
+                </Row>
+
                 <Row>
                     <Col md={12} lg={8}>
                         <Row className="mb-2">
@@ -37,9 +61,11 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 {singleCarGallery.map((image: { gatsbyImage: IGatsbyImageData }, index: number) => (
                                     <Carousel.Item key={index}>
                                         <GatsbyImage className="item" image={image.gatsbyImage} alt={"Auto"} />
-                                        <Carousel.Caption>
+                                        <Carousel.Caption className="">
                                             <h3>{singleCarGallery.lenght}</h3>
-                                            <h3>{index + 1} of {countImagesInGallery}</h3>
+                                            <h3 className="photo-counter">
+                                                {index + 1}/{countImagesInGallery}
+                                            </h3>
                                         </Carousel.Caption>
                                     </Carousel.Item>
                                 ))}
@@ -49,6 +75,12 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                         <Row className="mt-5">
                             <Col className="border-top border-dark-subtle">
                                 <h3 className=""> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
+                                <Row md={3}>
+                                    {singleCarInformation.carCategories.nodes
+                                        .filter((filteredById: { parentDatabaseId: number }) => (filteredById.parentDatabaseId === 316))
+                                        .slice(0, 3)
+                                        .map((specialSubCategory: { name: string }, index: number) => (<p key={index}>{index + 1}. {specialSubCategory.name}</p>))}
+                                </Row>
 
                             </Col>
                         </Row>
@@ -56,32 +88,41 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                         <Row className="mt-2">
                             <Col className="border-top border-dark-subtle">
                                 <h3>Vairāk par {singleCarInformation.title} </h3>
-                                
+
                                 <div className="">
                                     <h6>Durvju skaits:</h6>
-                                    <p></p>
+                                    {singleCarInformation.carCategories.nodes
+                                        .filter((filteredById: { parentDatabaseId: number }) => (filteredById.parentDatabaseId === 273))
+                                        .slice(0, 3)
+                                        .map((specialSubCategory: { name: string }, index: number) => (<p key={index}>{specialSubCategory.name}</p>))}
                                 </div>
                                 <div className="">
                                     <h6>Ātrumkārba:</h6>
-                                    <p></p>
+                                    {singleCarInformation.carCategories.nodes
+                                        .filter((filteredById: { parentDatabaseId: number }) => (filteredById.parentDatabaseId === 199))
+                                        .slice(0, 3)
+                                        .map((specialSubCategory: { name: string }, index: number) => (<p key={index}>{specialSubCategory.name}</p>))}
                                 </div>
                                 <div className="">
                                     <h6>Dzinējs:</h6>
-                                    <p></p>
+                                    {singleCarInformation.carCategories.nodes
+                                        .filter((filteredById: { parentDatabaseId: number }) => (filteredById.parentDatabaseId === 194))
+                                        .slice(0, 3)
+                                        .map((specialSubCategory: { name: string }, index: number) => (<p key={index}>{specialSubCategory.name}</p>))}
                                 </div>
                                 <div className="">
                                     <h6>Gads:</h6>
-                                    {/* {singleCarInformation.carCategories.nodes.map((categori)=>(
-                                        if(categori.wpParent.node.databasedId === 304) {
-                                            categori.wpParent.node.wpChildren
-                                        }
-                                        
-                                    ))} */}
-                                    <p></p>
+                                    {singleCarInformation.carCategories.nodes
+                                        .filter((filteredById: { parentDatabaseId: number }) => (filteredById.parentDatabaseId === 304))
+                                        .slice(0, 3)
+                                        .map((specialSubCategory: { name: string }, index: number) => (<p key={index}>{specialSubCategory.name}</p>))}
                                 </div>
                                 <div className="">
                                     <h6>Virsbūves tips:</h6>
-                                    <p></p>
+                                    {singleCarInformation.carCategories.nodes
+                                        .filter((filteredById: { parentDatabaseId: number }) => (filteredById.parentDatabaseId === 249))
+                                        .slice(0, 3)
+                                        .map((specialSubCategory: { name: string }, index: number) => (<p key={index}>{specialSubCategory.name}</p>))}
                                 </div>
                             </Col>
                         </Row>
@@ -95,50 +136,68 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
                         <Row className="mt-2">
                             <Col className="border-top border-dark-subtle">
-                                <h3> Recommended for you</h3>
+                                <h3>Rekomendējam tieši tev</h3>
                             </Col>
                             <Row md={3}>
-                                {/* <Col>
-                                <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                            </Col>
-                            <Col>
-                                <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                            </Col>
-                            <Col>
-                                <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                            </Col> */}
+                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: AllWpCarNode) => (
+                                    <Col className="mb-3">
+                                        <ShopAutoCard
+                                            gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                                            slug={car.slug} title={car.title}
+                                            price={car.carInfo.carPrice}
+                                            handleClick={() => { console.log("card4") }} />
+                                    </Col>
+                                ))}
                             </Row>
                         </Row>
                     </Col>
 
                     <Col md={0} lg={4} className="">
-                        <Container className="checkout-container p-4">
+                        <Container className="checkout-container">
+                            <Row>
+                                <Col>
+                                    <h3>{singleCarInformation.title}</h3>
+                                </Col>
+                            </Row>
+
                             <Row>
                                 <Col xs={8}>
                                     <h3 className="mb-0"></h3>
-                                    <p className="">Versija</p>
+                                    <p className="">Cena</p>
                                 </Col>
                                 <Col xs={4}>
-                                    <p>$ 15000</p>
+                                    <p>€ {singleCarInformation.carInfo.carPrice.toLocaleString()}</p>
                                 </Col>
                             </Row>
 
                             <Row>
                                 <Col xs={8}>
-                                    <p>Kā šo aprakstīt</p>
+                                    <p>Te kaut ko</p>
                                 </Col>
                                 <Col xs={4}>
-                                    <p>Mazlietota</p>
+                                    <p>kaut kas ir te</p>
                                 </Col>
                             </Row>
 
                             <Row>
-                                <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"}></Button>
+                                <Col xs={8}>
+                                    <p>Dīleris</p>
+                                </Col>
+                                <Col xs={4}>
+                                    {singleCarInformation.carCategories.nodes
+                                        .filter((filteredById: { parentDatabaseId: number }) => (filteredById.parentDatabaseId === 357))
+                                        .slice(0, 3)
+                                        .map((specialSubCategory: { name: string }, index: number) => (<p key={index}>{specialSubCategory.name}</p>))}
+                                </Col>
                             </Row>
 
                             <Row>
-                                <p>Dīleris</p>
+                                <Col className="btn-wrapper"><Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"}></Button>
+                                </Col>
+
                             </Row>
+
+
 
                             <Row>
                                 <Dropdown.Divider />
@@ -150,36 +209,8 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
             </Container>
         </MainLayout>
     );
-}
+};
 
 export default SingleCar;
 
 export const Head: HeadFC = () => <title>Pirkt Auto</title>;
-
-// export const query = graphql`
-// query CarDetails($slug: String){
-//   wpCar(slug: {eq:$slug}) {
-//     title
-//     carInfo {
-//       carGallery {
-//         gatsbyImage(
-//           cropFocus: CENTER
-//           fit: COVER
-//           formats: WEBP
-//           placeholder: BLURRED
-//           width: 500
-//         )
-//       }
-//       carPrice
-//     }
-//     databaseId
-//     slug
-//     carCategories {
-//       nodes {
-//         name
-//         databaseId
-//       }
-//     }
-//   }
-// }
-// `

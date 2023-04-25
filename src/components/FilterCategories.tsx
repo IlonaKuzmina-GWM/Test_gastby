@@ -1,5 +1,5 @@
-import { useStaticQuery, graphql } from 'gatsby';
-import React, { FC, useEffect, useState } from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
+import React, { FC, useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from './Button';
