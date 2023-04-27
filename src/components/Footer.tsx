@@ -19,24 +19,20 @@ const Footer = () => {
                 </div>
 
                 <div className="column colum-two wrapper">
-                    <h3>Support</h3>
-                    <NavLinks></NavLinks>
-                </div>
-
-                <div className="column colum-three wrapper">
                     <h3>Noderīgas <br />saites</h3>
                     <NavLinks></NavLinks>
                 </div>
 
-                <div className="column colum-for wrapper">
+                <div className="column colum-three wrapper">
                     <h3>Dīleri</h3>
                     <NavLinks></NavLinks>
                 </div>
 
-                <div className="column colum-five wrapper">
+                <div className="column colum-for wrapper">
                     <h3>Kontakti</h3>
                     <NavLinks></NavLinks>
                 </div>
+
             </div>
 
             <div className="wrapper second-line">

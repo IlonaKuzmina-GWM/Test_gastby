@@ -1,0 +1,43 @@
+.checkout-container {
+  background: #ffffff;
+  box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
+  border-radius: 0.375rem;
+  max-width: 360px;
+  position: fixed;
+  top: 100px;
+  padding: 15px;
+  min-height: auto;
+  max-height: calc(100vh - 72px);
+  bottom: unset;
+  z-index: 3;
+
+  .version-type-wrapper span {
+    font-size: 14px;
+    margin-top: -15px;
+    margin-left: -5px;
+  }
+
+  .btn-wrapper button {
+    width: 100%;
+  }
+
+  .back-arrow{
+    cursor: pointer;
+    padding: 10px 10px 10px 0;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .single-car-container {
+    .checkout-container {
+      top: unset;
+      bottom: 0px;
+      right: 0;
+      left: 0;
+      max-width: 100%;
+      margin: 0 auto;
+      background-color: red;
+      padding: 20px 15px;
+    }
+  }
+}
