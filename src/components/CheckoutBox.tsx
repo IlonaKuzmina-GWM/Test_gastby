@@ -2,9 +2,13 @@ import React, { FC, useState } from "react";
 import { Col, Container, Dropdown, Nav, Row } from "react-bootstrap";
 import ArrowLeft from "../images/icons/ArrowLeft.svg";
 import PinsBroker from "../images/icons/PinsBroker.svg";
-import Button from "./Button";
-import Share from "../images/icons/Share.svg";
 import Questions from "../images/icons/Questions.svg";
+import Share from "../images/icons/Share.svg";
+import Button from "./Button";
+import Envelope from "../images/icons/Envelope.svg";
+import Phone from "../images/icons/Phone.svg";
+import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LineIcon, LineShareButton, TelegramIcon, TelegramShareButton, WhatsappIcon, WhatsappShareButton, WorkplaceIcon, WorkplaceShareButton } from "react-share";
+
 
 
 type CheckoutBoxProps = {
@@ -17,48 +21,33 @@ type CheckoutBoxProps = {
 }
 
 const CheckoutBox: FC<CheckoutBoxProps> = ({ title, carType, price, brokerName, carCondition, isElementorLocationFooterVisible }) => {
-    const [moreInformationShow, setMoreInformationShow] = useState(false)
+    const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
+    const [shareBlockShown, setShareBlockShown] = useState(false);
+    const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
+
+    const toggleCheckoutIcons = () => {
+        setCheckoutIconsUseed(!checkoutIconsUseed);
+    };
 
     return (
         <Col md={0} lg={4} xl={4} className="">
             <Container className="checkout-container" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
+                <button
+                    className="colapse-button"
+                    onClick={toggleCheckoutIcons}>Colapse</button>
+
                 <Row>
-                    <Col>
-                        <h4>{title}</h4>
+                    <Col xs={8}>
+                        <h5>{title}</h5>
                         <span className="version-type-wrapper">{carType}</span>
+                    </Col>
+                    <Col xs={4}>
+                        <h5>€ {price}</h5>
                     </Col>
                 </Row>
 
-                {moreInformationShow
-                    ?
+                {!checkoutIconsUseed && (
                     <>
-
-
-                        <div className="d-flex align-items-center back-arrow" onClick={() => { setMoreInformationShow(false) }}>
-                            <img className="" src={ArrowLeft} width={15} height={15} alt="pin" />
-                            <span>Atpakaļ</span>
-                        </div>
-                        <div>
-                            <a href="tel:123-456-7890">Zvanīt: 123-456-7890</a>
-                        </div>
-
-                        <div>
-                            <a href="mailto:email@example.com">Sūtīt e-pastu: info@info.lv</a>
-                        </div>
-
-
-                    </>
-                    :
-                    <>
-                        <Row>
-                            <Col xs={8}>
-                                <p>Cena</p>
-                            </Col>
-                            <Col xs={4}>
-                                <p>€ {price}</p>
-                            </Col>
-                        </Row>
-
                         <Row>
                             <Col xs={8}>
                                 <p>Stāvoklis</p>
@@ -70,7 +59,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, carType, price, brokerName, 
 
                         <Row>
                             <Col className="btn-wrapper mt-4">
-                                <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"} onClickHandler={() => { setMoreInformationShow(true) }}></Button>
+                                <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
                                 <Nav.Link href="/">
                                     <div className="d-flex justify-content-center align-items-center mt-2">
                                         <img className="mb-3" src={PinsBroker} width={15} height={15} alt="pin" />
@@ -82,33 +71,86 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, carType, price, brokerName, 
 
                         <Row className="">
                             <Dropdown.Divider />
-                            <Row md={3} className="mt-3">
-
-
-                                <div className="d-flex flex-column align-items-center">
+                            <Row md={3} className="mt-4 checkout-icons-container">
+                                <div className="d-flex flex-column align-items-center icon-item">
                                     <img className="" src={Questions} width={25} height={25} alt="pin" />
                                     <p className="mt-2 text-center">PDF??</p>
                                 </div>
 
-
-                                <div className="d-flex flex-column align-items-center">
+                                <div className="d-flex flex-column align-items-center icon-item" onClick={() => { setCheckoutIconsUseed(true); setShareBlockShown(true); }}>
                                     <img className="" src={Share} width={25} height={25} alt="pin" />
                                     <p className="mt-2 text-center">Dalīties</p>
                                 </div>
 
-                                <div className="d-flex flex-column align-items-center" onClick={() => { setMoreInformationShow(true) }}>
+                                <div className="d-flex flex-column align-items-center icon-item" onClick={() => { setQuestionsBlockShown(true); setCheckoutIconsUseed(true); }}>
                                     <img className="" src={Questions} width={25} height={25} alt="pin" />
                                     <p className="mt-2 text-center">Jautājumi</p>
                                 </div>
-
-
                             </Row>
-
                         </Row>
                     </>
+                )
                 }
 
+                {questionsBlockShown && (
+                    <div className="questions-block-container">
+                        <div className="d-flex align-items-center back-arrow mb-3" onClick={() => { setQuestionsBlockShown(false), setCheckoutIconsUseed(false) }}>
+                            <img className="" src={ArrowLeft} width={15} height={15} alt="pin" />
+                            <span>Atpakaļ</span>
+                        </div>
 
+                        <h5>Jautājumi?</h5>
+
+                        <a href="tel:123-456-7890" className="link ">
+                            <div className="mt-3 link-wrapper d-flex align-items-center">
+                                <img src={Phone} alt="Phone" className="me-2" width={20} height={20} />
+                                <span>123-456-7890</span>
+                            </div>
+                        </a>
+
+
+                        <a href="mailto:email@example.com" className="link">
+                            <div className="mt-3 link-wrapper d-flex align-items-center">
+                                <img src={Envelope} alt="Mail" className="me-2" width={20} height={20} />
+                                <span>info@info.lv</span>
+                            </div>
+                        </a>
+
+                    </div>
+                )}
+
+                {shareBlockShown && (
+                    <div className="share-block-container">
+                        <div className="d-flex align-items-center back-arrow mb-3" onClick={() => { setShareBlockShown(false), setCheckoutIconsUseed(false) }}>
+                            <img className="" src={ArrowLeft} width={15} height={15} alt="pin" />
+                            <span>Atpakaļ</span>
+                        </div>
+
+                        <div className="share-icons-container d-flex justify-content-around">
+
+                            <FacebookShareButton
+                                url={'https://www.example.com'}
+                                quote={'Ko te es vēlos pateikt?'}
+                                hashtag="#muo"
+                            >
+                                <FacebookIcon size={40} round />
+                            </FacebookShareButton>
+
+                            <WhatsappShareButton url={'https://www.example.com'}>
+                                <WhatsappIcon size={40} round />
+                            </WhatsappShareButton>
+
+                            <TelegramShareButton url={'https://www.example.com'}>
+                                <TelegramIcon size={40} round></TelegramIcon>
+                            </TelegramShareButton>
+
+                            <EmailShareButton url={'https://www.example.com'}>
+                                <EmailIcon size={40} round />
+                            </EmailShareButton>
+
+                        </div>
+                    </div>
+                )}
 
             </Container>
         </Col>
