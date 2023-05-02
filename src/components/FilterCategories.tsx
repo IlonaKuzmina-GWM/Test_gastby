@@ -116,10 +116,10 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
                     <input type="range" className="form-range" min="0" max="30000" step="100" id="customRange3"></input> */}
                     <div className="price-range-selector">
                         <label htmlFor="minPrice">Min:</label>
-                        <input type="range" id="minPrice" name="minPrice" min={0} max={50000} step="500" value={minPrice} onChange={handleMinPriceChange} />
+                        <input type="range" id="minPrice" name="minPrice" min={defaultMinPrice} max={defaultMaxPrice/2} step="500" value={minPrice} onChange={handleMinPriceChange} />
                         <br />
                         <label htmlFor="maxPrice">Max:</label>
-                        <input type="range" id="maxPrice" name="maxPrice" min={0} max={50000} step="500" value={maxPrice} onChange={handleMaxPriceChange} />
+                        <input type="range" id="maxPrice" name="maxPrice" min={defaultMinPrice/2} max={defaultMaxPrice} step="500" value={maxPrice} onChange={handleMaxPriceChange} />
 
                         <div className="price-stats mb-3">
                             <span>Min: ${defaultMinPrice}</span>
