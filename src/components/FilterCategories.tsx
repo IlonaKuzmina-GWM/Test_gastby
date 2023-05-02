@@ -10,11 +10,15 @@ type FilterCategoriesProps = {
     eventkey: number;
     filteredParamaterCounter: number;
     isChecked: boolean;
+    defaultMinPrice: number;
+    defaultMaxPrice: number;
     clearFilteredValues: () => void;
     filteredCategoryHandler: (category: string) => void;
+    priceRangeChangeHandler: (minPrice: number, maxPrice: number) => void;
 }
 
-const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, filteredParamaterCounter, isChecked, clearFilteredValues, filteredCategoryHandler }) => {
+const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, filteredParamaterCounter, isChecked, defaultMinPrice, defaultMaxPrice,
+    clearFilteredValues, filteredCategoryHandler, priceRangeChangeHandler }) => {
     const data = useStaticQuery(graphql`
      {
       allWpCarCategory {
@@ -41,49 +45,57 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
       }
     }`)
 
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(50000);
     const filters = data.allWpCarCategory.nodes;
+    const [minPrice, setMinPrice] = useState(defaultMinPrice);
+    const [maxPrice, setMaxPrice] = useState(defaultMaxPrice);
 
     const handleMinPriceChange = (e: { target: { value: string; }; }) => {
         setMinPrice(parseInt(e.target.value));
+        // call the handlePriceRangeChange function to send the updated min and max values to the parent component
+        priceRangeChangeHandler(parseInt(e.target.value), maxPrice);
     };
 
     const handleMaxPriceChange = (e: { target: { value: string; }; }) => {
         setMaxPrice(parseInt(e.target.value));
+        // call the handlePriceRangeChange function to send the updated min and max values to the parent component
+        priceRangeChangeHandler(minPrice, parseInt(e.target.value));
     };
 
-    const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: { wpParent: { node: { databaseId: string | number; }; }; }) => {
+    // const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: { wpParent: { node: { databaseId: string | number; }; }; }) => {
+    //     if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
+    //         unique[category.wpParent.node.databaseId] = category
+    //     }
+    //     return unique;
+    // }, {});
+
+
+    const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: {
+        wpParent: {
+            node: {
+                [x: string]: any; databaseId: string | number;
+            }; wpChildren: { nodes: any[]; };
+        };
+    }) => {
         if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
-            unique[category.wpParent.node.databaseId] = category;
+            unique[category.wpParent.node.databaseId] = {
+                ...category,
+                wpParent: {
+                    ...category.wpParent,
+                    node: {
+                        ...category.wpParent.node,
+                        wpChildren: {
+                            ...category.wpParent.node.wpChildren,
+                            nodes: category.wpParent.node.wpChildren.nodes.map((node: any) => ({
+                                ...node,
+                                isChecked: false
+                            }))
+                        }
+                    }
+                }
+            };
         }
         return unique;
     }, {});
-
-    // const getUniqueCategories = (filters: any[]) => {
-    //     const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: { wpParent: { node: { databaseId: string | number; wpChildren: { nodes: any[]; }; name: string; }; }; }) => {
-    //         if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
-    //             unique[category.wpParent.node.databaseId] = category;
-    //         }
-
-    //         return unique;
-    //     }, {});
-
-    //     const jaunsMazlietotsCategory = Object.values(uniqueCategories).find((category: any) => category.wpParent.node.name === "Jauns/mazlietots");
-
-    //     if (jaunsMazlietotsCategory) {
-    //         const hasVisasSubcategory = jaunsMazlietotsCategory.wpParent.node.wpChildren.nodes.some((node: any) => node.name === "visas");
-    //         if (!hasVisasSubcategory) {
-    //             const visasSubcategory = {
-    //                 name: "visas",
-    //                 databaseId: "new_subcategory_id"
-    //             };
-    //             jaunsMazlietotsCategory.wpParent.node.wpChildren.nodes.push(visasSubcategory);
-    //         }
-    //     }
-
-    //     return uniqueCategories;
-    // }
 
 
     return (
@@ -104,14 +116,14 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
                     <input type="range" className="form-range" min="0" max="30000" step="100" id="customRange3"></input> */}
                     <div className="price-range-selector">
                         <label htmlFor="minPrice">Min:</label>
-                        <input type="range" id="minPrice" name="minPrice" min="0" max="100000" step="500" value={minPrice} onChange={handleMinPriceChange} />
+                        <input type="range" id="minPrice" name="minPrice" min={0} max={50000} step="500" value={minPrice} onChange={handleMinPriceChange} />
                         <br />
                         <label htmlFor="maxPrice">Max:</label>
-                        <input type="range" id="maxPrice" name="maxPrice" min="0" max="100000" step="500" value={maxPrice} onChange={handleMaxPriceChange} />
+                        <input type="range" id="maxPrice" name="maxPrice" min={0} max={50000} step="500" value={maxPrice} onChange={handleMaxPriceChange} />
 
                         <div className="price-stats mb-3">
-                            <span>Min: ${minPrice}</span>
-                            <span>Max: ${maxPrice}</span>
+                            <span>Min: ${defaultMinPrice}</span>
+                            <span>Max: ${defaultMaxPrice}</span>
                         </div>
                     </div>
                 </Col>
@@ -127,7 +139,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
                                         type="checkbox"
                                         label={subcategory.name}
                                         value={subcategory.databaseId}
-                                        onChange={(e) => { filteredCategoryHandler(e.target.value); }}
+                                        onChange={(e) => { filteredCategoryHandler(e.target.value);}}
                                     />
                                 </Form.Group>
                             </Form>

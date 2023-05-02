@@ -15,13 +15,31 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
     const [filteredValues, setFilteredValues] = useState<string[]>([])
     const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
     const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [defaultMinPrice, setDefaultMinPrice] = useState(0);
+    const [defaultMaxPrice, setDefaultMaxPrice] = useState(0);
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(0);
 
-    // console.log("ship page data", data)
+    const findDefaultMinAndMaxPrice = () => {
+        const prices = allWpCars.map((car: AllWpCarNode) => car.carInfo.carPrice);
+        const minDefaultPrice = Math.min(...prices);
+        const maxDefaultPrice = Math.max(...prices);
+
+        setDefaultMinPrice(minDefaultPrice);
+        setDefaultMaxPrice(maxDefaultPrice);
+        // console.log("funkcijas prices", minDefaultPrice, maxDefaultPrice)
+    };
+
+    useEffect(() => {
+        findDefaultMinAndMaxPrice();
+    }, []);
+
+    useEffect(() => {  }, [minPrice, maxPrice]);
 
     const clearFilteredValues = () => {
         setFilteredValues([]);
         setIsChecked(false)
-    }
+    };
 
     const filteredCategoryHandler = (categoryId: string) => {
         const isChecked = filteredValues.includes(categoryId);
@@ -35,23 +53,47 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
         }
     }
 
+    const priceRangeChangeHandler = (minPrice: number, maxPrice: number) => {
+        setMinPrice(minPrice);
+        setMaxPrice(maxPrice);
+    }
 
-    // console.log(filteredValues)
+    // const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
+    //     if (filteredValues.length === 0) {
+    //         return true;
+    //     }
+
+    //     const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
+
+    //     const allSelectedCategoriesMatch = filteredValues.every((categoryId) => {
+    //         return carCategoryIds.includes(categoryId);
+    //     });
+
+    //     return allSelectedCategoriesMatch;
+
+    //     // for (let category of car.carCategories.nodes) {
+    //     //     if (filteredValues.includes(category.databaseId?.toString())) {
+    //     //         return true;
+    //     //     }
+    //     // }
+    //     // return false;
+    // });
 
     const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
-        // console.log(car)
-
         if (filteredValues.length === 0) {
-            return true;
+            // return true;
+              return car.carInfo.carPrice >= minPrice;
         }
 
-        for (let category of car.carCategories.nodes) {
-            if (filteredValues.includes(category.databaseId?.toString())) {
-                return true;
-            }
-        }
-        return false;
+        const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
+
+        const allSelectedCategoriesMatch = filteredValues.every((categoryId) => {
+            return carCategoryIds.includes(categoryId);
+        });
+
+        return allSelectedCategoriesMatch || car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
     });
+
 
     return (
         <MainLayout>
@@ -64,8 +106,11 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
                     <FilterCategories eventkey={0}
                         clearFilteredValues={clearFilteredValues}
                         filteredCategoryHandler={filteredCategoryHandler}
+                        priceRangeChangeHandler={priceRangeChangeHandler}
                         filteredParamaterCounter={filteredValues.length}
-                        isChecked={false} />
+                        isChecked={isChecked}
+                        defaultMinPrice={defaultMinPrice}
+                        defaultMaxPrice={defaultMaxPrice} />
                 </div>
 
                 <Container className="auto-cards-container px-1 p-3">
