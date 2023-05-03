@@ -14,9 +14,6 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
     const allWpCars = data.allWpCar.nodes;
     const [filteredValues, setFilteredValues] = useState<string[]>([])
     const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
-    const [isChecked, setIsChecked] = useState<boolean>(false);
-    const [defaultMinPrice, setDefaultMinPrice] = useState(0);
-    const [defaultMaxPrice, setDefaultMaxPrice] = useState(0);
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
 
@@ -25,26 +22,24 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
         const minDefaultPrice = Math.min(...prices);
         const maxDefaultPrice = Math.max(...prices);
 
-        setDefaultMinPrice(minDefaultPrice);
-        setDefaultMaxPrice(maxDefaultPrice);
-        // console.log("funkcijas prices", minDefaultPrice, maxDefaultPrice)
+        setMinPrice(minDefaultPrice);
+        setMaxPrice(maxDefaultPrice);
     };
 
     useEffect(() => {
         findDefaultMinAndMaxPrice();
     }, []);
 
-    useEffect(() => {  }, [minPrice, maxPrice]);
-
     const clearFilteredValues = () => {
         setFilteredValues([]);
-        setIsChecked(false)
+        setMinPrice(0);
+        setMaxPrice(0);
     };
 
     const filteredCategoryHandler = (categoryId: string) => {
-        const isChecked = filteredValues.includes(categoryId);
+        const isCheckedArray = filteredValues.includes(categoryId);
 
-        if (isChecked) {
+        if (isCheckedArray) {
             const updateCategories = filteredValues.filter((id) => id !== categoryId);
             setFilteredValues(updateCategories)
         } else {
@@ -53,9 +48,12 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
         }
     }
 
-    const priceRangeChangeHandler = (minPrice: number, maxPrice: number) => {
-        setMinPrice(minPrice);
-        setMaxPrice(maxPrice);
+    const minPriceRangeChangeHandler = (minPri: number) => {
+        setMinPrice(minPri);
+    }
+
+    const maxPriceRangeChangeHandler = (maxPri: number) => {
+        setMaxPrice(maxPri);
     }
 
     // const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
@@ -80,9 +78,8 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
     // });
 
     const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
-        if (filteredValues.length === 0) {
-            // return true;
-              return car.carInfo.carPrice >= minPrice;
+        if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
+            return true;
         }
 
         const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
@@ -91,7 +88,7 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
             return carCategoryIds.includes(categoryId);
         });
 
-        return allSelectedCategoriesMatch || car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
+        return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
     });
 
 
@@ -106,11 +103,9 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
                     <FilterCategories eventkey={0}
                         clearFilteredValues={clearFilteredValues}
                         filteredCategoryHandler={filteredCategoryHandler}
-                        priceRangeChangeHandler={priceRangeChangeHandler}
-                        filteredParamaterCounter={filteredValues.length}
-                        isChecked={isChecked}
-                        defaultMinPrice={defaultMinPrice}
-                        defaultMaxPrice={defaultMaxPrice} />
+                        minPriceRangeChangeHandler={minPriceRangeChangeHandler}
+                        maxPriceRangeChangeHandler={maxPriceRangeChangeHandler}
+                        filteredParamaterCounter={filteredValues.length}/>
                 </div>
 
                 <Container className="auto-cards-container px-1 p-3">

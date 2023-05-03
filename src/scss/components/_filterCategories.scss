@@ -1,4 +1,19 @@
 .filters-accordion {
+
+  .main__range--wrapper {
+
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+  }
+  
+  .main__price--input {
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #c5c5c5;
+    max-width: 45%;
+    padding: 9px;
+  }
+
   .accordion-title {
     line-height: 0;
   }

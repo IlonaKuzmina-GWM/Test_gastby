@@ -1,6 +1,6 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React, { FC, useState } from 'react';
-import { Col, Form, Row } from 'react-bootstrap';
+import { Col, Form, FormControl, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from './Button';
 
@@ -9,16 +9,15 @@ type FilterCategoriesProps = {
     subcategries?: string[];
     eventkey: number;
     filteredParamaterCounter: number;
-    isChecked: boolean;
-    defaultMinPrice: number;
-    defaultMaxPrice: number;
+    isCheckedProp?: boolean;
     clearFilteredValues: () => void;
     filteredCategoryHandler: (category: string) => void;
-    priceRangeChangeHandler: (minPrice: number, maxPrice: number) => void;
+    minPriceRangeChangeHandler: (minPrice: number) => void;
+    maxPriceRangeChangeHandler: (maxPrice: number) => void;
 }
 
-const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, filteredParamaterCounter, isChecked, defaultMinPrice, defaultMaxPrice,
-    clearFilteredValues, filteredCategoryHandler, priceRangeChangeHandler }) => {
+const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, filteredParamaterCounter, isCheckedProp,
+    clearFilteredValues, filteredCategoryHandler, minPriceRangeChangeHandler, maxPriceRangeChangeHandler }) => {
     const data = useStaticQuery(graphql`
      {
       allWpCarCategory {
@@ -46,19 +45,20 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
     }`)
 
     const filters = data.allWpCarCategory.nodes;
-    const [minPrice, setMinPrice] = useState(defaultMinPrice);
-    const [maxPrice, setMaxPrice] = useState(defaultMaxPrice);
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(0);
+    // const [isChecked, setIsChecked] = useState(isCheckedProp);
 
     const handleMinPriceChange = (e: { target: { value: string; }; }) => {
         setMinPrice(parseInt(e.target.value));
         // call the handlePriceRangeChange function to send the updated min and max values to the parent component
-        priceRangeChangeHandler(parseInt(e.target.value), maxPrice);
+        minPriceRangeChangeHandler(parseInt(e.target.value));
     };
 
     const handleMaxPriceChange = (e: { target: { value: string; }; }) => {
         setMaxPrice(parseInt(e.target.value));
         // call the handlePriceRangeChange function to send the updated min and max values to the parent component
-        priceRangeChangeHandler(minPrice, parseInt(e.target.value));
+        maxPriceRangeChangeHandler(parseInt(e.target.value));
     };
 
     // const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: { wpParent: { node: { databaseId: string | number; }; }; }) => {
@@ -97,7 +97,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
         return unique;
     }, {});
 
-
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className='filters-accordion'>
             <Row className=' mb-3 px-3 filter-results justify-content-between align-items-center'>
@@ -110,22 +109,22 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
                 </Col>
             </Row>
 
-            <Row>
-                <Col>
-                    {/* <label htmlFor="customRange3" className="form-label">Cena</label>
-                    <input type="range" className="form-range" min="0" max="30000" step="100" id="customRange3"></input> */}
-                    <div className="price-range-selector">
-                        <label htmlFor="minPrice">Min:</label>
-                        <input type="range" id="minPrice" name="minPrice" min={defaultMinPrice} max={defaultMaxPrice/2} step="500" value={minPrice} onChange={handleMinPriceChange} />
-                        <br />
-                        <label htmlFor="maxPrice">Max:</label>
-                        <input type="range" id="maxPrice" name="maxPrice" min={defaultMinPrice/2} max={defaultMaxPrice} step="500" value={maxPrice} onChange={handleMaxPriceChange} />
+            <Row className='center-xs'>
+                <Col className='' xs={12}>
+                    <h4 className="price__block--title">Cena</h4>
+                    <Form className='d-flex justify-content-between main__range--wrapper'>
+                        <FormControl
+                            className='main__price--input'
+                            type='number'
+                            placeholder='Min'
+                            onChange={handleMinPriceChange} />
 
-                        <div className="price-stats mb-3">
-                            <span>Min: ${defaultMinPrice}</span>
-                            <span>Max: ${defaultMaxPrice}</span>
-                        </div>
-                    </div>
+                        <FormControl
+                            className='main__price--input'
+                            type='number'
+                            placeholder='Max'
+                            onChange={handleMaxPriceChange} />
+                    </Form>
                 </Col>
             </Row>
             {Object.values(uniqueCategories).map((category: any, index: any) => (
@@ -139,7 +138,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
                                         type="checkbox"
                                         label={subcategory.name}
                                         value={subcategory.databaseId}
-                                        onChange={(e) => { filteredCategoryHandler(e.target.value);}}
+                                        onChange={(e) => { filteredCategoryHandler(e.target.value); }}
                                     />
                                 </Form.Group>
                             </Form>
