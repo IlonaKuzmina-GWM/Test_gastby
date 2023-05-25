@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Col, Container, Dropdown, Nav, Row } from "react-bootstrap";
 import ArrowLeft from "../images/icons/ArrowLeft.svg";
 import PinsBroker from "../images/icons/PinsBroker.svg";
@@ -18,9 +18,10 @@ type CheckoutBoxProps = {
     brokerName: React.ReactNode;
     carCondition: React.ReactElement;
     isElementorLocationFooterVisible: boolean;
+    slug: string;
 }
 
-const CheckoutBox: FC<CheckoutBoxProps> = ({ title, carType, price, brokerName, carCondition, isElementorLocationFooterVisible }) => {
+const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible }) => {
     const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
     const [shareBlockShown, setShareBlockShown] = useState(false);
     const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
@@ -29,19 +30,29 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, carType, price, brokerName, 
         setCheckoutIconsUseed(!checkoutIconsUseed);
     };
 
+    useEffect(() => {
+        const windowWidth = window.innerWidth;
+
+        if (windowWidth <= 768) {
+            setCheckoutIconsUseed(true);
+            return;
+        }
+    }, []);
+
+    console.log("slug", slug)
+
     return (
         <Col md={0} lg={4} xl={4} className="">
             <Container className="checkout-container" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
                 <button
-                    className="colapse-button"
-                    onClick={toggleCheckoutIcons}>Colapse</button>
-
+                    className="colapse-button mb-3"
+                    onClick={toggleCheckoutIcons}></button>
                 <Row>
                     <Col xs={8}>
                         <h5>{title}</h5>
                         <span className="version-type-wrapper">{carType}</span>
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={4} className="text-end">
                         <h5>€ {price}</h5>
                     </Col>
                 </Row>
@@ -127,27 +138,25 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, carType, price, brokerName, 
                         </div>
 
                         <div className="share-icons-container d-flex justify-content-around">
-
                             <FacebookShareButton
-                                url={'https://www.example.com'}
+                                url={`https://pirktautomain.gatsbyjs.io/${slug}`}
                                 quote={'Ko te es vēlos pateikt?'}
-                                hashtag="#muo"
+                                hashtag="#mynewcar"
                             >
                                 <FacebookIcon size={40} round />
                             </FacebookShareButton>
 
-                            <WhatsappShareButton url={'https://www.example.com'}>
+                            <WhatsappShareButton url={`https://pirktautomain.gatsbyjs.io/${slug}`}>
                                 <WhatsappIcon size={40} round />
                             </WhatsappShareButton>
 
-                            <TelegramShareButton url={'https://www.example.com'}>
+                            <TelegramShareButton url={`https://pirktautomain.gatsbyjs.io/${slug}`}>
                                 <TelegramIcon size={40} round></TelegramIcon>
                             </TelegramShareButton>
 
                             <EmailShareButton url={'https://www.example.com'}>
                                 <EmailIcon size={40} round />
                             </EmailShareButton>
-
                         </div>
                     </div>
                 )}

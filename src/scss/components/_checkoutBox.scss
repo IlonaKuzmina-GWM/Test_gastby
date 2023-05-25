@@ -21,7 +21,7 @@
 
   .version-type-wrapper span {
     font-size: 14px;
-    margin-top: -15px;
+    margin-top: -10px;
     margin-left: -5px;
   }
 
@@ -78,9 +78,19 @@
       margin: 0 auto;
       // background-color: red;
       padding: 20px 15px;
+      box-shadow: 0 -12px 30px rgba(58, 58, 58, 0.2)!important;
 
       .colapse-button{
         display: block;
+        margin: 0 auto;
+        width: 20%;
+        height: 5px;
+        color: $gold-primary;
+        background-color: $gold-primary;
+        border: $gold-primary 2px solid;
+        border-radius: 25px;
+        // border-top: 5px;
+        // border-top-color: red;
       }
 
       .checkout-icons-container .icon-item{

@@ -2,7 +2,7 @@
 import { HeadFC, graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import React, { FC, useEffect, useState } from "react";
-import { Carousel, Col, Container, Row } from "react-bootstrap";
+import { Carousel, Col, Container, Nav, Row } from "react-bootstrap";
 import CheckoutBox from "../components/CheckoutBox";
 import ShopAutoCard from "../components/ShopAutoCard";
 import AndroidAuto from "../images/icons/AndroidAuto.svg";
@@ -10,6 +10,7 @@ import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
 import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
 import { AllWpCarNode } from "../types/allWpCarTypes";
+import Button from "../components/Button";
 
 
 
@@ -52,6 +53,12 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
             const availabilityCheckoutBoxOffSet = elementorLocationFooter.offsetTop;
             // const windowHeight = window.innerHeight;
+            const windowWidth = window.innerWidth;
+
+            if (windowWidth <= 768) {
+                setIsElementorLocationFooterVisible(false);
+                return;
+            }
 
             setIsElementorLocationFooterVisible(window.pageYOffset > availabilityCheckoutBoxOffSet - 210);
         }
@@ -115,7 +122,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                     </Col>
                 </Row>
 
-                <Row>
+                <Row className="justify-content-space-evenly">
                     <Col md={12} lg={7} xl={8}>
                         <Row className="mb-4">
                             <Carousel>
@@ -133,7 +140,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             </Carousel>
                         </Row>
 
-                        <Row className=" mb-4">
+                        <Row className=" mb-5">
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3"> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
                                 <div className="icon-wrapper">
@@ -142,7 +149,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             </Col>
                         </Row>
 
-                        <Row className="mb-4">
+                        <Row className="mb-5">
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3">Vairāk par {singleCarInformation.title} </h3>
 
@@ -153,13 +160,28 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                     {renderMainCarCategory('Gads: ', 304)}
                                     {renderMainCarCategory('Virsbūves tips: ', 249)}
                                 </Row>
+
+                                <Row>
+                                <Nav.Link href="#allFeatures">
+                                      <Button name={"Visas funkcijas un specifikācijas"} size={"small"} type={"outline"}></Button>
+                                </Nav.Link>
+                                </Row>
                             </Col>
                         </Row>
 
-                        <Row className="mb-4">
+                        <Row className="mb-5">
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3">Apraksts</h3>
-                                <div className="blog__text" dangerouslySetInnerHTML={{ __html: singleCarInformation.content }} />
+                                <div className="auto__description" dangerouslySetInnerHTML={{ __html: singleCarInformation.content }} />
+                            </Col>
+                        </Row>
+                        
+                        <Row className="mb-5" id="allFeatures">
+                            <Col className="border-top border-dark-subtle">
+                                <h3 className="mb-3">Visas funkcijas un specifikācijas</h3>
+                                <div>
+                                    Jādomā vēl ko te saņemsim no WP. 
+                                </div>
                             </Col>
                         </Row>
 
@@ -183,6 +205,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
                     <CheckoutBox
                         title={singleCarInformation.title}
+                        slug={singleCarInformation.slug}
                         carType={renderMainCarCategory('', 366)}
                         price={singleCarInformation.carInfo.carPrice.toLocaleString()}
                         brokerName={renderMainCarCategory('', 357)}

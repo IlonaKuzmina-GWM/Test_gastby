@@ -2,6 +2,26 @@
   padding-top: 40px;
   margin-top: 50px;
 
+  .auto__description {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-weight: 600;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    p + p {
+      padding-bottom: 10px;
+    }
+  }
+
   .icon-wrapper {
     background-color: $gold-primary;
     border-radius: 15px;
@@ -45,5 +65,4 @@
   .row-title {
     border: 0 2px 0 0 solid aqua;
   }
-
 }
