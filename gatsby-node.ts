@@ -43,7 +43,6 @@ exports.createPages = async ({ graphql, actions }: any) => {
   const { allWpCar } = data;
 
   const singleCarTempalte = path.resolve(`src/templates/single-car-page.tsx`);
-  const brokerPage = path.resolve("src/templates/broker-page.tsx");
 
   allWpCar.nodes.forEach((node: { slug: any }) => {
     actions.createPage({
@@ -52,4 +51,20 @@ exports.createPages = async ({ graphql, actions }: any) => {
       context: node,
     });
   });
+
+  const dealerPageTemplate = path.resolve("src/templates/broker-page.tsx");
+
+  allWpCar.nodes.forEach((node: { slug: any; databaseId: any; }) => {
+    const { slug, databaseId } = node; // Destructure the required properties
+  
+    actions.createPage({
+      path: `/dīleris/${slug}`,
+      component: dealerPageTemplate,
+      context: {
+        slug, // Pass the slug
+        databaseId, // Pass the databaseId
+      },
+    });
+  });
 };
+

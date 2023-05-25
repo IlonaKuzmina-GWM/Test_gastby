@@ -209,6 +209,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                         carType={renderMainCarCategory('', 366)}
                         price={singleCarInformation.carInfo.carPrice.toLocaleString()}
                         brokerName={renderMainCarCategory('', 357)}
+                        brokerSlug={363}
                         carCondition={renderMainCarCategory('', 202)}
                         isElementorLocationFooterVisible={isElementorLocationFooterVisible} />
                 </Row>

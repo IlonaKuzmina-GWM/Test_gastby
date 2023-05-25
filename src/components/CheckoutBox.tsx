@@ -8,6 +8,7 @@ import Button from "./Button";
 import Envelope from "../images/icons/Envelope.svg";
 import Phone from "../images/icons/Phone.svg";
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LineIcon, LineShareButton, TelegramIcon, TelegramShareButton, WhatsappIcon, WhatsappShareButton, WorkplaceIcon, WorkplaceShareButton } from "react-share";
+import { Link } from "gatsby";
 
 
 
@@ -16,12 +17,13 @@ type CheckoutBoxProps = {
     carType: React.ReactNode;
     price: number;
     brokerName: React.ReactNode;
+    brokerSlug: number;
     carCondition: React.ReactElement;
     isElementorLocationFooterVisible: boolean;
     slug: string;
 }
 
-const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible }) => {
+const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName,brokerSlug, carCondition, isElementorLocationFooterVisible }) => {
     const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
     const [shareBlockShown, setShareBlockShown] = useState(false);
     const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
@@ -71,12 +73,12 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                         <Row>
                             <Col className="btn-wrapper mt-4">
                                 <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
-                                <Nav.Link href="/">
+                                <Link to={`/dīleris/${brokerSlug}`} className="nav-link">
                                     <div className="d-flex justify-content-center align-items-center mt-2">
                                         <img className="mb-3" src={PinsBroker} width={15} height={15} alt="pin" />
                                         {brokerName}
                                     </div>
-                                </Nav.Link>
+                                </Link>
                             </Col>
                         </Row>
 
