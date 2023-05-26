@@ -16,8 +16,10 @@ type FilterCategoriesProps = {
     maxPriceRangeChangeHandler: (maxPrice: number) => void;
 }
 
-const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, filteredParamaterCounter, isCheckedProp,
-    clearFilteredValues, filteredCategoryHandler, minPriceRangeChangeHandler, maxPriceRangeChangeHandler }) => {
+const FilterCategories: FC<FilterCategoriesProps> = ({
+    subcategries, eventkey, filteredParamaterCounter, isCheckedProp,
+    clearFilteredValues, filteredCategoryHandler, minPriceRangeChangeHandler,
+    maxPriceRangeChangeHandler }) => {
     const data = useStaticQuery(graphql`
      {
       allWpCarCategory {
@@ -138,6 +140,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({ subcategries, eventkey, f
                                         type="checkbox"
                                         label={subcategory.name}
                                         value={subcategory.databaseId}
+                                        name={subcategory.databaseId}
                                         onChange={(e) => { filteredCategoryHandler(e.target.value); }}
                                     />
                                 </Form.Group>

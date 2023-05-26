@@ -11,7 +11,7 @@ type HomeProps = {
   data: any;
 };
 
-const IndexPage: React.FC<HomeProps> = ({ }) => {
+const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
   return (
     <MainLayout>
@@ -34,7 +34,7 @@ const IndexPage: React.FC<HomeProps> = ({ }) => {
             </button>
           </form>
 
-          <div className="review-pop-up">
+          {/* <div className="review-pop-up">
             <StaticImage
               style={{ position: "absolute" }}
               src={"../images/review-img.png"}
@@ -43,11 +43,27 @@ const IndexPage: React.FC<HomeProps> = ({ }) => {
             />
             <h5 className="review-name">Andris Bērziņš</h5>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro beatae error laborum.</p>
-          </div>
-
-          <TooltipBoot></TooltipBoot>
+          </div> */}
+          <TooltipBoot text="Labākie piedāvājumi vienuviet" />
 
         </div>
+
+        <div className="review-pop-up">
+          <StaticImage
+            style={{ position: "absolute" }}
+            src={"../images/review-img.png"}
+            alt={"Avatar"}
+            className={"review-avatar"}
+          />
+          <h5 className="review-name">Andris Bērziņš</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro beatae error laborum.</p>
+        </div>
+
+        <div className="car-counter d-flex align-items-center justify-content-center">
+          <h3>  {data.allWpCar.nodes.length} </h3>
+          <p>auto tavai <br /> izvēlei</p>
+        </div>
+
         <div className="white-gradient"></div>
       </section>
 
@@ -150,3 +166,12 @@ const IndexPage: React.FC<HomeProps> = ({ }) => {
 export default IndexPage;
 
 export const Head: HeadFC = () => <title>Pirkt Auto</title>;
+
+export const query = graphql`
+query AllCarsDetails {
+    allWpCar {
+    nodes {
+      slug
+    }
+  }
+}`

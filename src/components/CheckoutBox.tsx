@@ -23,7 +23,7 @@ type CheckoutBoxProps = {
     slug: string;
 }
 
-const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName,brokerSlug, carCondition, isElementorLocationFooterVisible }) => {
+const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, brokerSlug, carCondition, isElementorLocationFooterVisible }) => {
     const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
     const [shareBlockShown, setShareBlockShown] = useState(false);
     const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
@@ -41,7 +41,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
         }
     }, []);
 
-    console.log("slug", slug)
+    // console.log("slug", slug)
 
     return (
         <Col md={0} lg={4} xl={4} className="">
@@ -73,7 +73,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                         <Row>
                             <Col className="btn-wrapper mt-4">
                                 <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
-                                <Link to={`/dīleris/${brokerSlug}`} className="nav-link">
+                                <Link to={`/shop`} className="nav-link">
                                     <div className="d-flex justify-content-center align-items-center mt-2">
                                         <img className="mb-3" src={PinsBroker} width={15} height={15} alt="pin" />
                                         {brokerName}

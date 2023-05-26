@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
-const TooltipBoot = () => {
+type TooltipBootProps = {
+    text:string;
+}
+
+const TooltipBoot:FC<TooltipBootProps> = ({text}) => {
 
     const popover = (
         <Popover id="popover-basic" className='popover'>
             <Popover.Body className='text-white'>
-                Labākie piedāvājumi vienuviet
+                {text}
             </Popover.Body>
         </Popover>
     );

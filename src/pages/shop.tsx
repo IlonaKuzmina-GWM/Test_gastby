@@ -105,7 +105,7 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
                         filteredCategoryHandler={filteredCategoryHandler}
                         minPriceRangeChangeHandler={minPriceRangeChangeHandler}
                         maxPriceRangeChangeHandler={maxPriceRangeChangeHandler}
-                        filteredParamaterCounter={filteredValues.length}/>
+                        filteredParamaterCounter={filteredValues.length} />
                 </div>
 
                 <Container className="auto-cards-container px-1 p-3">
@@ -122,7 +122,14 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
                                     title={car.title}
                                     price={car.carInfo.carPrice} />
                             </Col>
-                        ))}
+                        ))
+                        }
+                    </Row>
+
+                    <Row xs={12} className="g-4 mt-5">
+                        {filteredCars.length < 1 && <div className="d-flex justify-content-center align-items-center">
+                            <h3 className="text-center">Diemžēl pēc izvēlētiem kriterijiem nekas nav atrasts</h3>
+                        </div>}
                     </Row>
                 </Container>
             </div>
