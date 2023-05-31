@@ -1,14 +1,44 @@
 .header {
+background-color: transparent;
+  // background: rgba(255, 255, 255, 0.2);
+  // backdrop-filter: blur(10px);
   a,
   .link {
-    color: $white;
+    color: $dark;
     padding: 15px 30px;
     text-decoration: none;
     font-weight: 600;
+    position: relative;
   }
-}
 
-.header_logo {
+  .link::before {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-color: $gold_primary; 
+    transition: width 0.3s ease;
+  }
+  
+  .link:hover::before {
+    width: 100%;
+  }
+
+  .header_logo {
   width: 100%;
   max-width: 140px;
+}
+}
+
+
+.header.scrolled {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: $white;
+
+  a{
+    color:$white;
+  }
 }
