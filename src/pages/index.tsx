@@ -10,7 +10,7 @@ import CarCarousel from "../components/CarCarousel";
 import { Col, Row } from "react-bootstrap";
 import ShopAutoCard from "../components/ShopAutoCard";
 
-type Car = {
+export type Car = {
   id: string;
   title: string;
   slug: string;
@@ -40,7 +40,6 @@ type HomeProps = {
 
 export type SearchResult = Car[];
 
-// Define the type for the search function
 type SearchFunction = (
   query: string,
   cars: Car[]
@@ -50,17 +49,15 @@ const searchCars: SearchFunction = (query, cars) => {
   const normalizedQuery = query.toLowerCase().trim();
 
   return cars.filter((car) => {
-    // Search by car title
+
     if (car.title.toLowerCase().includes(normalizedQuery)) {
       return true;
     }
 
-    // Search by car price
     if (car.carInfo.carPrice.toString().includes(normalizedQuery)) {
       return true;
     }
 
-    // Search by car category name
     if (
       car.carCategories.nodes.some(
         (category) => category.name.toLowerCase().includes(normalizedQuery)
@@ -88,10 +85,9 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
     event.preventDefault();
     const results = searchCars(searchQuery, data.allWpCar.nodes);
     setSearchResults(results);
-    // console.log("results", results)
     navigate('/shop', {
       state: { searchResults: results },
-    } ); // Redirect to the shop page and pass searchResults as state
+    });
   };
 
   return (

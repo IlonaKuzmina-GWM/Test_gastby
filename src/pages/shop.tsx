@@ -5,10 +5,9 @@ import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 import { graphql } from "gatsby";
 import { AllWpCarNode, FetchingData } from "../types/allWpCarTypes";
-import { SearchResult } from ".";
+import { Car, SearchResult } from ".";
 
 type ShopProps = {
-
     data: FetchingData;
     location: {
         state: {
@@ -18,12 +17,12 @@ type ShopProps = {
 };
 
 const ShopPage: FC<ShopProps> = ({ location, data }) => {
-    const searchResults = location.state?.searchResults || [];
     const allWpCars = data.allWpCar.nodes;
     const [filteredValues, setFilteredValues] = useState<string[]>([])
     const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
+    const [searchResults, setSearchResults] = useState<SearchResult>(location.state?.searchResults || []);
 
     const findDefaultMinAndMaxPrice = () => {
         const prices = allWpCars.map((car: AllWpCarNode) => car.carInfo.carPrice);
@@ -42,6 +41,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setFilteredValues([]);
         setMinPrice(0);
         setMaxPrice(0);
+        setSearchResults([]);
     };
 
     const filteredCategoryHandler = (categoryId: string) => {
@@ -78,7 +78,21 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
     });
 
-    const carsToRender = searchResults.length > 0 ? searchResults : filteredCars;
+    const searchResultsFilteredCars = searchResults .filter((car: Car) => {
+        if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
+            return true;
+        }
+
+        const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
+
+        const allSelectedCategoriesMatch = filteredValues.every((categoryId) => {
+            return carCategoryIds.includes(categoryId);
+        });
+
+        return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
+    });
+
+    const carsToRender = searchResults.length > 0 ? searchResultsFilteredCars : filteredCars;
 
     return (
         <MainLayout>

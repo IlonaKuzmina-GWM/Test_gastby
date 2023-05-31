@@ -19,7 +19,7 @@ type CarCategories = {
 type CarCategoriesNode = {
     name: string;
     // databaseId: number | null;
-    databaseId: any;
+    databaseId?: any;
     parentDatabaseId: number | null;
 }
 
