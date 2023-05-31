@@ -5,12 +5,20 @@ import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 import { graphql } from "gatsby";
 import { AllWpCarNode, FetchingData } from "../types/allWpCarTypes";
+import { SearchResult } from ".";
 
 type ShopProps = {
-    data: FetchingData;
-}
 
-const ShopPage: FC<ShopProps> = ({ data }) => {
+    data: FetchingData;
+    location: {
+        state: {
+            searchResults: SearchResult;
+        };
+    };
+};
+
+const ShopPage: FC<ShopProps> = ({ location, data }) => {
+    const searchResults = location.state?.searchResults || [];
     const allWpCars = data.allWpCar.nodes;
     const [filteredValues, setFilteredValues] = useState<string[]>([])
     const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
@@ -56,27 +64,6 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
         setMaxPrice(maxPri);
     }
 
-    // const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
-    //     if (filteredValues.length === 0) {
-    //         return true;
-    //     }
-
-    //     const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
-
-    //     const allSelectedCategoriesMatch = filteredValues.every((categoryId) => {
-    //         return carCategoryIds.includes(categoryId);
-    //     });
-
-    //     return allSelectedCategoriesMatch;
-
-    //     // for (let category of car.carCategories.nodes) {
-    //     //     if (filteredValues.includes(category.databaseId?.toString())) {
-    //     //         return true;
-    //     //     }
-    //     // }
-    //     // return false;
-    // });
-
     const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
         if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
             return true;
@@ -91,6 +78,7 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
         return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
     });
 
+    const carsToRender = searchResults.length > 0 ? searchResults : filteredCars;
 
     return (
         <MainLayout>
@@ -114,7 +102,7 @@ const ShopPage: FC<ShopProps> = ({ data }) => {
                     </Row>
 
                     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
-                        {filteredCars.map((car: any) => (
+                        {carsToRender.map((car: any) => (
                             <Col key={car.id}>
                                 <ShopAutoCard
                                     slug={car.slug}

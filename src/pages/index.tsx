@@ -1,17 +1,98 @@
 import * as React from "react";
-import { graphql, HeadFC, Link } from "gatsby";
+import { graphql, HeadFC, Link, navigate } from "gatsby";
+import { useLocation } from '@reach/router';
 import MainLayout from "../layouts/MainLayout";
 import Button from "../components/Button";
 import { StaticImage } from "gatsby-plugin-image";
 import HomeAutoCard from "../components/HomeAutoCard";
 import TooltipBoot from "../components/Tooltip";
 import CarCarousel from "../components/CarCarousel";
+import { Col, Row } from "react-bootstrap";
+import ShopAutoCard from "../components/ShopAutoCard";
 
-type HomeProps = {
-  data: any;
+type Car = {
+  id: string;
+  title: string;
+  slug: string;
+  featuredImage: {
+    node: {
+      gatsbyImage: string;
+    };
+  };
+  carInfo: {
+    carPrice: number;
+  };
+  carCategories: {
+    nodes: {
+      name: string;
+      databaseId: number;
+    }[];
+  };
 };
 
+type HomeProps = {
+  data: {
+    allWpCar: {
+      nodes: Car[];
+    };
+  };
+};
+
+export type SearchResult = Car[];
+
+// Define the type for the search function
+type SearchFunction = (
+  query: string,
+  cars: Car[]
+) => SearchResult;
+
+const searchCars: SearchFunction = (query, cars) => {
+  const normalizedQuery = query.toLowerCase().trim();
+
+  return cars.filter((car) => {
+    // Search by car title
+    if (car.title.toLowerCase().includes(normalizedQuery)) {
+      return true;
+    }
+
+    // Search by car price
+    if (car.carInfo.carPrice.toString().includes(normalizedQuery)) {
+      return true;
+    }
+
+    // Search by car category name
+    if (
+      car.carCategories.nodes.some(
+        (category) => category.name.toLowerCase().includes(normalizedQuery)
+      )
+    ) {
+      return true;
+    }
+
+    return false;
+  });
+};
+
+
 const IndexPage: React.FC<HomeProps> = ({ data }) => {
+  type LocationState = {
+    searchResults?: SearchResult;
+  };
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchResults, setSearchResults] = React.useState<SearchResult>([]);
+
+  const location = useLocation();
+  const results = location.state?.searchResults || [];
+
+  const handleSearch = (event: React.FormEvent) => {
+    event.preventDefault();
+    const results = searchCars(searchQuery, data.allWpCar.nodes);
+    setSearchResults(results);
+    // console.log("results", results)
+    navigate('/shop', {
+      state: { searchResults: results },
+    } ); // Redirect to the shop page and pass searchResults as state
+  };
 
   return (
     <MainLayout>
@@ -27,25 +108,19 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             piedāvājuma portāls</h1>
           <p>atrodi sev piemērotu auto ātri, vienkārši un
             vēl papildus bla bla bla :D </p>
-          <form className="hero-search-form" action="">
-            <input type="search" placeholder="Meklēt auto" className="hero-search-input" />
+          <form className="hero-search-form" action="" onSubmit={handleSearch}>
+            <input
+              type="search"
+              placeholder="Meklēt auto"
+              className="hero-search-input"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)} />
             <button type="submit">
               <StaticImage src={"../images/search.png"} alt={"Search"} />
             </button>
           </form>
 
-          {/* <div className="review-pop-up">
-            <StaticImage
-              style={{ position: "absolute" }}
-              src={"../images/review-img.png"}
-              alt={"Avatar"}
-              className={"review-avatar"}
-            />
-            <h5 className="review-name">Andris Bērziņš</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro beatae error laborum.</p>
-          </div> */}
           <TooltipBoot text="Labākie piedāvājumi vienuviet" />
-
         </div>
 
         <div className="review-pop-up">
@@ -169,9 +244,32 @@ export const Head: HeadFC = () => <title>Pirkt Auto</title>;
 
 export const query = graphql`
 query AllCarsDetails {
-    allWpCar {
+  allWpCar {
     nodes {
+      carCategories {
+        nodes {
+          name
+          databaseId
+        }
+      }
       slug
+      title
+      id
+      featuredImage {
+        node {
+          gatsbyImage(
+            cropFocus: CENTER
+            fit: COVER
+            formats: WEBP
+            placeholder: BLURRED
+            width: 300
+            height: 200
+          )
+        }
+      }
+      carInfo {
+        carPrice
+      }
     }
   }
 }`
