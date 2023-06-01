@@ -10,8 +10,7 @@ import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
 import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
 import { Car } from "../types/allWpCarTypes";
-
-
+import ImageGalleryPopUp from "../components/ImageGalleryPopUp";
 
 type SingleCarProps = {
     pageContext: Car;
@@ -37,11 +36,12 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
       }
     }
   `);
-
     const [isElementorLocationFooterVisible, setIsElementorLocationFooterVisible] = useState(false);
     const singleCarInformation = pageContext;
     const singleCarGallery = singleCarInformation.carInfo.carGallery;
     const countImagesInGallery = singleCarGallery.length;
+    const [showPopup, setShowPopUp] = useState(false);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
     useEffect(() => {
         const setCheckoutBoxVisibility = () => {
@@ -54,7 +54,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
             // const windowHeight = window.innerHeight;
             const windowWidth = window.innerWidth;
 
-            if (windowWidth <= 768) {
+            if (windowWidth <= 990) {
                 setIsElementorLocationFooterVisible(false);
                 return;
             }
@@ -112,6 +112,12 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         )
     }
 
+    const openPopUp = (index: number) => {
+        setSelectedImageIndex(index);
+        setShowPopUp(true);
+        console.log("index", index)
+    }
+
     return (
         <MainLayout>
             <Container className="single-car-container">
@@ -126,7 +132,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                         <Row className="mb-4">
                             <Carousel>
                                 {singleCarGallery.map((image: any, index: number) => (
-                                    <Carousel.Item key={index}>
+                                    <Carousel.Item key={index} onClick={() => openPopUp(index)}>
                                         <GatsbyImage className="item" image={image.gatsbyImage} alt={"Auto"} />
                                         <Carousel.Caption className="carousel-caption">
                                             <span className="photo-counter">
@@ -211,6 +217,14 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                         carCondition={renderMainCarCategory('', 202)}
                         isElementorLocationFooterVisible={isElementorLocationFooterVisible} />
                 </Row>
+
+                {showPopup && (
+                    <ImageGalleryPopUp
+                        images={singleCarGallery}
+                        selectedIndex={selectedImageIndex}
+                        onClose={() => setShowPopUp(false)}
+                    />
+                )}
             </Container>
         </MainLayout>
     );

@@ -1,3 +1,4 @@
+import { IGatsbyImageData } from "gatsby-plugin-image";
 
 export type CarCategory = {
   name: string;
@@ -7,16 +8,12 @@ export type CarCategory = {
 
 type FeaturedImage = {
   node: {
-    gatsbyImage: {
-      src: string;
-    };
+    gatsbyImage: IGatsbyImageData;
   };
 }
 
 export type CarGalleryImage = {
-  gatsbyImage: {
-    src: string;
-  };
+  gatsbyImage: IGatsbyImageData
 }
 
 type CarInfo = {
