@@ -2,6 +2,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React, { FC, useState } from 'react';
 import { Col, Form, FormControl, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
+import { CarCategory } from '../types/allWpCategoryTypes';
 import Button from './Button';
 
 
@@ -49,33 +50,22 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     const filters = data.allWpCarCategory.nodes;
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
-    // const [isChecked, setIsChecked] = useState(isCheckedProp);
 
     const handleMinPriceChange = (e: { target: { value: string; }; }) => {
         setMinPrice(parseInt(e.target.value));
-        // call the handlePriceRangeChange function to send the updated min and max values to the parent component
         minPriceRangeChangeHandler(parseInt(e.target.value));
     };
 
     const handleMaxPriceChange = (e: { target: { value: string; }; }) => {
         setMaxPrice(parseInt(e.target.value));
-        // call the handlePriceRangeChange function to send the updated min and max values to the parent component
         maxPriceRangeChangeHandler(parseInt(e.target.value));
     };
-
-    // const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: { wpParent: { node: { databaseId: string | number; }; }; }) => {
-    //     if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
-    //         unique[category.wpParent.node.databaseId] = category
-    //     }
-    //     return unique;
-    // }, {});
-
 
     const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: {
         wpParent: {
             node: {
                 [x: string]: any; databaseId: string | number;
-            }; wpChildren: { nodes: any[]; };
+            }; wpChildren: { nodes: CarCategory[]; };
         };
     }) => {
         if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
@@ -87,7 +77,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                         ...category.wpParent.node,
                         wpChildren: {
                             ...category.wpParent.node.wpChildren,
-                            nodes: category.wpParent.node.wpChildren.nodes.map((node: any) => ({
+                            nodes: category.wpParent.node.wpChildren.nodes.map((node: CarCategory) => ({
                                 ...node,
                                 isChecked: false
                             }))
@@ -129,18 +119,18 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                     </Form>
                 </Col>
             </Row>
-            {Object.values(uniqueCategories).map((category: any, index: any) => (
+            {Object.values(uniqueCategories).map((category: any, index: number) => (
                 <Accordion.Item key={index} eventKey={index.toString()}>
                     <Accordion.Header className='accordion-title'>{category.wpParent.node.name}</Accordion.Header>
                     <Accordion.Body>
-                        {category.wpParent.node.wpChildren.nodes.map((subcategory: any, index: any) => (
+                        {category.wpParent.node.wpChildren.nodes.map((subcategory: CarCategory, index: number) => (
                             <Form key={index}>
                                 <Form.Group className="" controlId="formBasicEmail">
                                     <Form.Check
                                         type="checkbox"
                                         label={subcategory.name}
                                         value={subcategory.databaseId}
-                                        name={subcategory.databaseId}
+                                        name={subcategory.databaseId.toString()}
                                         onChange={(e) => { filteredCategoryHandler(e.target.value); }}
                                     />
                                 </Form.Group>

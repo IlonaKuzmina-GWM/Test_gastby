@@ -1,37 +1,33 @@
-export type AllWpCarCategory = {
-    nodes: AllWpCarCategoryNode[];
+type CarIdNumbers = {
+  databaseId: number;
 }
 
-type AllWpCarCategoryNode = {
-    wpParent: WpParent | null;
+export type CarCategory = {
+  name: string;
+  slug: string;
+  databaseId: number;
+  cars: {
+    nodes: CarIdNumbers[];
+  };
 }
 
-type WpParent = {
-    node: WpParentNode;
-}
-
-type WpParentNode = {
-    name:       string;
-    wpChildren: WpChildren;
+export type WpParent = {
+  node: {
+    name: string;
+    wpChildren: {
+      nodes: CarCategory[];
+    };
     databaseId: number;
+  };
 }
 
-type WpChildren = {
-    nodes: WpChildrenNode[];
-}
-
-type WpChildrenNode = {
-    name:       string;
-    slug:       string;
-    databaseId: number;
-    cars:       Cars;
-}
-
-type Cars = {
-    nodes: CarsNode[];
-}
-
-type CarsNode = {
-    databaseId: number;
+export type AllWpCarCategoryResult = {
+  data: {
+    allWpCarCategory: {
+      nodes: {
+        wpParent: WpParent;
+      }[];
+    };
+  };
 }
 

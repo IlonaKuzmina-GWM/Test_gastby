@@ -1,14 +1,14 @@
+import { Link } from "gatsby";
 import React, { FC, useEffect, useState } from "react";
-import { Col, Container, Dropdown, Nav, Row } from "react-bootstrap";
+import { Col, Container, Dropdown, Row } from "react-bootstrap";
+import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, TelegramIcon, TelegramShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
 import ArrowLeft from "../images/icons/ArrowLeft.svg";
+import Envelope from "../images/icons/Envelope.svg";
+import Phone from "../images/icons/Phone.svg";
 import PinsBroker from "../images/icons/PinsBroker.svg";
 import Questions from "../images/icons/Questions.svg";
 import Share from "../images/icons/Share.svg";
 import Button from "./Button";
-import Envelope from "../images/icons/Envelope.svg";
-import Phone from "../images/icons/Phone.svg";
-import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LineIcon, LineShareButton, TelegramIcon, TelegramShareButton, WhatsappIcon, WhatsappShareButton, WorkplaceIcon, WorkplaceShareButton } from "react-share";
-import { Link } from "gatsby";
 
 
 
@@ -40,8 +40,6 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
             return;
         }
     }, []);
-
-    // console.log("slug", slug)
 
     return (
         <Col md={0} lg={4} xl={4} className="">

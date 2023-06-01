@@ -1,21 +1,20 @@
-
 import { HeadFC, graphql, useStaticQuery } from "gatsby";
-import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 import React, { FC, useEffect, useState } from "react";
 import { Carousel, Col, Container, Nav, Row } from "react-bootstrap";
+import Button from "../components/Button";
 import CheckoutBox from "../components/CheckoutBox";
 import ShopAutoCard from "../components/ShopAutoCard";
 import AndroidAuto from "../images/icons/AndroidAuto.svg";
 import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
 import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
-import { AllWpCarNode } from "../types/allWpCarTypes";
-import Button from "../components/Button";
+import { Car } from "../types/allWpCarTypes";
 
 
 
 type SingleCarProps = {
-    pageContext: any;
+    pageContext: Car;
 };
 
 const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
@@ -126,11 +125,10 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                     <Col md={12} lg={7} xl={8}>
                         <Row className="mb-4">
                             <Carousel>
-                                {singleCarGallery.map((image: { gatsbyImage: IGatsbyImageData }, index: number) => (
+                                {singleCarGallery.map((image: any, index: number) => (
                                     <Carousel.Item key={index}>
                                         <GatsbyImage className="item" image={image.gatsbyImage} alt={"Auto"} />
                                         <Carousel.Caption className="carousel-caption">
-                                            <span>{singleCarGallery.lenght}</span>
                                             <span className="photo-counter">
                                                 {index + 1}/{countImagesInGallery}
                                             </span>
@@ -162,9 +160,9 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 </Row>
 
                                 <Row>
-                                <Nav.Link href="#allFeatures">
-                                      <Button name={"Visas funkcijas un specifikācijas"} size={"small"} type={"outline"}></Button>
-                                </Nav.Link>
+                                    <Nav.Link href="#allFeatures">
+                                        <Button name={"Visas funkcijas un specifikācijas"} size={"small"} type={"outline"}></Button>
+                                    </Nav.Link>
                                 </Row>
                             </Col>
                         </Row>
@@ -175,12 +173,12 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 <div className="auto__description" dangerouslySetInnerHTML={{ __html: singleCarInformation.content }} />
                             </Col>
                         </Row>
-                        
+
                         <Row className="mb-5" id="allFeatures">
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3">Visas funkcijas un specifikācijas</h3>
                                 <div>
-                                    Jādomā vēl ko te saņemsim no WP. 
+                                    Jādomā vēl ko te saņemsim no WP.
                                 </div>
                             </Col>
                         </Row>
@@ -190,7 +188,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 <h3 className="mb-3">Rekomendējam tieši tev</h3>
                             </Col>
                             <Row md={3}>
-                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: AllWpCarNode) => (
+                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: Car) => (
                                     <Col className="mb-3">
                                         <ShopAutoCard
                                             gatsbyImageData={car.featuredImage.node.gatsbyImage}
@@ -207,7 +205,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                         title={singleCarInformation.title}
                         slug={singleCarInformation.slug}
                         carType={renderMainCarCategory('', 366)}
-                        price={singleCarInformation.carInfo.carPrice.toLocaleString()}
+                        price={singleCarInformation.carInfo.carPrice}
                         brokerName={renderMainCarCategory('', 357)}
                         brokerSlug={363}
                         carCondition={renderMainCarCategory('', 202)}

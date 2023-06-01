@@ -1,49 +1,19 @@
-import * as React from "react";
-import { graphql, HeadFC, Link, navigate } from "gatsby";
 import { useLocation } from '@reach/router';
-import MainLayout from "../layouts/MainLayout";
-import Button from "../components/Button";
+import { graphql, HeadFC, Link, navigate } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import HomeAutoCard from "../components/HomeAutoCard";
-import TooltipBoot from "../components/Tooltip";
+import * as React from "react";
+import Button from "../components/Button";
 import CarCarousel from "../components/CarCarousel";
-import { Col, Row } from "react-bootstrap";
-import ShopAutoCard from "../components/ShopAutoCard";
+import TooltipBoot from "../components/Tooltip";
+import MainLayout from "../layouts/MainLayout";
+import { Car, MyQueryResult } from "../types/allWpCarTypes";
 
-export type Car = {
-  id: string;
-  title: string;
-  slug: string;
-  featuredImage: {
-    node: {
-      gatsbyImage: string;
-    };
-  };
-  carInfo: {
-    carPrice: number;
-  };
-  carCategories: {
-    nodes: {
-      name: string;
-      databaseId: number;
-    }[];
-  };
-};
-
-type HomeProps = {
-  data: {
-    allWpCar: {
-      nodes: Car[];
-    };
-  };
-};
-
-export type SearchResult = Car[];
+// export type SearchResult = Car[];
 
 type SearchFunction = (
   query: string,
   cars: Car[]
-) => SearchResult;
+) => Car[];
 
 const searchCars: SearchFunction = (query, cars) => {
   const normalizedQuery = query.toLowerCase().trim();
@@ -60,7 +30,19 @@ const searchCars: SearchFunction = (query, cars) => {
 
     if (
       car.carCategories.nodes.some(
-        (category) => category.name.toLowerCase().includes(normalizedQuery)
+        (category) => {
+          const categoryName = category.name.toLowerCase();
+
+          return categoryName.includes(normalizedQuery) && categoryName !== "jauns/mazlietots";
+        }
+      )
+    ) {
+      return true;
+    }
+
+    if (
+      car.carCategories.nodes.some(
+        (category) => category.databaseId.toString().includes(normalizedQuery)
       )
     ) {
       return true;
@@ -70,20 +52,31 @@ const searchCars: SearchFunction = (query, cars) => {
   });
 };
 
+type HomeProps = {
+  data: MyQueryResult;
+};
 
 const IndexPage: React.FC<HomeProps> = ({ data }) => {
   type LocationState = {
-    searchResults?: SearchResult;
+    searchResults?: Car[];
   };
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState<SearchResult>([]);
+  const [searchResults, setSearchResults] = React.useState<Car[]>([]);
 
   const location = useLocation();
-  const results = location.state?.searchResults || [];
+  // const results = location.state?.searchResults || [];
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
     const results = searchCars(searchQuery, data.allWpCar.nodes);
+    setSearchResults(results);
+    navigate('/shop', {
+      state: { searchResults: results },
+    });
+  };
+
+  const handleNavigateToShopFilteredCarNewOrUsed = (type: number) => {
+    const results = searchCars(type.toString(), data.allWpCar.nodes);
     setSearchResults(results);
     navigate('/shop', {
       state: { searchResults: results },
@@ -184,14 +177,14 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
         <p className="section-text">make your home so comfortable with refreshing plants</p>
 
         <div className="row justify-content-between px-3 mt-5 first-items-container">
-          <div className="d-flex item col-md-7 mb-5">
+          <div className="d-flex item col-md-7 mb-5 item-link" onClick={() => handleNavigateToShopFilteredCarNewOrUsed(205)}>
             <StaticImage
               style={{ position: "absolute" }}
               src={"../images/1.jpg"}
               alt={"image"}
               className={"item-image"}
             />
-            <Link to="/shop" className=""></Link>
+
             <p>Jauni auto</p>
           </div>
           <div className="d-flex item col-md-4 mb-5">
@@ -210,14 +203,13 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
               alt={"image"}
               className={"item-image"}
             /></div>
-          <div className="d-flex item col-md-7 mb-5">
+          <div className="d-flex item col-md-7 mb-5 item-link" onClick={() => handleNavigateToShopFilteredCarNewOrUsed(208)}>
             <StaticImage
               style={{ position: "absolute" }}
               src={"../images/4.jpg"}
               alt={"image"}
               className={"item-image"}
             />
-            <Link to="/shop"></Link>
             <p>Mazlietoti auto</p>
           </div>
         </div>

@@ -1,17 +1,16 @@
+import { graphql } from "gatsby";
 import React, { FC, useEffect, useState } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
-import { graphql } from "gatsby";
-import { AllWpCarNode, FetchingData } from "../types/allWpCarTypes";
-import { Car, SearchResult } from ".";
+import { Car, MyQueryResult } from "../types/allWpCarTypes";
 
 type ShopProps = {
-    data: FetchingData;
+    data: MyQueryResult;
     location: {
         state: {
-            searchResults: SearchResult;
+            searchResults: Car[];
         };
     };
 };
@@ -22,10 +21,10 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
-    const [searchResults, setSearchResults] = useState<SearchResult>(location.state?.searchResults || []);
+    const [searchResults, setSearchResults] = useState<Car[]>(location.state?.searchResults || []);
 
     const findDefaultMinAndMaxPrice = () => {
-        const prices = allWpCars.map((car: AllWpCarNode) => car.carInfo.carPrice);
+        const prices = allWpCars.map((car: Car) => car.carInfo.carPrice);
         const minDefaultPrice = Math.min(...prices);
         const maxDefaultPrice = Math.max(...prices);
 
@@ -64,7 +63,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setMaxPrice(maxPri);
     }
 
-    const filteredCars = allWpCars.filter((car: AllWpCarNode) => {
+    const filteredCars = allWpCars.filter((car: Car) => {
         if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
             return true;
         }
@@ -78,7 +77,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
     });
 
-    const searchResultsFilteredCars = searchResults .filter((car: Car) => {
+    const searchResultsFilteredCars = searchResults.filter((car: Car) => {
         if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
             return true;
         }
@@ -116,7 +115,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                     </Row>
 
                     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
-                        {carsToRender.map((car: any) => (
+                        {carsToRender.map((car: Car) => (
                             <Col key={car.id}>
                                 <ShopAutoCard
                                     slug={car.slug}

@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
-import "../scss/index.scss";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import "../scss/index.scss";
 
 type MainLayoutProps = {
     children?: ReactNode;
