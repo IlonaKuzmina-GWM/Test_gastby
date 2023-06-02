@@ -1,60 +1,122 @@
-import { StaticImage } from "gatsby-plugin-image";
-import React, { useEffect, useState } from "react";
-// import OwlCarousel from 'react-owl-carousel';
-import HomeAutoCard from "./HomeAutoCard";
+import { graphql, useStaticQuery } from "gatsby";
+import React from "react";
+import { Carousel, Col } from "react-bootstrap";
+import { Car } from "../types/allWpCarTypes";
 import ShopAutoCard from "./ShopAutoCard";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
+import { Pagination } from "swiper";
+
 const CarCarousel = () => {
-    const [carusel, setCarusel] = useState(false)
-
-    useEffect(() => {
-        setCarusel(true)
-    }, [carusel]);
-
-    const responsiveOptions = {
-        0: {
-            items: 1,
-            stagePadding: 20,
-            dots: true
-        },
-        768: {
-            items: 1,
-            stagePadding: 100
-        },
-        1024: {
-            items: 2,
-            stagePadding: 100
-        },
-        1200: {
-            items: 3,
-            stagePadding: 150
+    const carouselCardsData = useStaticQuery(graphql`
+    {
+      allWpCar {
+        nodes {
+          slug
+          title
+          id
+          featuredImage {
+            node {
+              gatsbyImage(
+                cropFocus: CENTER
+                fit: COVER
+                formats: WEBP
+                placeholder: BLURRED
+                width: 300
+                height: 200
+              )
+            }
+          }
+          carInfo {
+            carPrice
+          }
         }
-    };
+      }
+    }
+  `);
+
 
     return (
-        <div className="car-carousel-container">
-            <div className='container-fluid' >
-                {/* {carusel ? <OwlCarousel
-                    responsive={responsiveOptions}
-                    className="owl-theme"
-                    loop
-                    margin={8}
-                    center
-                    dots={false}>
+        // <div className="car-carousel-container">
+        //     <Carousel>
+        //         {carouselCardsData.allWpCar.nodes.map((car: Car) => (
+        //             <Carousel.Item key={car.id}>
+        //                 <Col>
+        //                     <ShopAutoCard
+        //                         slug={car.slug}
+        //                         gatsbyImageData={car.featuredImage.node.gatsbyImage}
+        //                         title={car.title}
+        //                         price={car.carInfo.carPrice}
+        //                     />
+        //                 </Col>
+        //             </Carousel.Item>
+        //         ))}
+        //     </Carousel>
+        // </div>
+        //     <>
+        //     <Swiper
+        //       slidesPerView={1}
+        //       spaceBetween={10}
+        //       pagination={{
+        //         clickable: true,
+        //       }}
+        //       breakpoints={{
+        //         "@0.00": {
+        //           slidesPerView: 1,
+        //           spaceBetween: 10,
+        //         },
+        //         "@0.75": {
+        //           slidesPerView: 2,
+        //           spaceBetween: 20,
+        //         },
+        //         "@1.00": {
+        //           slidesPerView: 3,
+        //           spaceBetween: 40,
+        //         },
+        //         "@1.50": {
+        //           slidesPerView: 4,
+        //           spaceBetween: 50,
+        //         },
+        //       }}
+        //       modules={[Pagination]}
+        //       className="mySwiper"
+        //     >
+        //       <SwiperSlide>Slide 1</SwiperSlide>
+        //       <SwiperSlide>Slide 2</SwiperSlide>
+        //       <SwiperSlide>Slide 3</SwiperSlide>
+        //       <SwiperSlide>Slide 4</SwiperSlide>
+        //       <SwiperSlide>Slide 5</SwiperSlide>
+        //       <SwiperSlide>Slide 6</SwiperSlide>
+        //       <SwiperSlide>Slide 7</SwiperSlide>
+        //       <SwiperSlide>Slide 8</SwiperSlide>
+        //       <SwiperSlide>Slide 9</SwiperSlide>
+        //     </Swiper>
+        //   </>
 
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 1"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 2"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 3"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 4"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 5"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 6"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 7"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 8"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 9"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                    <ShopAutoCard imageUrl={"../images/Escultures.png"} title={"Good auto 10"} price={1500} handleClick={() => { console.log("card4") }}></ShopAutoCard>
-                </OwlCarousel> : null} */}
-            </div>
-        </div>
+        <Swiper
+            spaceBetween={50}
+            slidesPerView={3}
+            onSlideChange={() => console.log('slide change')}
+            onSwiper={(swiper) => console.log(swiper)}
+        >
+            {carouselCardsData.allWpCar.nodes.map((car: Car) => (
+                <SwiperSlide key={car.id}>
+                    <Col>
+                        <ShopAutoCard
+                            slug={car.slug}
+                            gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                            title={car.title}
+                            price={car.carInfo.carPrice}
+                        />
+                    </Col>
+                </SwiperSlide>
+            ))}
+        </Swiper>
     );
 }
 
