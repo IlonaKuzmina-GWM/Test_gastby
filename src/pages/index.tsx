@@ -6,14 +6,11 @@ import Button from "../components/Button";
 import TooltipBoot from "../components/Tooltip";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
-
-import ShopAutoCard from '../components/ShopAutoCard';
-
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
+import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+
 import HomeAutoCard from '../components/HomeAutoCard';
 
 
@@ -177,32 +174,22 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
         </div>
 
         <div className="auto-card-container">
-          {/* <CarCarousel 
-          title={undefined} 
-          price={undefined} 
-          handleClick={undefined} 
-          gatsbyImage
-          slug={undefined}></CarCarousel>*/}
-
           <Swiper
-            spaceBetween={50}
-            slidesPerView={4}
+            spaceBetween={30}
+            slidesPerView={"auto"}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
+
+            modules={[Pagination]}
           >
             {data.allWpCar.nodes.map((car: Car) => (
               <SwiperSlide key={car.id}>
-                {/* <ShopAutoCard
-                  slug={car.slug}
-                  gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
-                  title={car.title}
-                  price={car.carInfo.carPrice}
-                /> */}
-
                 <HomeAutoCard
                   gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
                   title={car.title}
-                  price={car.carInfo.carPrice}></HomeAutoCard>
+                  price={car.carInfo.carPrice}
+                  slug={car.slug}
+                ></HomeAutoCard>
               </SwiperSlide>
             ))}
           </Swiper>

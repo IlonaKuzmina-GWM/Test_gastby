@@ -1,6 +1,6 @@
-import { GatsbyImage, IGatsbyImageData, StaticImage } from "gatsby-plugin-image";
+import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import React, { FC, ReactNode } from "react";
-import { Card, CardImg, ListGroup, ListGroupItem, Nav } from "react-bootstrap";
+import { Card, ListGroup, ListGroupItem, Nav } from "react-bootstrap";
 
 type HomeAutoCardProps = {
     gatsbyImageData: IGatsbyImageData;
@@ -8,14 +8,15 @@ type HomeAutoCardProps = {
     price: number;
     children?: ReactNode;
     labels?: ReactNode;
+    slug?: string;
 }
 
-const HomeAutoCard: FC<HomeAutoCardProps> = ({ labels, gatsbyImageData, title, price, children }) => {
+const HomeAutoCard: FC<HomeAutoCardProps> = ({ labels, gatsbyImageData, title, price, children, slug }) => {
 
     return (
         <div className="home-auto-card-wrapper">
             <Card border="light" style={{ width: '' }}>
-                <Nav.Link href="/shop">
+                <Nav.Link href={"/" + slug} >
                     <GatsbyImage image={gatsbyImageData} alt={title} className="home-auto-card-image" />
 
                     <Card.Body className="auto-card-content">
@@ -28,8 +29,6 @@ const HomeAutoCard: FC<HomeAutoCardProps> = ({ labels, gatsbyImageData, title, p
                 </Nav.Link>
             </Card>
         </div>
-
-
     );
 }
 
