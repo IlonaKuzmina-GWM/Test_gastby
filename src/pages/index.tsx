@@ -3,10 +3,18 @@ import { graphql, HeadFC, Link, navigate } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
 import Button from "../components/Button";
-import CarCarousel from "../components/CarCarousel";
 import TooltipBoot from "../components/Tooltip";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
+
+import ShopAutoCard from '../components/ShopAutoCard';
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
 
 // export type SearchResult = Car[];
 
@@ -168,8 +176,33 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
         </div>
 
         <div className="auto-card-container">
-          <CarCarousel></CarCarousel>
+          {/* <CarCarousel 
+          title={undefined} 
+          price={undefined} 
+          handleClick={undefined} 
+          gatsbyImage
+          slug={undefined}></CarCarousel>*/}
+
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={3}
+            onSlideChange={() => console.log('slide change')}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {data.allWpCar.nodes.map((car: Car) => (
+              <SwiperSlide key={car.id}>
+                <ShopAutoCard
+                  slug={car.slug}
+                  gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                  title={car.title}
+                  price={car.carInfo.carPrice}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
+
+
       </section>
 
       <section className="one-more-section container-lg">
@@ -250,8 +283,7 @@ query AllCarsDetails {
             fit: COVER
             formats: WEBP
             placeholder: BLURRED
-            width: 300
-            height: 200
+            width: 800
           )
         }
       }
