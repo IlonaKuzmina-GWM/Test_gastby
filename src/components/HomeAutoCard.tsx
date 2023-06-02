@@ -1,38 +1,35 @@
-import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
+import { GatsbyImage, IGatsbyImageData, StaticImage } from "gatsby-plugin-image";
 import React, { FC, ReactNode } from "react";
 import { Card, CardImg, ListGroup, ListGroupItem, Nav } from "react-bootstrap";
 
 type HomeAutoCardProps = {
-    imageUrl: string;
+    gatsbyImageData: IGatsbyImageData;
     title: string;
     price: number;
     children?: ReactNode;
-    labels: ReactNode;
+    labels?: ReactNode;
 }
 
-const HomeAutoCard: FC<HomeAutoCardProps> = ({ labels, imageUrl, title, price, children }) => {
-    console.log(imageUrl)
+const HomeAutoCard: FC<HomeAutoCardProps> = ({ labels, gatsbyImageData, title, price, children }) => {
 
     return (
-        // <div className="auto-card-wrapper">
-        //     {/* <GatsbyImage alt={""} image={imageUrl}></GatsbyImage> */}
-        //     <StaticImage className="auto-card-image" src={"../images/Escultures.png"} alt={""} />
-        // </div>
-        <>
-            <Card border="light" style={{ width: '18rem' }}>
+        <div className="home-auto-card-wrapper">
+            <Card border="light" style={{ width: '' }}>
                 <Nav.Link href="/shop">
-                    <StaticImage className="auto-card-image" src={"../images/Escultures.png"} alt={""} />
-                    {/* <Card.Img variant="top"> <StaticImage className="auto-card-image" src={"../images/Esculturesa.png"} alt={""} /></Card.Img> */}
-                    <Card.Body>
-                        <Card.Title>{title}</Card.Title>
-                        <Card.Text>€ {price}</Card.Text>
+                    <GatsbyImage image={gatsbyImageData} alt={title} className="home-auto-card-image" />
+
+                    <Card.Body className="auto-card-content">
+                        <Card.Title className="auto-card-title">{title}</Card.Title>
+                        <Card.Text className="auto-card-price">€ {price}</Card.Text>
                     </Card.Body>
-                    <ListGroup>
+                    <ListGroup className="label-wrapper">
                         <ListGroupItem>{labels}</ListGroupItem>
                     </ListGroup>
                 </Nav.Link>
             </Card>
-        </>
+        </div>
+
+
     );
 }
 

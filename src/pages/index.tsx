@@ -14,6 +14,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import HomeAutoCard from '../components/HomeAutoCard';
 
 
 // export type SearchResult = Car[];
@@ -185,18 +186,23 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
           <Swiper
             spaceBetween={50}
-            slidesPerView={3}
+            slidesPerView={4}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
           >
             {data.allWpCar.nodes.map((car: Car) => (
               <SwiperSlide key={car.id}>
-                <ShopAutoCard
+                {/* <ShopAutoCard
                   slug={car.slug}
-                  gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                  gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
                   title={car.title}
                   price={car.carInfo.carPrice}
-                />
+                /> */}
+
+                <HomeAutoCard
+                  gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
+                  title={car.title}
+                  price={car.carInfo.carPrice}></HomeAutoCard>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -284,6 +290,7 @@ query AllCarsDetails {
             formats: WEBP
             placeholder: BLURRED
             width: 800
+            height: 500
           )
         }
       }

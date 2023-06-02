@@ -119,7 +119,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                             <Col key={car.id}>
                                 <ShopAutoCard
                                     slug={car.slug}
-                                    gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                                    gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
                                     title={car.title}
                                     price={car.carInfo.carPrice} />
                             </Col>

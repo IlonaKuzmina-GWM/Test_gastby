@@ -1,4 +1,4 @@
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import React, { FC } from "react";
 import { Card, Nav } from "react-bootstrap";
 import Button from "./Button";
@@ -8,7 +8,7 @@ type ShopAutoCardProps = {
     price: number | string;
     slug?: string;
     handleClick?: () => void;
-    gatsbyImageData: any;
+    gatsbyImageData: IGatsbyImageData ;
 }
 
 const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, price, handleClick, gatsbyImageData, slug }) => {
