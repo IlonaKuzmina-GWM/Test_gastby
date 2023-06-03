@@ -58,10 +58,10 @@ export default function HTML(props) {
         ></link>
 
         {/* Use maximum-scale and user-scalable at your own risk. It disables pinch/zoom. Think about usability/accessibility before including. */}
-        {/* <meta
+        <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        /> */}
+        />
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>
