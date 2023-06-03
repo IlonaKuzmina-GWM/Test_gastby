@@ -57,7 +57,7 @@ export const createPagesStatefully: GatsbyNode["createPagesStatefully"] = async 
 
   // Set cache headers for font files
   createRedirect({
-    fromPath: "/fonts/*.woff2",
+    fromPath: "static/fonts/*.woff2",
     toPath: "/fonts/:splat",
     statusCode: 200,
     force: true,
