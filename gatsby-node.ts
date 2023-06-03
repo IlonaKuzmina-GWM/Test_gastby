@@ -2,7 +2,6 @@ import { GatsbyNode } from "gatsby";
 
 const path = require("path");
 
-
 exports.createPages = async ({ graphql, actions }: any) => {
   const { data } = await graphql(`
     query allWpCarData {
@@ -22,13 +21,13 @@ exports.createPages = async ({ graphql, actions }: any) => {
           id
           featuredImage {
             node {
-              gatsbyImage( formats: WEBP, placeholder: BLURRED, width: 1024, height: 1024)
+              gatsbyImage(formats: WEBP, placeholder: BLURRED, width: 976, height: 549)
             }
           }
           carInfo {
             carPrice
             carGallery {
-              gatsbyImage( formats: WEBP, placeholder: BLURRED, width: 1024, height: 1024)
+              gatsbyImage(formats: WEBP, placeholder: BLURRED, width: 976, height: 549)
             }
           }
         }
@@ -53,20 +52,17 @@ exports.createPages = async ({ graphql, actions }: any) => {
   });
 };
 
-
-export const createPagesStatefully: GatsbyNode['createPagesStatefully'] = async ({
-  actions,
-}) => {
+export const createPagesStatefully: GatsbyNode["createPagesStatefully"] = async ({ actions }) => {
   const { createRedirect } = actions;
 
   // Set cache headers for font files
   createRedirect({
-    fromPath: 'static/fonts/*.woff2', 
-    toPath: '/fonts/:splat',
+    fromPath: "/fonts/*.woff2",
+    toPath: "/fonts/:splat",
     statusCode: 200,
     force: true,
     headers: {
-      'Cache-Control': 'public, max-age=31536000',
+      "Cache-Control": "public, max-age=31536000",
     },
   });
 };

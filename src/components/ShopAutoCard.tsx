@@ -15,7 +15,8 @@ const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, price, handleClick, gatsby
     return (
         <Card border="light" className="shop-auto-card px-0 m-2 mb-3">
             <Nav.Link href={"/" + slug} className="d-flex flex-column">
-                <GatsbyImage image={gatsbyImageData} alt={title} className="shop-card-image"/>
+                <GatsbyImage image={gatsbyImageData} alt={title} className="shop-card-image" sizes="986w"/>
+                
                 <Card.Body className="px-4 d-flex flex-column">
                     <Card.Text className="mb-0">€ {price.toLocaleString()}</Card.Text>
                     <Card.Title>{title}</Card.Title>

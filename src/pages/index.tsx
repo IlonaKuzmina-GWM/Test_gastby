@@ -97,6 +97,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
           src={"../images/hero_image.png"}
           alt={"Hero image"}
           className={"hero-background-image"}
+          width={2000}
+          placeholder='blurred'
         />
         <div className="hero-content">
           <h1 className="hero-title">Tavs ’vietējais’ jaunu auto
@@ -177,9 +179,6 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
           <Swiper
             spaceBetween={30}
             slidesPerView={"auto"}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
-
             modules={[Pagination]}
           >
             {data.allWpCar.nodes.slice(0,8).map((car: Car) => (
@@ -276,8 +275,8 @@ query AllCarsDetails {
             fit: COVER
             formats: WEBP
             placeholder: BLURRED
-            width: 800
-            height: 500
+            width: 976
+            height: 549
           )
         }
       }

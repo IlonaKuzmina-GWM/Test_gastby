@@ -13,8 +13,9 @@ export default function HTML(props) {
 
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <meta name="description" content=" " />
-        <meta name="author" content=" " />
+        <meta name="title" content="Pirkt auto" />
+        <meta name="description" content="Pirkt auto" />
+        <meta name="author" content="GWM" />
         <meta name="HandheldFriendly" content="true" />
         <meta name="MobileOptimized" content="320" />
         {/* <link
@@ -27,7 +28,7 @@ export default function HTML(props) {
         <link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.min.css" />
         <link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.theme.default.css" />
         <link rel="stylesheet" href="/bower_components/owl.carousel/dist/assets/owl.carousel.min.css" /> */}
-        {/* <link
+        <link
           rel="preload"
           href="/fonts/WorkSans-Regular.woff2"
           as="font"
@@ -54,13 +55,13 @@ export default function HTML(props) {
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
-        ></link> */}
+        ></link>
 
         {/* Use maximum-scale and user-scalable at your own risk. It disables pinch/zoom. Think about usability/accessibility before including. */}
-        <meta
+        {/* <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
+        /> */}
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>

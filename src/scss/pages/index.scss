@@ -409,6 +409,10 @@
 
 @media only screen and (max-width: 768px) {
   .hero-section {
+.hero-background-image img{
+ object-position: right !important;
+}
+
     .hero-content {
       .hero-search-form {
         display: flex;
