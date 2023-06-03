@@ -132,7 +132,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
         </div>
 
         <div className="car-counter d-flex align-items-center justify-content-center">
-          <h3>  {data.allWpCar.nodes.length} </h3>
+          <h2>  {data.allWpCar.nodes.length} </h2>
           <p>auto tavai <br /> izvēlei</p>
         </div>
 
@@ -144,21 +144,21 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
           <div className="item">
             <StaticImage className="item-image" src={"../images/laiks.png"} alt={"Icon"} objectFit="contain"></StaticImage>
             <div className="item-content">
-              <h5>Laiks ir nauda</h5>
+              <h3>Laiks ir nauda</h3>
               <p>Laika nav.. naudas arī nav..</p>
             </div>
           </div>
           <div className="item">
             <StaticImage className="item-image" src={"../images/izdevigi.png"} alt={"Icon"} objectFit="contain"></StaticImage>
             <div className="item-content">
-              <h5>Izvēlies izdevīgāko</h5>
+              <h3>Izvēlies izdevīgāko</h3>
               <p>Atrodi sev izdevīgāko auto</p>
             </div>
           </div>
           <div className="item">
             <StaticImage className="item-image" src={"../images/ask-me.png"} alt={"Icon"} objectFit="contain"></StaticImage>
             <div className="item-content">
-              <h5>Vēl kaut kas</h5>
+              <h3>Vēl kaut kas</h3>
               <p>Lorem Ipsums</p>
             </div>
           </div>
