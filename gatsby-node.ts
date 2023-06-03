@@ -1,4 +1,7 @@
+import { GatsbyNode } from "gatsby";
+
 const path = require("path");
+
 
 exports.createPages = async ({ graphql, actions }: any) => {
   const { data } = await graphql(`
@@ -19,13 +22,13 @@ exports.createPages = async ({ graphql, actions }: any) => {
           id
           featuredImage {
             node {
-              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 1024, height: 1024)
+              gatsbyImage( formats: WEBP, placeholder: BLURRED, width: 1024, height: 1024)
             }
           }
           carInfo {
             carPrice
             carGallery {
-              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 1024, height: 1024)
+              gatsbyImage( formats: WEBP, placeholder: BLURRED, width: 1024, height: 1024)
             }
           }
         }
@@ -47,5 +50,23 @@ exports.createPages = async ({ graphql, actions }: any) => {
       component: singleCarTempalte,
       context: node,
     });
+  });
+};
+
+
+export const createPagesStatefully: GatsbyNode['createPagesStatefully'] = async ({
+  actions,
+}) => {
+  const { createRedirect } = actions;
+
+  // Set cache headers for font files
+  createRedirect({
+    fromPath: 'static/fonts/*.woff2', 
+    toPath: '/fonts/:splat',
+    statusCode: 200,
+    force: true,
+    headers: {
+      'Cache-Control': 'public, max-age=31536000',
+    },
   });
 };

@@ -160,7 +160,7 @@ query AllCarsDetails {
             fit: COVER
             formats: WEBP
             placeholder: BLURRED
-            width: 300
+            width: 350
             height: 200
           )
         }

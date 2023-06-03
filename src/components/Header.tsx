@@ -25,7 +25,7 @@ const Header = () => {
             className={`fixed-top header ${scrolled ? "scrolled" : ""}`}>
             <Container fluid>
                 <Navbar.Brand href="/">
-                    <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_color.png" alt="logo" />
+                    <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_color.png" alt="logo" width={200} height={25} placeholder="blurred"/>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
 
@@ -36,7 +36,7 @@ const Header = () => {
                 >
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-                            <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_black.png" alt="logo" />
+                            <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_black.png" alt="logo" width={200} height={25} placeholder="blurred"/>
                         </Offcanvas.Title>
                     </Offcanvas.Header>
 

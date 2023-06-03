@@ -26,7 +26,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
           id
           featuredImage {
             node {
-              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 300, height: 200)
+              gatsbyImage(formats: WEBP, placeholder: BLURRED, width: 350, height: 200)
             }
           }
           carInfo {

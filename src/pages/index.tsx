@@ -8,8 +8,8 @@ import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
+// import "swiper/css";
+// import "swiper/css/pagination";
 
 import HomeAutoCard from '../components/HomeAutoCard';
 
@@ -125,7 +125,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             alt={"Avatar"}
             className={"review-avatar"}
           />
-          <h5 className="review-name">Andris Bērziņš</h5>
+          <h3 className="review-name">Andris Bērziņš</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro beatae error laborum.</p>
         </div>
 
@@ -182,7 +182,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
             modules={[Pagination]}
           >
-            {data.allWpCar.nodes.map((car: Car) => (
+            {data.allWpCar.nodes.slice(0,8).map((car: Car) => (
               <SwiperSlide key={car.id}>
                 <HomeAutoCard
                   gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
