@@ -181,7 +181,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             slidesPerView={"auto"}
             modules={[Pagination]}
           >
-            {data.allWpCar.nodes.slice(0,8).map((car: Car) => (
+            {data.allWpCar.nodes.slice(0, 8).map((car: Car) => (
               <SwiperSlide key={car.id}>
                 <HomeAutoCard
                   gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}

@@ -1,8 +1,29 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import Button from "./Button";
 import NavLinks from "./NavLinks";
+import { Link, graphql, useStaticQuery } from "gatsby";
 
-const Footer = () => {
+
+const Footer = ({ }) => {
+const [dealer,] = useState(["Dealer One","Dealer Two","Dealer Three"])
+
+    const data = useStaticQuery(graphql`
+    {
+     allWpCarCategory {
+       nodes {
+        wpChildren {
+        nodes {
+          name
+        }
+      }
+       }
+     }
+   }`)
+
+    // console.log(data.allWpCarCategory.nodes)
+
+    // console.log("felaeris footeri", dealer)
+
     return (
         <div className="footer container">
             <div className="wrapper first-line">
@@ -18,25 +39,25 @@ const Footer = () => {
 
                 </div>
 
-                <div className="column colum-two wrapper">
-                    <h3>Noderīgas <br />saites</h3>
-                    <NavLinks></NavLinks>
-                </div>
-
                 <div className="column colum-three wrapper">
                     <h3>Dīleri</h3>
-                    <NavLinks></NavLinks>
+                    {dealer.map((link, index) => (
+                        <Link key={index} to="/" className="">{link}</Link>
+                    ))}
                 </div>
 
                 <div className="column colum-for wrapper">
                     <h3>Kontakti</h3>
-                    <NavLinks></NavLinks>
+                    <p>Tel.nr: <a href="tel:1234567">1234567</a></p>
+                    <p>E-pasts: <a href="mailto:info@pirktauto.lv">info@pirktauto.lv</a></p>
+                    <p>Adrese: Birznieka Upīša 569, Rīga</p>
+                    <p>Kaut kas vēl te</p>
                 </div>
 
             </div>
 
             <div className="wrapper second-line">
-                <p>© 2023 PirktAuto.lv - Visas tiesības aizsargātas.</p>
+                <p>© {new Date().getFullYear()} PirktAuto.lv - Visas tiesības aizsargātas.</p>
             </div>
         </div>
     );
