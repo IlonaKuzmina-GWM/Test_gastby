@@ -5,6 +5,10 @@
   margin: 0 auto;
   column-gap: 10px;
 
+  .show-filters-btn {
+    display: none;
+  }
+
   .filters-container {
     // background-color: palevioletred;
     width: 40%;
@@ -32,9 +36,17 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .filters-container {
-    display: none;
+  // .filters-container {
+  //   display: none;
+  // }
+
+  .shop-page-container {
+    flex-direction: column;
+    .show-filters-btn {
+      display: flex;
+    }
   }
+
 }
 
 @media only screen and (max-width: 481px) {

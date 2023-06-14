@@ -92,10 +92,19 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     });
 
     const carsToRender = searchResults.length > 0 ? searchResultsFilteredCars : filteredCars;
+    const [showFilters, setShowFilters] = useState(false);
+
+    const toggleFilters = () => {
+      setShowFilters(!showFilters);
+    };
 
     return (
         <MainLayout>
             <div className="shop-page-container">
+                <div>
+                    <button className="show-filters-btn" onClick={toggleFilters}>Show Filter</button>  
+                </div>
+              
                 <div className="filters-container flex-shrink-0 p-3 ">
                     <a href="/" className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
                         <svg className="bi pe-none" width="30" height="24"><use xlinkHref="#bootstrap"></use></svg>
@@ -106,7 +115,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         filteredCategoryHandler={filteredCategoryHandler}
                         minPriceRangeChangeHandler={minPriceRangeChangeHandler}
                         maxPriceRangeChangeHandler={maxPriceRangeChangeHandler}
-                        filteredParamaterCounter={filteredValues.length} />
+                        filteredParamaterCounter={filteredValues.length} 
+                        showFilters={showFilters}
+                        />
                 </div>
 
                 <Container className="auto-cards-container px-1 p-3">

@@ -11,14 +11,16 @@ type FilterCategoriesProps = {
     eventkey: number;
     filteredParamaterCounter: number;
     isCheckedProp?: boolean;
+    showFilters:boolean;
     clearFilteredValues: () => void;
     filteredCategoryHandler: (category: string) => void;
     minPriceRangeChangeHandler: (minPrice: number) => void;
     maxPriceRangeChangeHandler: (maxPrice: number) => void;
+    
 }
 
 const FilterCategories: FC<FilterCategoriesProps> = ({
-    subcategries, eventkey, filteredParamaterCounter, isCheckedProp,
+    subcategries, eventkey, filteredParamaterCounter, isCheckedProp,showFilters,
     clearFilteredValues, filteredCategoryHandler, minPriceRangeChangeHandler,
     maxPriceRangeChangeHandler }) => {
     const data = useStaticQuery(graphql`
@@ -50,6 +52,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     const filters = data.allWpCarCategory.nodes;
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
+    // const [showFilter, setShowFilter] = useState(showFilters);
 
     const handleMinPriceChange = (e: { target: { value: string; }; }) => {
         setMinPrice(parseInt(e.target.value));
@@ -60,6 +63,11 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         setMaxPrice(parseInt(e.target.value));
         maxPriceRangeChangeHandler(parseInt(e.target.value));
     };
+
+    // const toggleFilters = () => {
+    //     setShowFilter(!showFilter);
+    //   };
+  
 
     const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: {
         wpParent: {
@@ -90,7 +98,8 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     }, {});
 
     return (
-        <Accordion defaultActiveKey={['0']} alwaysOpen className='filters-accordion'>
+        <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
+            <button className='close-filters-btn' onClick={() => {  }}>close-filters-btn</button>
             <Row className=' mb-3 px-3 filter-results justify-content-between align-items-center'>
                 <Col className='px-0 '>
                     <span>izvēlēti "{filteredParamaterCounter}" parametri</span>
