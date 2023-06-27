@@ -8,10 +8,9 @@ import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
-// import "swiper/css";
-// import "swiper/css/pagination";
 
 import HomeAutoCard from '../components/HomeAutoCard';
+import { useState } from 'react';
 
 
 // export type SearchResult = Car[];
@@ -66,8 +65,10 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
   type LocationState = {
     searchResults?: Car[];
   };
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState<Car[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<Car[]>([]);
+
+  // console.log("this",data.allWpCar.nodes.map((car) => car.carCategories.nodes))
 
   const location = useLocation();
   // const results = location.state?.searchResults || [];
@@ -188,6 +189,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
                   title={car.title}
                   price={car.carInfo.carPrice}
                   slug={car.slug}
+                  labels={car.carCategories.nodes}
                 ></HomeAutoCard>
               </SwiperSlide>
             ))}
@@ -208,6 +210,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
               src={"../images/1.jpg"}
               alt={"image"}
               className={"item-image"}
+              formats={['auto', 'webp', 'avif']}
+              placeholder="blurred"
             />
 
             <p>Jauni auto</p>
@@ -218,6 +222,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
               src={"../images/2.webp"}
               alt={"image"}
               className={"item-image"}
+              formats={['auto', 'webp', 'avif']}
+              placeholder="blurred"
             /></div>
         </div>
         <div className="row justify-content-between px-3 second-items-container">
@@ -227,6 +233,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
               src={"../images/3.jpg"}
               alt={"image"}
               className={"item-image"}
+              formats={['auto', 'webp', 'avif']}
+              placeholder="blurred"
             /></div>
           <div className="d-flex item col-md-7 mb-5 item-link" onClick={() => handleNavigateToShopFilteredCarNewOrUsed(208)}>
             <StaticImage
@@ -234,6 +242,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
               src={"../images/4.jpg"}
               alt={"image"}
               className={"item-image"}
+              formats={['auto', 'webp', 'avif']}
+              placeholder="blurred"
             />
             <p>Mazlietoti auto</p>
           </div>
@@ -263,6 +273,7 @@ query AllCarsDetails {
         nodes {
           name
           databaseId
+          parentDatabaseId
         }
       }
       slug

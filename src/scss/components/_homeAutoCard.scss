@@ -30,17 +30,23 @@
       display: flex;
       gap: 15px;
       margin-top: auto;
+      flex-direction: row !important;
+
+      .label-item {
+        width: 30% !important;
+        background-color: $gold_primary;
+      }
     }
 
-    .label-wrapper div {
-      padding: 6.45883px 12.9177px;
-      background: #f6fff6;
-      border: 1.61471px solid #dcb47a;
-      border-radius: 19.3765px;
-      color: #dcb47a;
-      font-size: 22.6059px;
-      line-height: 100%;
-    }
+    // .label-wrapper div {
+    //   padding: 6.45883px 12.9177px;
+    //   background: #f6fff6;
+    //   border: 1.61471px solid #dcb47a;
+    //   border-radius: 19.3765px;
+    //   color: #dcb47a;
+    //   font-size: 22.6059px;
+    //   line-height: 100%;
+    // }
   }
 }
 

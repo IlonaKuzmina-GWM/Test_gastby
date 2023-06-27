@@ -2,7 +2,9 @@
   padding-top: 200px;
   max-height: 500px;
 
-  p{margin-bottom: 0;}
+  p {
+    margin-bottom: 0;
+  }
 
   .first-line {
     flex-direction: row;
@@ -57,6 +59,8 @@
 
     .first-line {
       flex-wrap: wrap;
+      justify-content: space-around;
+      column-gap: 50px;
     }
 
     .column-one {
@@ -64,6 +68,10 @@
       align-items: center;
       text-align: center;
       margin-bottom: 30px;
+    }
+
+    .colum-for, .colum-three {
+      width: 45%;
     }
   }
 }
@@ -79,12 +87,25 @@
         margin-bottom: 20px;
         min-height: auto;
       }
+
+      .first-line-form input {
+        max-width: 200px;
+        padding: 5px 5px 5px 5px;
+      }
+
+      .first-line-form button{
+        margin:  5px;
+      }
     }
 
     .column {
       width: 100%;
       align-items: center;
       text-align: center;
+    }
+
+    .colum-for {
+      margin-top: 40px;
     }
   }
 }
