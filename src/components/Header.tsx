@@ -42,7 +42,7 @@ const Header = () => {
                         </Offcanvas.Header>
 
                         <Offcanvas.Body>
-                            <Nav className="justify-content-end flex-grow-1 pe-3 ">
+                            <Nav className="justify-content-end flex-grow-1 pe-2">
                                 <Link to="/" activeClassName="current" className="fs-5 px-4 link">Home</Link>
                                 <Link to="/shop" activeClassName="current" className="fs-5 px-4 link">Shop</Link>
                                 <Link to="/about" activeClassName="current" className="fs-5 px-4 link">About Us</Link>
