@@ -120,14 +120,14 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         />
                 </div>
 
-                <Container className="auto-cards-container px-1 p-3">
+                <Container className="auto-cards-container px-1 p-3 mx-3">
                     <Row className="d-flex align-items-center mt-2 border-bottom">
                         <p className="small-info-text">"{filteredCars.length}" šitik daudz auto mums ir :D</p>
                     </Row>
 
                     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
                         {carsToRender.map((car: Car) => (
-                            <Col key={car.id}>
+                            <Col key={car.id} className="px-1">
                                 <ShopAutoCard
                                     slug={car.slug}
                                     gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}

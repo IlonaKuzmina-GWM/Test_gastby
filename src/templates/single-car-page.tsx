@@ -101,7 +101,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                 </div>
             )
         } return (
-            <Row md={3}>
+            <Row md={3} className="category-icon-row">
                 {categories.map((specialSubCategory: { name: string }, index: number) => (
                     <div className="d-flex align-items-center">
                         {specialSubCategoryIcons(specialSubCategory.name)}

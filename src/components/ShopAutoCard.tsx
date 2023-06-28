@@ -13,7 +13,7 @@ type ShopAutoCardProps = {
 
 const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, price, handleClick, gatsbyImageData, slug }) => {
     return (
-        <Card border="light" className="shop-auto-card px-0 m-2 mb-3">
+        <Card border="light" className="shop-auto-card px-0 m-2 mb-3 mx-1">
             <Nav.Link href={"/" + slug} className="d-flex flex-column">
                 <GatsbyImage image={gatsbyImageData} alt={title} className="shop-card-image"/>
                 

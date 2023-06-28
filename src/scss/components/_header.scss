@@ -1,7 +1,6 @@
 .header {
   background-color: transparent;
-  // background: rgba(255, 255, 255, 0.2);
-  // backdrop-filter: blur(10px);
+
   a,
   .link {
     color: $dark;
@@ -11,7 +10,8 @@
     position: relative;
   }
 
-  .link::before, .link.current::before {
+  .link::before,
+  .link.current::before {
     content: "";
     position: absolute;
     bottom: 10px;
@@ -22,19 +22,22 @@
     transition: width 0.3s ease;
   }
 
-  .link:hover::before, .link.current::before{
+  .link:hover::before,
+  .link.current::before {
     width: 100%;
   }
 
   .header_logo {
-    // width: 100%;
     max-width: 160px;
     vertical-align: middle;
   }
 }
 
+.header_toggle-btn {
+  border: $dark solid 1px;
+}
+
 .header.scrolled {
-  // background: rgba(255, 255, 255, 0.2);
   background-color: rgba(220, 180, 122, 0.5);
   backdrop-filter: blur(10px);
   color: $white;
@@ -43,7 +46,33 @@
     color: $white;
   }
 
-  .current{
+  .current {
     color: $dark;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .offcanvas .link {
+    text-decoration: none;
+    color: $dark;
+    position: relative;
+    margin: 10px 5px;
+    padding-left: 5px !important;
+  }
+
+  .offcanvas .link::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-color: $gold_primary;
+    transition: width 0.3s ease;
+  }
+
+  .offcanvas .link:hover::before,
+  .offcanvas .link.current::before {
+    width: 50%;
   }
 }
