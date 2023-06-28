@@ -22,7 +22,7 @@
 
     .label-item {
       font-size: 14px;
-border: none;
+      border: none;
       background-color: $gold_primary;
       padding: 5px 10px;
     }
@@ -43,24 +43,12 @@ border: none;
     .auto-card-price {
       font-size: 25px;
     }
-    // .label-wrapper div {
-    //   padding: 6.45883px 12.9177px;
-    //   background: #f6fff6;
-    //   border: 1.61471px solid #dcb47a;
-    //   border-radius: 19.3765px;
-    //   color: #dcb47a;
-    //   font-size: 22.6059px;
-    //   line-height: 100%;
-    // }
   }
 }
 
 @media only screen and (max-width: 1100px) {
   .home-auto-card-wrapper {
     .auto-card-content {
-      // display: flex;
-      // flex-direction: column;
-      // align-items: flex-start;
       padding: 32px 16px 40px;
       gap: 0px;
 
@@ -71,22 +59,6 @@ border: none;
       .auto-card-price {
         font-size: 25px;
       }
-
-      // .label-wrapper {
-      //   display: flex;
-      //   gap: 15px;
-      //   margin-top: auto;
-      // }
-
-      // .label-wrapper div {
-      //   padding: 6.45883px 12.9177px;
-      //   background: #f6fff6;
-      //   border: 1.61471px solid #dcb47a;
-      //   border-radius: 19.3765px;
-      //   color: #dcb47a;
-      //   font-size: 22.6059px;
-      //   line-height: 100%;
-      // }
     }
   }
 }
@@ -94,31 +66,19 @@ border: none;
 @media only screen and (max-width: 768px) {
   .home-auto-card-wrapper {
     .label-wrapper {
-      // display: flex;
-      // gap: 5px;
-      // margin-top: auto;
-      // padding: 5px;
-      // justify-content: center;
-      // border-radius: 25.8353px;
       flex-wrap: wrap;
-      // margin-bottom: 20px;
-  
+
       .label-item {
-        // font-size: 12px;
-  // border: none;
-  //       background-color: $gold_primary;
-  padding: 5px 8px;
+        padding: 5px 8px;
       }
     }
   }
 }
 
 @media only screen and (max-width: 420px) {
-.home-auto-card-wrapper {
-  
-  .label-item {
-    font-size: 12px;
-
+  .home-auto-card-wrapper {
+    .label-item {
+      font-size: 12px;
+    }
   }
-}
 }

@@ -10,7 +10,6 @@
   }
 
   .filters-container {
-    // background-color: palevioletred;
     width: 40%;
     max-width: 350px;
   }
@@ -36,17 +35,12 @@
 }
 
 @media only screen and (max-width: 768px) {
-  // .filters-container {
-  //   display: none;
-  // }
-
   .shop-page-container {
     flex-direction: column;
     .show-filters-btn {
       display: flex;
     }
   }
-
 }
 
 @media only screen and (max-width: 481px) {

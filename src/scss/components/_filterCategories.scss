@@ -1,11 +1,9 @@
 .filters-accordion {
-
   .main__range--wrapper {
-
     flex-wrap: nowrap;
     margin-bottom: 10px;
   }
-  
+
   .main__price--input {
     border-radius: 10px;
     background: #ffffff;
@@ -55,12 +53,10 @@
   }
 }
 
-
-
 @media only screen and (max-width: 768px) {
-.filters-accordion{
+  .filters-accordion {
     position: absolute;
-    right: -100%; 
+    right: -100%;
     top: 70px;
     height: 100vh;
     width: 300px;
@@ -68,17 +64,14 @@
     transition: right 0.3s ease-in-out;
     z-index: 1000;
     overflow-y: auto;
-  
+
     &.show {
       right: 0;
     }
-  
+
     .close-filters-btn {
       display: block;
       background-color: red;
     }
-  
-
   }
-  
 }

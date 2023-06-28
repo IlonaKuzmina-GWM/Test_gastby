@@ -1,11 +1,10 @@
-import React, { FC, useState } from "react";
-import Button from "./Button";
-import NavLinks from "./NavLinks";
 import { Link, graphql, useStaticQuery } from "gatsby";
+import React, { useState } from "react";
+import Button from "./Button";
 
 
 const Footer = ({ }) => {
-const [dealer,] = useState(["Dealer One","Dealer Two","Dealer Three"])
+    const [dealer,] = useState(["Dealer One", "Dealer Two", "Dealer Three"])
 
     const data = useStaticQuery(graphql`
     {
@@ -19,10 +18,6 @@ const [dealer,] = useState(["Dealer One","Dealer Two","Dealer Three"])
        }
      }
    }`)
-
-    // console.log(data.allWpCarCategory.nodes)
-
-    // console.log("felaeris footeri", dealer)
 
     return (
         <div className="footer container">

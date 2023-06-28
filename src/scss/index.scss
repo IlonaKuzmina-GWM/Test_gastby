@@ -2,6 +2,7 @@
 @import "core/reset";
 @import "core/custom-bootstrap";
 @import "core/core";
+@import "swiper/css/pagination";
 
 @import "components/layouts";
 @import "components/footer";
@@ -18,5 +19,6 @@
 @import "pages/index.scss";
 @import "pages/shop.scss";
 @import "pages/single-car-page.scss";
+@import "pages/contact.scss";
 
 
