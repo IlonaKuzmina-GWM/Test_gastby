@@ -99,7 +99,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
           <h1 className="hero-title">Tavs ’vietējais’ jaunu auto
             piedāvājuma portāls</h1>
           <p>atrodi sev piemērotu auto ātri, vienkārši un
-            vēl papildus bla bla bla :D </p>
+            vēl papildus bla bla :D </p>
           <form className="hero-search-form" action="" onSubmit={handleSearch}>
             <input
               type="search"
