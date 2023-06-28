@@ -1,19 +1,16 @@
 import { useLocation } from '@reach/router';
+import { useState } from 'react';
 import { graphql, HeadFC, Link, navigate } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
+import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../components/Button";
 import TooltipBoot from "../components/Tooltip";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
 
 import HomeAutoCard from '../components/HomeAutoCard';
-import { useState } from 'react';
-
-
-// export type SearchResult = Car[];
 
 type SearchFunction = (
   query: string,
@@ -68,10 +65,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Car[]>([]);
 
-  // console.log("this",data.allWpCar.nodes.map((car) => car.carCategories.nodes))
-
   const location = useLocation();
-  // const results = location.state?.searchResults || [];
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
@@ -180,19 +174,29 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
           <Swiper
             spaceBetween={30}
             slidesPerView={"auto"}
-            modules={[Pagination]}
+            className='pb-5'
           >
-            {data.allWpCar.nodes.slice(0, 8).map((car: Car) => (
-              <SwiperSlide key={car.id}>
+            {data.allWpCar.nodes.slice(0, 8).map((car: Car) => {
+              const carLabels = car.carCategories.nodes
+              
+              const filteredLabels = carLabels.filter((label: any) => {
+                return (
+                  label.parentDatabaseId === 304 ||
+                  label.parentDatabaseId === 202 ||
+                  label.parentDatabaseId === 211
+                );
+              });
+
+              return <SwiperSlide key={car.id}>
                 <HomeAutoCard
                   gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
                   title={car.title}
                   price={car.carInfo.carPrice}
                   slug={car.slug}
-                  labels={car.carCategories.nodes}
+                  labels={filteredLabels}
                 ></HomeAutoCard>
               </SwiperSlide>
-            ))}
+            })}
           </Swiper>
         </div>
 

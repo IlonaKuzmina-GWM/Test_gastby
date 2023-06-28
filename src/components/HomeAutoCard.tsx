@@ -1,54 +1,18 @@
 import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { Card, ListGroup, ListGroupItem, Nav } from "react-bootstrap";
+import { CarCategory } from "../types/allWpCarTypes";
 
 type HomeAutoCardProps = {
     gatsbyImageData: IGatsbyImageData;
     title: string;
     price: number;
-    children?: ReactNode;
-    labels?: any;
+    children?: JSX.Element;
+    labels?: CarCategory[];
     slug?: string;
 }
 
-const HomeAutoCard: FC<HomeAutoCardProps> = ({ labels, gatsbyImageData, title, price, children, slug }) => {
-    const [neededLabels, setNeededLabels] = useState<string[]>([])
-
-
-    console.log("labels", labels)
-    console.log("neededLabels", neededLabels)
-
-    useEffect(() => { findLabels() }, [])
-
-    const findLabels = () => {
-        const names: string[] = [];
-
-        for (const label of labels) {
-            if (label.parentDatabaseId === 304 || label.parentDatabaseId === 202 || label.parentDatabaseId === 211)
-                names.push(label.name)
-        }
-
-        setNeededLabels(names)
-    }
-
-    // {
-    //gads
-    //   "name": "2019",
-    //   "databaseId": 420,
-    //   "parentDatabaseId": 304
-    // }
-
-    // {
-    //   "name": "Mazlietots",
-    //   "databaseId": 208,
-    //   "parentDatabaseId": 202
-    // },
-
-    // {
-    //   "name": "Rīga",
-    //   "databaseId": 214,
-    //   "parentDatabaseId": 211
-    // },
+const HomeAutoCard: FC<HomeAutoCardProps> = React.memo(({ labels, gatsbyImageData, title, price, children, slug }) => {
 
     return (
         <div className="home-auto-card-wrapper">
@@ -60,16 +24,15 @@ const HomeAutoCard: FC<HomeAutoCardProps> = ({ labels, gatsbyImageData, title, p
                         <Card.Title className="auto-card-title">{title}</Card.Title>
                         <Card.Text className="auto-card-price">€ {price}</Card.Text>
                     </Card.Body>
-                    <ListGroup className="label-wrapper">
-                        {neededLabels.map((label) => (
-                            <span key={label} className="label-item">{label}</span>
-                            // <ListGroupItem key={label} className="label-item">{label}</ListGroupItem>
+                    <ListGroup className="label-wrapper" horizontal >
+                        {labels && labels.map((label: any) => (
+                            <ListGroupItem key={label} className="label-item">{label.name}</ListGroupItem>
                         ))}
                     </ListGroup>
                 </Nav.Link>
             </Card>
         </div>
     );
-}
+})
 
 export default HomeAutoCard;
