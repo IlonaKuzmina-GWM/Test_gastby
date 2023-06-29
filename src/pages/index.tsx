@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { graphql, HeadFC, Link, navigate } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
-// import "swiper/css/pagination";
+import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../components/Button";
 import TooltipBoot from "../components/Tooltip";

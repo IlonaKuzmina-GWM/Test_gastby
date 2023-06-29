@@ -120,7 +120,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         />
                 </div>
 
-                <Container className="auto-cards-container px-1 p-3 mx-3">
+                <Container className="auto-cards-container">
                     <Row className="d-flex align-items-center mt-2 border-bottom">
                         <p className="small-info-text">"{filteredCars.length}" šitik daudz auto mums ir :D</p>
                     </Row>

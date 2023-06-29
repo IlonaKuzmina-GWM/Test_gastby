@@ -38,7 +38,7 @@
 }
 
 .header.scrolled {
-  background-color: rgba(220, 180, 122, 0.5);
+  background-color: #dcb47a80;
   backdrop-filter: blur(10px);
   color: $white;
 
@@ -74,5 +74,11 @@
   .offcanvas .link:hover::before,
   .offcanvas .link.current::before {
     width: 50%;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .header {
+    z-index: 990 !important;
   }
 }

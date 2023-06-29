@@ -4,6 +4,7 @@ import { Col, Form, FormControl, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import { CarCategory } from '../types/allWpCategoryTypes';
 import Button from './Button';
+import { StaticImage } from 'gatsby-plugin-image';
 
 
 type FilterCategoriesProps = {
@@ -11,16 +12,16 @@ type FilterCategoriesProps = {
     eventkey: number;
     filteredParamaterCounter: number;
     isCheckedProp?: boolean;
-    showFilters:boolean;
+    showFilters: boolean;
     clearFilteredValues: () => void;
     filteredCategoryHandler: (category: string) => void;
     minPriceRangeChangeHandler: (minPrice: number) => void;
     maxPriceRangeChangeHandler: (maxPrice: number) => void;
-    
+
 }
 
 const FilterCategories: FC<FilterCategoriesProps> = ({
-    subcategries, eventkey, filteredParamaterCounter, isCheckedProp,showFilters,
+    subcategries, eventkey, filteredParamaterCounter, isCheckedProp, showFilters,
     clearFilteredValues, filteredCategoryHandler, minPriceRangeChangeHandler,
     maxPriceRangeChangeHandler }) => {
     const data = useStaticQuery(graphql`
@@ -67,7 +68,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     // const toggleFilters = () => {
     //     setShowFilter(!showFilter);
     //   };
-  
+
 
     const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: {
         wpParent: {
@@ -99,55 +100,71 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
-            <button className='close-filters-btn' onClick={() => {  }}>close-filters-btn</button>
-            <Row className=' mb-3 px-3 filter-results justify-content-between align-items-center'>
-                <Col className='px-0 '>
-                    <span>izvēlēti "{filteredParamaterCounter}" parametri</span>
-                </Col>
+            <div className='filters-accordion-wrapper'>
 
-                <Col className='px-0  row justify-content-end pe-3'>
-                    <Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={clearFilteredValues}></Button>
-                </Col>
-            </Row>
+                <div className='close-filters-btn-wrapper'>
+                    <StaticImage className='close-filters-btn' src={"../images/cancel.svg"} alt={"Cancel"} width={30} height={30} />
+                </div>
 
-            <Row className='center-xs'>
-                <Col className='' xs={12}>
-                    <h4 className="price__block--title">Cena</h4>
-                    <Form className='d-flex justify-content-between main__range--wrapper'>
-                        <FormControl
-                            className='main__price--input'
-                            type='number'
-                            placeholder='Min'
-                            onChange={handleMinPriceChange} />
+                <Row className='filter-results mb-3 px-3 justify-content-between align-items-center'>
+                    <Col className='px-0 clear_results'>
+                        <span>izvēlēti "{filteredParamaterCounter}" parametri</span>
+                    </Col>
 
-                        <FormControl
-                            className='main__price--input'
-                            type='number'
-                            placeholder='Max'
-                            onChange={handleMaxPriceChange} />
-                    </Form>
-                </Col>
-            </Row>
-            {Object.values(uniqueCategories).map((category: any, index: number) => (
-                <Accordion.Item key={index} eventKey={index.toString()}>
-                    <Accordion.Header className='accordion-title'>{category.wpParent.node.name}</Accordion.Header>
-                    <Accordion.Body>
-                        {category.wpParent.node.wpChildren.nodes.map((subcategory: CarCategory, index: number) => (
-                            <Form key={index}>
-                                <Form.Group className="" controlId="formBasicEmail">
-                                    <Form.Check
-                                        type="checkbox"
-                                        label={subcategory.name}
-                                        value={subcategory.databaseId}
-                                        name={subcategory.databaseId.toString()}
-                                        onChange={(e) => { filteredCategoryHandler(e.target.value); }}
-                                    />
-                                </Form.Group>
+                    <Col className='px-0  row filter_results_btn-wrapper'>
+                        <div className='clear-btn'>
+                            <Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={clearFilteredValues}></Button>
+                        </div>
+
+                        <div className='show-all-btn'>
+                            <Button name={'Apskatīt atlasītos auto'} size={'small'} type={'primary'} onClickHandler={() => { }}></Button>
+                        </div>
+
+                    </Col>
+                </Row>
+
+                <div className='accordion-wrapper'>
+                    <Row className='center-xs'>
+                        <Col className='' xs={12}>
+                            <h4 className="price__block--title">Cena</h4>
+                            <Form className='d-flex justify-content-between main__range--wrapper'>
+                                <FormControl
+                                    className='main__price--input'
+                                    type='number'
+                                    placeholder='Min'
+                                    onChange={handleMinPriceChange} />
+
+                                <FormControl
+                                    className='main__price--input'
+                                    type='number'
+                                    placeholder='Max'
+                                    onChange={handleMaxPriceChange} />
                             </Form>
-                        ))}
-                    </Accordion.Body>
-                </Accordion.Item>
-            ))}
+                        </Col>
+                    </Row>
+
+                    {Object.values(uniqueCategories).map((category: any, index: number) => (
+                        <Accordion.Item key={index} eventKey={index.toString()}>
+                            <Accordion.Header className='accordion-title'>{category.wpParent.node.name}</Accordion.Header>
+                            <Accordion.Body>
+                                {category.wpParent.node.wpChildren.nodes.map((subcategory: CarCategory, index: number) => (
+                                    <Form key={index}>
+                                        <Form.Group className="" controlId="formBasicEmail">
+                                            <Form.Check
+                                                type="checkbox"
+                                                label={subcategory.name}
+                                                value={subcategory.databaseId}
+                                                name={subcategory.databaseId.toString()}
+                                                onChange={(e) => { filteredCategoryHandler(e.target.value); }}
+                                            />
+                                        </Form.Group>
+                                    </Form>
+                                ))}
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    ))}
+                </div>
+            </div>
         </Accordion >);
 }
 
