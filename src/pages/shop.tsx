@@ -5,6 +5,7 @@ import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
+import Button from "../components/Button";
 
 type ShopProps = {
     data: MyQueryResult;
@@ -95,29 +96,37 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [showFilters, setShowFilters] = useState(false);
 
     const toggleFilters = () => {
-      setShowFilters(!showFilters);
+        setShowFilters(!showFilters);
+    };
+
+    const closeFilters = () => {
+        setShowFilters(false);
     };
 
     return (
         <MainLayout>
             <div className="shop-page-container">
-                <div>
-                    <button className="show-filters-btn" onClick={toggleFilters}>Show Filter</button>  
-                </div>
-              
+
+
                 <div className="filters-container flex-shrink-0 p-3 ">
-                    <a href="/" className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                        <svg className="bi pe-none" width="30" height="24"><use xlinkHref="#bootstrap"></use></svg>
+                    <div className="filter-title-line d-flex align-items-center mb-3 link-dark text-decoration-none border-bottom">
+                        {/* <svg className="bi pe-none" width="30" height="24"><use xlinkHref="#bootstrap"></use></svg> */}
                         <span className="fs-5 fw-semibold">Filtrs</span>
-                    </a>
+
+                        <button className="show-filters-btn" onClick={toggleFilters}>Show Filter</button>
+                    </div>
+
+
+
                     <FilterCategories eventkey={0}
                         clearFilteredValues={clearFilteredValues}
                         filteredCategoryHandler={filteredCategoryHandler}
                         minPriceRangeChangeHandler={minPriceRangeChangeHandler}
                         maxPriceRangeChangeHandler={maxPriceRangeChangeHandler}
-                        filteredParamaterCounter={filteredValues.length} 
+                        filteredParamaterCounter={filteredValues.length}
                         showFilters={showFilters}
-                        />
+                        onCloseFilters={closeFilters}
+                    />
                 </div>
 
                 <Container className="auto-cards-container">

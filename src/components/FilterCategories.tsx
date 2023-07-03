@@ -13,6 +13,7 @@ type FilterCategoriesProps = {
     filteredParamaterCounter: number;
     isCheckedProp?: boolean;
     showFilters: boolean;
+    onCloseFilters: () => void;
     clearFilteredValues: () => void;
     filteredCategoryHandler: (category: string) => void;
     minPriceRangeChangeHandler: (minPrice: number) => void;
@@ -21,7 +22,7 @@ type FilterCategoriesProps = {
 }
 
 const FilterCategories: FC<FilterCategoriesProps> = ({
-    subcategries, eventkey, filteredParamaterCounter, isCheckedProp, showFilters,
+    subcategries, eventkey, filteredParamaterCounter, isCheckedProp, showFilters, onCloseFilters,
     clearFilteredValues, filteredCategoryHandler, minPriceRangeChangeHandler,
     maxPriceRangeChangeHandler }) => {
     const data = useStaticQuery(graphql`
@@ -53,7 +54,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     const filters = data.allWpCarCategory.nodes;
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
-    // const [showFilter, setShowFilter] = useState(showFilters);
 
     const handleMinPriceChange = (e: { target: { value: string; }; }) => {
         setMinPrice(parseInt(e.target.value));
@@ -64,11 +64,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         setMaxPrice(parseInt(e.target.value));
         maxPriceRangeChangeHandler(parseInt(e.target.value));
     };
-
-    // const toggleFilters = () => {
-    //     setShowFilter(!showFilter);
-    //   };
-
 
     const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: {
         wpParent: {
@@ -102,7 +97,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
             <div className='filters-accordion-wrapper'>
 
-                <div className='close-filters-btn-wrapper'>
+                <div className='close-filters-btn-wrapper' onClick={onCloseFilters}>
                     <StaticImage className='close-filters-btn' src={"../images/cancel.svg"} alt={"Cancel"} width={30} height={30} />
                 </div>
 
@@ -117,9 +112,8 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                         </div>
 
                         <div className='show-all-btn'>
-                            <Button name={'Apskatīt atlasītos auto'} size={'small'} type={'primary'} onClickHandler={() => { }}></Button>
+                            <Button name={'Apskatīt atlasītos auto'} size={'small'} type={'primary'} onClickHandler={onCloseFilters}></Button>
                         </div>
-
                     </Col>
                 </Row>
 

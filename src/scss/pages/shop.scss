@@ -18,6 +18,8 @@
     .small-info-text {
       font-size: 14px;
       color: $text_secondary;
+      margin-bottom: 0;
+      margin-top: 1rem;
     }
   }
 }
@@ -37,8 +39,39 @@
 @media only screen and (max-width: 768px) {
   .shop-page-container {
     flex-direction: column;
+
+    .filters-container {
+      width: 100%;
+      max-width: 100%;
+
+      .filter-title-line {
+        justify-content: space-between;
+        padding-bottom: 1rem;
+      }
+    }
+
     .show-filters-btn {
       display: flex;
+      // display: inline-block;
+      border-radius: 60px;
+      box-shadow: -1px 3px 3px 0 rgba(80, 80, 80, 0.2);
+      flex: 0 0 auto;
+      cursor: pointer;
+      transition: all 0.7s ease;
+      width: max-content;
+      text-transform: capitalize;
+      font-weight: 700;
+      padding: 8px 20px;
+      font-size: 14px;
+
+      color: $gold_primary;
+      background: transparent;
+      border: 1px solid $gold_primary;
+
+      &:hover {
+        box-shadow: -1px 6px 10px 0 rgba(120, 60, 20, 0.2);
+        opacity: 0.9;
+      }
     }
   }
 }
