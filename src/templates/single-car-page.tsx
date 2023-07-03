@@ -103,9 +103,9 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         } return (
             <Row md={3} className="category-icon-row">
                 {categories.map((specialSubCategory: { name: string }, index: number) => (
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center" key={index}>
                         {specialSubCategoryIcons(specialSubCategory.name)}
-                        <span key={index}>{specialSubCategory.name}</span>
+                        <span>{specialSubCategory.name}</span>
                     </div>
                 ))}
             </Row>
@@ -194,8 +194,8 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 <h3 className="mb-3">Rekomendējam tieši tev</h3>
                             </Col>
                             <Row md={3}>
-                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: Car) => (
-                                    <Col className="mb-3">
+                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: Car, index:number) => (
+                                    <Col className="mb-3" key={index}>
                                         <ShopAutoCard
                                             gatsbyImageData={car.featuredImage.node.gatsbyImage}
                                             slug={car.slug} title={car.title}

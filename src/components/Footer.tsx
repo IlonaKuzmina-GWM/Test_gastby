@@ -36,7 +36,7 @@ const Footer = ({ }) => {
 
                 <div className="column colum-three wrapper">
                     <h3>Dīleri</h3>
-                    {dealer.map((link, index) => (
+                    {dealer.map((link:string, index:number) => (
                         <Link key={index} to="/" className="">{link}</Link>
                     ))}
                 </div>
