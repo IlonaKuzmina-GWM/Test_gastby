@@ -8,10 +8,8 @@ import { StaticImage } from 'gatsby-plugin-image';
 
 
 type FilterCategoriesProps = {
-    subcategries?: string[];
     eventkey: number;
     filteredParamaterCounter: number;
-    isCheckedProp?: boolean;
     showFilters: boolean;
     onCloseFilters: () => void;
     clearFilteredValues: () => void;
@@ -22,8 +20,13 @@ type FilterCategoriesProps = {
 }
 
 const FilterCategories: FC<FilterCategoriesProps> = ({
-    subcategries, eventkey, filteredParamaterCounter, isCheckedProp, showFilters, onCloseFilters,
-    clearFilteredValues, filteredCategoryHandler, minPriceRangeChangeHandler,
+    eventkey,
+    filteredParamaterCounter,
+    showFilters,
+    onCloseFilters,
+    clearFilteredValues,
+    filteredCategoryHandler,
+    minPriceRangeChangeHandler,
     maxPriceRangeChangeHandler }) => {
     const data = useStaticQuery(graphql`
      {
@@ -93,6 +96,13 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         return unique;
     }, {});
 
+    const uncheckAllCheckboxes = () => {
+        const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+    };
+
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
             <div className='filters-accordion-wrapper'>
@@ -108,7 +118,10 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
                     <Col className='px-0  row filter_results_btn-wrapper'>
                         <div className='clear-btn'>
-                            <Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={clearFilteredValues}></Button>
+                            <Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
+                                clearFilteredValues();
+                                uncheckAllCheckboxes();
+                            }}></Button>
                         </div>
 
                         <div className='show-all-btn'>
@@ -143,9 +156,10 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                             <Accordion.Body>
                                 {category.wpParent.node.wpChildren.nodes.map((subcategory: CarCategory, index: number) => (
                                     <Form key={index}>
-                                        <Form.Group className="" controlId="formBasicEmail">
+                                        <Form.Group className="" controlId={subcategory.databaseId.toString()}>
                                             <Form.Check
                                                 type="checkbox"
+                                                id={subcategory.databaseId.toString()}
                                                 label={subcategory.name}
                                                 value={subcategory.databaseId}
                                                 name={subcategory.databaseId.toString()}

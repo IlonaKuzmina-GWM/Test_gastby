@@ -60,31 +60,6 @@
     position: relative;
   }
 
-  .form-check-input {
-  //   // appearance: none;
-  //   background-color: transparent;
-  //   // border: none;
-  //   border-radius: 0;
-  //   cursor: pointer;
-  //   height: 100%;
-  //   left: 10px;
-  //   outline: none;
-  //   position: absolute;
-  //   top: 0;
-    // width: 100%;
-  }
-
-  // .form-check-input::after {
-  //   position: absolute;
-  //   border-radius: 0.25em;
-  //   content: "";
-  //   top: 0;
-  //   left: 0;
-  //   height: 20px;
-  //   width: 20px;
-  //   border: 1px solid $gold_primary;
-  // }
-
   .form-check-input:checked {
     background-color: $gold_primary;
     border-color: $gold_primary;
@@ -92,7 +67,6 @@
 
   .form-check-label {
     width: 100%;
-    pointer-events: none;
   }
 
   .close-filters-btn {

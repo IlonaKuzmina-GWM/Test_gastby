@@ -23,6 +23,13 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
     const [searchResults, setSearchResults] = useState<Car[]>(location.state?.searchResults || []);
+    const [showFilters, setShowFilters] = useState(false);
+
+    useEffect(() => {
+        findDefaultMinAndMaxPrice();
+    }, []);
+
+
 
     const findDefaultMinAndMaxPrice = () => {
         const prices = allWpCars.map((car: Car) => car.carInfo.carPrice);
@@ -33,15 +40,11 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setMaxPrice(maxDefaultPrice);
     };
 
-    useEffect(() => {
-        findDefaultMinAndMaxPrice();
-    }, []);
 
     const clearFilteredValues = () => {
         setFilteredValues([]);
-        setMinPrice(0);
-        setMaxPrice(0);
         setSearchResults([]);
+        findDefaultMinAndMaxPrice();
     };
 
     const filteredCategoryHandler = (categoryId: string) => {
@@ -92,8 +95,13 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
     });
 
-    const carsToRender = searchResults.length > 0 ? searchResultsFilteredCars : filteredCars;
-    const [showFilters, setShowFilters] = useState(false);
+    const carsToRender = searchResults.length > 1 ? searchResultsFilteredCars : filteredCars;
+
+    console.log("searchResultsFilteredCars", searchResultsFilteredCars);
+    console.log("filteredCars", filteredCars);
+    console.log("filteredValues", filteredValues);
+    console.log("minPrice", minPrice);
+    console.log("maxPrice", maxPrice);
 
     const toggleFilters = () => {
         setShowFilters(!showFilters);
@@ -106,17 +114,11 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     return (
         <MainLayout>
             <div className="shop-page-container">
-
-
                 <div className="filters-container flex-shrink-0 p-3 ">
                     <div className="filter-title-line d-flex align-items-center mb-3 link-dark text-decoration-none border-bottom">
-                        {/* <svg className="bi pe-none" width="30" height="24"><use xlinkHref="#bootstrap"></use></svg> */}
                         <span className="fs-5 fw-semibold">Filtrs</span>
-
                         <button className="show-filters-btn" onClick={toggleFilters}>Show Filter</button>
                     </div>
-
-
 
                     <FilterCategories eventkey={0}
                         clearFilteredValues={clearFilteredValues}
