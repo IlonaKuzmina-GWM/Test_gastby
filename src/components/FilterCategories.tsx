@@ -1,10 +1,10 @@
 import { graphql, useStaticQuery } from 'gatsby';
+import { StaticImage } from 'gatsby-plugin-image';
 import React, { FC, useState } from 'react';
 import { Col, Form, FormControl, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import { CarCategory } from '../types/allWpCategoryTypes';
 import Button from './Button';
-import { StaticImage } from 'gatsby-plugin-image';
 
 
 type FilterCategoriesProps = {
@@ -16,7 +16,6 @@ type FilterCategoriesProps = {
     filteredCategoryHandler: (category: string) => void;
     minPriceRangeChangeHandler: (minPrice: number) => void;
     maxPriceRangeChangeHandler: (maxPrice: number) => void;
-
 }
 
 const FilterCategories: FC<FilterCategoriesProps> = ({

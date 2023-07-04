@@ -1,6 +1,6 @@
+import { GatsbyImage } from "gatsby-plugin-image";
 import React, { FC, useState } from "react";
 import { CarGalleryImage } from "../types/allWpCarTypes";
-import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 
 type ImageGalleryPopUpProps = {
     images: CarGalleryImage[];

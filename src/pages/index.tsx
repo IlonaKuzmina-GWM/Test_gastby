@@ -1,8 +1,8 @@
 import { useLocation } from '@reach/router';
-import { useState } from 'react';
 import { graphql, HeadFC, Link, navigate } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
+import { useState } from 'react';
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../components/Button";

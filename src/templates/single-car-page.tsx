@@ -4,13 +4,13 @@ import React, { FC, useEffect, useState } from "react";
 import { Carousel, Col, Container, Nav, Row } from "react-bootstrap";
 import Button from "../components/Button";
 import CheckoutBox from "../components/CheckoutBox";
+import ImageGalleryPopUp from "../components/ImageGalleryPopUp";
 import ShopAutoCard from "../components/ShopAutoCard";
 import AndroidAuto from "../images/icons/AndroidAuto.svg";
 import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
 import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
 import { Car } from "../types/allWpCarTypes";
-import ImageGalleryPopUp from "../components/ImageGalleryPopUp";
 
 type SingleCarProps = {
     pageContext: Car;
@@ -115,7 +115,6 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     const openPopUp = (index: number) => {
         setSelectedImageIndex(index);
         setShowPopUp(true);
-        console.log("index", index)
     }
 
     return (

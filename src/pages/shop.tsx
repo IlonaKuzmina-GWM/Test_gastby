@@ -5,7 +5,6 @@ import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
-import Button from "../components/Button";
 
 type ShopProps = {
     data: MyQueryResult;
@@ -96,12 +95,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     });
 
     const carsToRender = searchResults.length > 1 ? searchResultsFilteredCars : filteredCars;
-
-    console.log("searchResultsFilteredCars", searchResultsFilteredCars);
-    console.log("filteredCars", filteredCars);
-    console.log("filteredValues", filteredValues);
-    console.log("minPrice", minPrice);
-    console.log("maxPrice", maxPrice);
 
     const toggleFilters = () => {
         setShowFilters(!showFilters);

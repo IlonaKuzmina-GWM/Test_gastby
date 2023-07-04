@@ -1,7 +1,7 @@
+import { HeadFC, Link, PageProps } from "gatsby"
 import * as React from "react"
-import { Link, HeadFC, PageProps } from "gatsby"
-import MainLayout from "../layouts/MainLayout"
 import Button from "../components/Button"
+import MainLayout from "../layouts/MainLayout"
 
 
 const NotFoundPage: React.FC<PageProps> = () => {
