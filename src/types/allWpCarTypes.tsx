@@ -9,6 +9,7 @@ export type CarCategory = {
 type FeaturedImage = {
   node: {
     gatsbyImage: IGatsbyImageData;
+    sourceUrl:string;
   };
 }
 

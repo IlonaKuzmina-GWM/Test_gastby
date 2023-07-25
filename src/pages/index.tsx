@@ -194,6 +194,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
                   price={car.carInfo.carPrice}
                   slug={car.slug}
                   labels={filteredLabels}
+                  imagesLink={car.featuredImage.node.sourceUrl}
                 ></HomeAutoCard>
               </SwiperSlide>
             })}
@@ -285,6 +286,7 @@ query AllCarsDetails {
       id
       featuredImage {
         node {
+          sourceUrl
           gatsbyImage(
             cropFocus: CENTER
             fit: COVER

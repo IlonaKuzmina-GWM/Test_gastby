@@ -143,7 +143,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                     </Row>
 
                     <Row xs={12} className="g-4 mt-5">
-                        {filteredCars.length < 1 && <div className="d-flex justify-content-center align-items-center">
+                        {filteredCars.length < 1 || carsToRender.length <1 && <div className="d-flex justify-content-center align-items-center">
                             <h3 className="text-center">Diemžēl pēc izvēlētiem kriterijiem nekas nav atrasts</h3>
                         </div>}
                     </Row>
