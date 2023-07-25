@@ -189,7 +189,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
               return <SwiperSlide key={car.id}>
                 <HomeAutoCard
-                  gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
+                gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                  // gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
                   title={car.title}
                   price={car.carInfo.carPrice}
                   slug={car.slug}
