@@ -29,6 +29,17 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     maxPriceRangeChangeHandler }) => {
     const data = useStaticQuery(graphql`
      {
+        allWpCar {
+    nodes {
+      title
+      carInfo {
+        atrasanasVieta
+        autoStavoklis
+        carPrice
+        dzinejs
+      }
+    }
+  }
       allWpCarCategory {
         nodes {
           wpParent {
@@ -102,6 +113,33 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         });
     };
 
+
+
+    //Te es sāku pāŗtaisīt visa koda loģiku. Tagad no WP visas auto  detaļas nāks caur ACF, nevis categorijām
+    //tādēļ jāmaina viss kods, visā projektā, adaptējot jauniem datiem, filtrs jāraksta no nulles. 
+    //
+    const uniqueCarInfoValues = data.allWpCar.nodes.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
+        const carInfo = car.carInfo;
+
+        Object.keys(carInfo).forEach((key) => {
+            if (!result[key]) {
+                result[key] = [];
+            }
+
+            const valuesArray = result[key];
+            const value = carInfo[key];
+
+            if (!valuesArray.some((existingValue: any) => JSON.stringify(existingValue) === JSON.stringify(value))) {
+                valuesArray.push(value);
+            }
+        });
+
+        return result;
+    }, {})
+
+    console.log(uniqueCarInfoValues);
+
+
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
             <div className='filters-accordion-wrapper'>
@@ -170,6 +208,31 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                             </Accordion.Body>
                         </Accordion.Item>
                     ))}
+
+                    {/* <Accordion>
+                        {Object.keys(uniqueCarInfoValues).map((key, index) => (
+                            <Accordion.Item key={index} eventKey={index.toString()}>
+                                <Accordion.Header className='accordion-title'>{key}</Accordion.Header>
+                                <Accordion.Body>
+                                    {uniqueCarInfoValues[key].map((valueName: any, valueIndex: any) => (
+                                        <Form key={valueIndex}>
+                                            <Form.Group className="" controlId={valueName}>
+                                                <Form.Check
+                                                    type="checkbox"
+                                                    id={valueName}
+                                                    label={valueName}
+                                                    value={valueName}
+                                                    name={valueName}
+                                                    onChange={(e) => { filteredCategoryHandler(e.target.value); }}
+                                                />
+                                            </Form.Group>
+                                        </Form>
+                                    ))}
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        ))}
+                    </Accordion> */}
+
                 </div>
             </div>
         </Accordion >);

@@ -5,6 +5,7 @@ import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
+import slugify from 'slugify';
 
 type ShopProps = {
     data: MyQueryResult;
@@ -46,6 +47,35 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         findDefaultMinAndMaxPrice();
     };
 
+
+    // const filteredCategoryHandler = (categoryId: string) => {
+    //     const selectedCategory = allWpCars.find((car) =>
+    //         car.carCategories.nodes.some((node: any) => node.databaseId.toString() === categoryId)
+    //     );
+
+    //     if (selectedCategory) {
+    //         const selectedSubcategory = selectedCategory.carCategories.nodes.find(
+    //             (node: any) => node.databaseId.toString() === categoryId
+    //         );
+
+    //         if (selectedSubcategory) {
+    //             const subcategorySlug = slugify(selectedSubcategory.name, { lower: true });
+
+
+    //             const isCheckedArray = filteredValues.includes(subcategorySlug);
+
+    //             if (isCheckedArray) {
+    //                 const updatedCategories = filteredValues.filter((slug) => slug !== subcategorySlug);
+    //                 setFilteredValues(updatedCategories);
+    //             } else {
+    //                 const updatedCategories = [...filteredValues, subcategorySlug];
+    //                 setFilteredValues(updatedCategories);
+    //             }
+    //         }
+    //     }
+    // };
+
+
     const filteredCategoryHandler = (categoryId: string) => {
         const isCheckedArray = filteredValues.includes(categoryId);
 
@@ -57,6 +87,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             setFilteredValues(updateCategories)
         }
     }
+
 
     const minPriceRangeChangeHandler = (minPri: number) => {
         setMinPrice(minPri);

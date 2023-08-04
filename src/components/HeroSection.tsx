@@ -16,6 +16,7 @@ const HeroSection: FC<HeroSectionProps> = ({ autoCounter, children }) => {
                 layout="fullWidth"
                 placeholder="none"
                 className="hero-background"
+                loading="lazy"
             />
             <div className="hero-content">
                 <h1 className="hero-title">Tavs ’vietējais’ jaunu auto
