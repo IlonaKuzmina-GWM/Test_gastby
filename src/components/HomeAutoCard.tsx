@@ -19,7 +19,11 @@ const HomeAutoCard: FC<HomeAutoCardProps> = React.memo(({ labels, gatsbyImageDat
         <div className="home-auto-card-wrapper">
             <Card border="light" style={{ width: '' }}>
                 <Nav.Link href={"/" + slug} >
-                    <GatsbyImage image={gatsbyImageData} alt={title} className="home-auto-card-image" />
+                    <GatsbyImage 
+                    image={gatsbyImageData} 
+                    alt={title} 
+                    className="home-auto-card-image" 
+                    />
                     {/* <img src={imagesLink} alt="" className="home-auto-card-image"/> */}
 
                     <Card.Body className="auto-card-content">

@@ -1,7 +1,7 @@
 .tooltip-wrapper {
   position: absolute;
-  bottom: 5%;
-  left: 5%;
+  bottom: 20%;
+  left: 10%;
 
   .btn {
     width: 55px;
@@ -25,10 +25,9 @@
   border: 1px solid $white;
   backdrop-filter: blur(2px);
   font-weight: 600;
-  font-size: 32px;
-  line-height: 38px;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
   text-align: center;
-
   color: $white;
 }
 

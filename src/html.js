@@ -12,35 +12,6 @@ export default function HTML(props) {
         <meta name="author" content="GWM" />
         <meta name="HandheldFriendly" content="true" />
         <meta name="MobileOptimized" content="320" />
-        {/* <link
-          rel="preload"
-          href="/fonts/WorkSans-Regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/WorkSans-Bold.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/WorkSans-Medium.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/WorkSans-SemiBold.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        ></link> */}
-
         {/* Use maximum-scale and user-scalable at your own risk. It disables pinch/zoom. Think about usability/accessibility before including. */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"/>
         {props.headComponents}

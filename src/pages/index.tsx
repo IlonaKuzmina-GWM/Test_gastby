@@ -11,6 +11,7 @@ import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
 
 import HomeAutoCard from '../components/HomeAutoCard';
+import HeroSection from '../components/HeroSection';
 
 type SearchFunction = (
   query: string,
@@ -86,72 +87,66 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
   return (
     <MainLayout>
-      <section className="hero-section">
-        <StaticImage
-          style={{ position: "absolute" }}
-          src={"../images/hero_image.png"}
-          alt={"Hero image"}
-          className={"hero-background-image"}
-          width={2000}
-          placeholder='blurred'
-        />
-        <div className="hero-content">
-          <h1 className="hero-title">Tavs ’vietējais’ jaunu auto
-            piedāvājuma portāls</h1>
-          <p>atrodi sev piemērotu auto ātri, vienkārši un
-            vēl papildus bla bla :D </p>
-          <form className="hero-search-form" action="" onSubmit={handleSearch}>
-            <input
-              type="search"
-              placeholder="Meklēt auto"
-              className="hero-search-input"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)} />
-            <button type="submit">
-              <StaticImage src={"../images/search.png"} alt={"Search"} />
-            </button>
-          </form>
-
-          <TooltipBoot text="Labākie piedāvājumi vienuviet" />
-        </div>
-
-        <div className="review-pop-up">
-          <StaticImage
-            style={{ position: "absolute" }}
-            src={"../images/review-img.png"}
-            alt={"Avatar"}
-            className={"review-avatar"}
-          />
-          <h3 className="review-name">Andris Bērziņš</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro beatae error laborum.</p>
-        </div>
-
-        <div className="car-counter d-flex align-items-center justify-content-center">
-          <h2>  {data.allWpCar.nodes.length} </h2>
-          <p>auto tavai <br /> izvēlei</p>
-        </div>
-
-        <div className="white-gradient"></div>
-      </section>
+      <HeroSection
+        autoCounter={data.allWpCar.nodes.length}>
+        <form className="hero-search-form" action="" onSubmit={handleSearch}>
+          <input
+            type="search"
+            placeholder="Meklēt auto"
+            className="hero-search-input"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)} />
+          <button type="submit">
+            <StaticImage src={"../images/search.png"} alt={"Search"} />
+          </button>
+        </form>
+      </HeroSection>
 
       <section className="item-section ">
         <div className="container-lg wrapper">
           <div className="item">
-            <StaticImage className="item-image" src={"../images/laiks.png"} alt={"Icon"} objectFit="contain"></StaticImage>
+            <StaticImage
+              className="item-image"
+              src={"../images/laiks.png"}
+              alt={"Icon"}
+              placeholder='blurred'
+              layout="fixed"
+              width={54}
+              height={59}
+            />
+
             <div className="item-content">
               <h3>Laiks ir nauda</h3>
               <p>Laika nav.. naudas arī nav..</p>
             </div>
           </div>
           <div className="item">
-            <StaticImage className="item-image" src={"../images/izdevigi.png"} alt={"Icon"} objectFit="contain"></StaticImage>
+            <StaticImage
+              className="item-image"
+              src={"../images/izdevigi.png"}
+              alt={"Icon"}
+              placeholder='blurred'
+              layout="fixed"
+              width={56}
+              height={64}
+            />
+
             <div className="item-content">
               <h3>Izvēlies izdevīgāko</h3>
               <p>Atrodi sev izdevīgāko auto</p>
             </div>
           </div>
           <div className="item">
-            <StaticImage className="item-image" src={"../images/ask-me.png"} alt={"Icon"} objectFit="contain"></StaticImage>
+            <StaticImage
+              className="item-image"
+              src={"../images/customer-service.svg"}
+              alt={"Icon"}
+              placeholder='blurred'
+              layout="fixed"
+              width={56}
+              height={56}
+            />
+
             <div className="item-content">
               <h3>Vēl kaut kas</h3>
               <p>Lorem Ipsums</p>
@@ -189,7 +184,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
               return <SwiperSlide key={car.id}>
                 <HomeAutoCard
-                gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                  gatsbyImageData={car.featuredImage.node.gatsbyImage}
                   // gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
                   title={car.title}
                   price={car.carInfo.carPrice}
@@ -293,8 +288,8 @@ query AllCarsDetails {
             fit: COVER
             formats: WEBP
             placeholder: BLURRED
-            width: 976
-            height: 549
+            width: 386
+            height: 217
           )
         }
       }

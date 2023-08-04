@@ -1,140 +1,3 @@
-.hero-section {
-  position: relative;
-  height: 100vh;
-
-  .hero-background-image {
-    height: 100vh;
-    z-index: 0;
-  }
-
-  .hero-content {
-    padding: 150px 0 50px;
-    width: 80%;
-    position: relative;
-    z-index: 1;
-    color: $white;
-    text-align: center;
-    margin: 0 auto;
-
-    .hero-title {
-      font-size: 75px;
-      font-weight: 700;
-      line-height: 85px;
-      margin-bottom: 20px;
-    }
-
-    .hero-search-form {
-      display: flex;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid $white;
-      backdrop-filter: blur(10px);
-      border-radius: 50px;
-      padding: 2px;
-      font-size: 20px;
-      color: $white;
-      margin-top: 40px;
-      max-width: 463px;
-      width: 100%;
-      margin: 40px auto;
-      cursor: pointer;
-
-      .hero-search-input {
-        border: none;
-        background: transparent;
-        margin: 0;
-        padding: 12px 8px 12px 30px;
-        font-size: 20px;
-        color: $text_secondary;
-        border: 1px solid transparent;
-        border-radius: inherit;
-        width: 100%;
-        color: $white;
-      }
-
-      .hero-search-input::placeholder {
-        color: $white;
-      }
-
-      button {
-        background: #525a55;
-        margin: 10px 12px;
-        border-radius: 50%;
-        min-width: 50px;
-        width: 50px;
-        height: 50px;
-        border: none;
-        padding-top: 7px;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .white-gradient {
-    position: absolute;
-    width: 100%;
-    height: 100px;
-    bottom: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $white 83.65%);
-  }
-
-  .review-pop-up {
-    position: absolute;
-    max-width: 304px;
-    padding: 22px 30px;
-    font-size: 16px;
-    color: $white;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid $white;
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    bottom: 15%;
-    right: 2%;
-    text-align: start;
-
-    .review-avatar {
-      position: absolute;
-      top: -30px;
-      right: 0;
-      width: 62px;
-      height: 62px;
-    }
-
-    .review-name {
-      font-size: 24px;
-    }
-  }
-
-  .car-counter {
-    position: absolute;
-    max-width: 200px;
-    padding: 10px 30px;
-    font-size: 16px;
-    line-height: 18px;
-    color: $white;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid $white;
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    bottom: 10%;
-    right: 0;
-    left: 0;
-    margin: 0 auto;
-    text-align: center;
-
-    h2 {
-      font-size: 45px;
-      font-weight: 700;
-      margin-bottom: 0;
-      margin-right: 10px;
-    }
-
-    p {
-      margin: 0px;
-    }
-  }
-}
-
 .item-section {
   padding: 60px 0;
   .wrapper {
@@ -291,12 +154,6 @@
 }
 
 @media only screen and (max-width: 1320px) {
-  .hero-section {
-    .hero-content {
-      padding: 150px 0 50px;
-    }
-  }
-
   .latest-auto-section {
     .auto-card-container {
       .swiper-slide {
@@ -307,68 +164,6 @@
 }
 
 @media only screen and (max-width: 1100px) {
-  .hero-section {
-    .hero-content {
-      padding: 100px 0 50px;
-      width: 90%;
-
-      .hero-title {
-        font-size: 52px;
-        line-height: 56px;
-      }
-
-      .hero-search-form {
-        display: flex;
-        justify-content: space-between;
-        background: rgba(255, 255, 255, 0.2);
-        border: 1px solid $white;
-        backdrop-filter: blur(10px);
-        border-radius: 50px;
-        padding: 2px;
-        font-size: 20px;
-        color: $white;
-        margin-top: 40px;
-        max-width: 463px;
-        width: 100%;
-        margin: 40px auto;
-
-        .hero-search-input {
-          border: none;
-          background: transparent;
-          margin: 0;
-          padding: 12px 8px 12px 30px;
-          font-size: 20px;
-          color: $text_secondary;
-          border: 1px solid transparent;
-          border-radius: inherit;
-          width: 100%;
-          color: $white;
-        }
-
-        .hero-search-input::placeholder {
-          color: $white;
-        }
-
-        button {
-          background: #525a55;
-          margin: 10px 12px;
-          border-radius: 50%;
-          min-width: 50px;
-          width: 50px;
-          height: 50px;
-          border: none;
-          padding-top: 7px;
-          cursor: pointer;
-        }
-      }
-    }
-
-    .review-pop-up {
-      max-width: 304px;
-      padding: 22px 30px;
-    }
-  }
-
   .item-section {
     .wrapper {
       flex-direction: row;
@@ -382,6 +177,10 @@
   }
 
   .one-more-section {
+    .item {
+      height: 550px;
+    }
+
     .item p {
       font-size: 52px;
       line-height: 56px;
@@ -398,49 +197,6 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .hero-section {
-    .hero-background-image img {
-      object-position: right !important;
-    }
-
-    .hero-content {
-      .hero-search-form {
-        display: flex;
-        justify-content: space-between;
-        background: rgba(255, 255, 255, 0.2);
-        border: 1px solid $white;
-        backdrop-filter: blur(10px);
-        border-radius: 50px;
-        padding: 2px;
-        font-size: 20px;
-        color: $white;
-        margin-top: 40px;
-        max-width: 463px;
-        width: 100%;
-        margin: 40px auto;
-        cursor: pointer;
-
-        .hero-search-input {
-          padding: 8px 8px 8px 30px;
-          font-size: 18px;
-        }
-
-        button {
-          min-width: 30px;
-          width: 30px;
-          height: 30px;
-        }
-      }
-      .hero-title {
-        font-size: 35px;
-        line-height: 40px;
-      }
-    }
-    .review-pop-up {
-      display: none;
-    }
-  }
-
   .latest-auto-section {
     padding: 0 0 0 15px;
 
@@ -455,6 +211,10 @@
     .second-items-container {
       flex-direction: column-reverse;
     }
+
+    .item {
+      height: 350px;
+    }
   }
 
   .latest-auto-section {
@@ -467,28 +227,11 @@
 }
 
 @media only screen and (max-width: 425px) {
-  .hero-section {
-    .hero-content {
-      padding: 100px 20px 50px;
-      width: 100%;
-
-      .hero-title {
-        font-size: 38px;
-        line-height: 42px;
-      }
-    }
-  }
-
   .item-section {
     .item {
       display: flex;
       margin: 10px;
       width: 100%;
-    }
-
-    .item-image {
-      max-width: 50px;
-      width: 50px;
     }
 
     .item-content {
