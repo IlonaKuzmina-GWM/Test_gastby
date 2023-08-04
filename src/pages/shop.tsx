@@ -133,8 +133,8 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         {carsToRender.map((car: Car) => (
                             <Col key={car.id} className="px-1">
                                 <ShopAutoCard
+                                    gatsbyImageData={car.featuredImage.node.gatsbyImage}
                                     slug={car.slug}
-                                    gatsbyImageData={car.featuredImage?.node?.gatsbyImage ?? null}
                                     title={car.title}
                                     price={car.carInfo.carPrice} />
                             </Col>
@@ -143,7 +143,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                     </Row>
 
                     <Row xs={12} className="g-4 mt-5">
-                        {filteredCars.length < 1 || carsToRender.length <1 && <div className="d-flex justify-content-center align-items-center">
+                        {filteredCars.length < 1 || carsToRender.length < 1 && <div className="d-flex justify-content-center align-items-center">
                             <h3 className="text-center">Diemžēl pēc izvēlētiem kriterijiem nekas nav atrasts</h3>
                         </div>}
                     </Row>
@@ -175,8 +175,8 @@ query AllCarsDetails {
             fit: COVER
             formats: WEBP
             placeholder: BLURRED
-            width: 350
-            height: 200
+            width: 302
+            height: 172
           )
         }
       }

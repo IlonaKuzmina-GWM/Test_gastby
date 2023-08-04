@@ -36,7 +36,7 @@ const HeroSection: FC<HeroSectionProps> = ({ autoCounter, children }) => {
                     width={65}
                     height={65}
                 />
-                <h3 className="review-name">Andris Bērziņš</h3>
+                <h2 className="review-name">Andris Bērziņš</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro beatae error laborum.</p>
             </div>
 

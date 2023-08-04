@@ -22,10 +22,9 @@ const HomeAutoCard: FC<HomeAutoCardProps> = React.memo(({ labels, gatsbyImageDat
                     <GatsbyImage 
                     image={gatsbyImageData} 
                     alt={title} 
+                    loading="lazy"
                     className="home-auto-card-image" 
                     />
-                    {/* <img src={imagesLink} alt="" className="home-auto-card-image"/> */}
-
                     <Card.Body className="auto-card-content">
                         <Card.Title className="auto-card-title">{title}</Card.Title>
                         <Card.Text className="auto-card-price">€ {price}</Card.Text>

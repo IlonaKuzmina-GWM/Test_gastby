@@ -200,10 +200,29 @@
   .latest-auto-section {
     padding: 0 0 0 15px;
 
-    h2 {
+    .latest-auto-title {
+      padding: 0;
       margin: 0 auto 20px;
-      text-align: center;
-      margin-bottom: 20px;
+      h2 {
+        text-align: start;
+        margin-bottom: 20px;
+      }
+
+      .arrow-wrapper {
+        .arrow {
+          max-width: 20px;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .auto-card-container {
+      .swiper-slide {
+        width: 50%;
+      }
     }
   }
 
@@ -214,14 +233,6 @@
 
     .item {
       height: 350px;
-    }
-  }
-
-  .latest-auto-section {
-    .auto-card-container {
-      .swiper-slide {
-        width: 50%;
-      }
     }
   }
 }
@@ -255,10 +266,6 @@
   }
 
   .latest-auto-section {
-    h2 {
-      text-align: center;
-    }
-
     .auto-card-container {
       .swiper-slide {
         width: 80%;
