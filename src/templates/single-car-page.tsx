@@ -10,7 +10,8 @@ import AndroidAuto from "../images/icons/AndroidAuto.svg";
 import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
 import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
-import { Car } from "../types/allWpCarTypes";
+import { Car, CarEquipment } from "../types/allWpCarTypes";
+import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
 
 type SingleCarProps = {
     pageContext: Car;
@@ -38,9 +39,11 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
   `);
     const [isElementorLocationFooterVisible, setIsElementorLocationFooterVisible] = useState(false);
     const singleCarInformation = pageContext;
+    const carEquipment = singleCarInformation.carEquipment;
     const singleCarGallery = singleCarInformation.carInfo.carGallery;
     const countImagesInGallery = singleCarGallery.length;
     const [showPopup, setShowPopUp] = useState(false);
+    const [carSpecificationPopUp, setCarSpecificationPopUp] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
     useEffect(() => {
@@ -117,6 +120,16 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         setShowPopUp(true);
     }
 
+    // const [selectedCar, setSelectedCar] = useState({} as CarEquipment);;
+
+    // const openPopup = (carInfo: CarEquipment) => {
+    //     setCarSpecificationPopUp(true);
+    // };
+
+    const closeSpecPopup = (closeSpecPopup:boolean) => {
+        setCarSpecificationPopUp(closeSpecPopup)
+    };
+
     return (
         <MainLayout>
             <Container className="single-car-container">
@@ -154,7 +167,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
                         <Row className="mb-5">
                             <Col className="border-top border-dark-subtle">
-                                <h3 className="mb-3">Vairāk par {singleCarInformation.title} </h3>
+                                <h3 className="mb-3">{singleCarInformation.title} specifikācija</h3>
 
                                 <Row md={2}>
                                     {renderMainCarCategory("Durvju skaits: ", 273)}
@@ -166,7 +179,11 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
                                 <Row>
                                     <Nav.Link href="#allFeatures">
-                                        <Button name={"Visas funkcijas un specifikācijas"} size={"small"} type={"outline"}></Button>
+                                        <Button
+                                            name={"Skatīt aprīkojumu"}
+                                            size={"small"}
+                                            type={"outline"}
+                                            onClickHandler={() => setCarSpecificationPopUp(true)} />
                                     </Nav.Link>
                                 </Row>
                             </Col>
@@ -179,21 +196,12 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             </Col>
                         </Row>
 
-                        <Row className="mb-5" id="allFeatures">
-                            <Col className="border-top border-dark-subtle">
-                                <h3 className="mb-3">Visas funkcijas un specifikācijas</h3>
-                                <div>
-                                    Jādomā vēl ko te saņemsim no WP.
-                                </div>
-                            </Col>
-                        </Row>
-
                         <Row className="mb-4">
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3">Rekomendējam tieši tev</h3>
                             </Col>
                             <Row md={3}>
-                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: Car, index:number) => (
+                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: Car, index: number) => (
                                     <Col className="mb-3" key={index}>
                                         <ShopAutoCard
                                             gatsbyImageData={car.featuredImage.node.gatsbyImage}
@@ -222,6 +230,13 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                         images={singleCarGallery}
                         selectedIndex={selectedImageIndex}
                         onClose={() => setShowPopUp(false)}
+                    />
+                )}
+
+                {carSpecificationPopUp && (
+                    <CarSpecificationPopUp
+                        carEquipment={carEquipment}
+                        onCloseHandler={closeSpecPopup}
                     />
                 )}
             </Container>

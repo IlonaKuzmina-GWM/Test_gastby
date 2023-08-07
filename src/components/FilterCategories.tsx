@@ -30,13 +30,27 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     const data = useStaticQuery(graphql`
      {
         allWpCar {
-    nodes {
-      title
-      carInfo {
-        atrasanasVieta
-        autoStavoklis
-        carPrice
-        dzinejs
+            nodes {
+                title
+                carInfo {
+                    carPrice
+                    atrasanasVieta
+                    atrumkarba
+                    autoStavoklis
+                    dzinejs
+                    durvjuSkaits
+                    gads
+                    krasa
+                    marka
+        piedzina
+        virsbuvesTips
+      }
+      carEquipment {
+        drosiba
+        elektronika
+        fieldGroupName
+        hiFi
+        papildaprikojums
       }
     }
   }
@@ -118,16 +132,97 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     //Te es sāku pāŗtaisīt visa koda loģiku. Tagad no WP visas auto  detaļas nāks caur ACF, nevis categorijām
     //tādēļ jāmaina viss kods, visā projektā, adaptējot jauniem datiem, filtrs jāraksta no nulles. 
     //
-    const uniqueCarInfoValues = data.allWpCar.nodes.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
-        const carInfo = car.carInfo;
+
+    // const replacements = {
+    //     "atrasanasVieta": "Atrašanās vieta",
+    //     "atrumkarba": "Ātrumkārba",
+    //     "autoStavoklis": "Auto stāvoklis",
+    //     "virsbuvesTips": "Virsbūves tips",
+    //     "piedzina": "Piedziņa",
+    //     "marka": "Marka",
+    //     "krasa": "Krāsa",
+    //     "gads": "Gads",
+    //     "dzinejs": "Dzinējs",
+    //     "durvjuSkaits": "Durvju skaits",
+    //     "carPrice": "Cena",
+    //     "atrasanas Vieta": "Atrašanās vieta",
+    // };
+
+    // const uniqueCarInfoValues = data.allWpCar.nodes.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
+    //     const carInfo = car.carInfo;
+    //     const transformedCarInfo = {};
+
+    //     Object.keys(carInfo).forEach((key) => {
+    //         if (!result[key]) {
+    //             result[key] = [];
+    //         }
+
+    //         const valuesArray = result[key];
+    //         const value = carInfo[key];
+    //         let transformedValue = value;
+
+    //         if (!valuesArray.some((existingValue: any) => JSON.stringify(existingValue) === JSON.stringify(value))) {
+    //             valuesArray.push(value);
+    //         }
+    //     });
+
+    //     return result;
+    // }, {});
+
+    type CarInfoProperty = keyof Replacements;
+
+    type Replacements = {
+        atrasanasVieta: string;
+        atrumkarba: string;
+        autoStavoklis: string;
+        virsbuvesTips: string;
+        piedzina: string;
+        marka: string;
+        krasa: string;
+        gads: string;
+        dzinejs: string;
+        durvjuSkaits: string;
+        carPrice: string;
+    };
+
+    const replacements: Replacements = {
+        "atrasanasVieta": "Atrašanās vieta",
+        "atrumkarba": "Ātrumkārba",
+        "autoStavoklis": "Auto stāvoklis",
+        "virsbuvesTips": "Virsbūves tips",
+        "piedzina": "Piedziņa",
+        "marka": "Marka",
+        "krasa": "Krāsa",
+        "gads": "Gads",
+        "dzinejs": "Dzinējs",
+        "durvjuSkaits": "Durvju skaits",
+        "carPrice": "Cena",
+    };
+
+    const transformCarInfo = (carInfo: { [x: string]: any; }) => {
+        // const transformedCarInfo = {};
+        const transformedCarInfo: Record<string, any> = {};
 
         Object.keys(carInfo).forEach((key) => {
+            const value = carInfo[key as CarInfoProperty];
+            const transformedKey = replacements[key as CarInfoProperty] || key;
+            transformedCarInfo[transformedKey] = value;
+        });
+
+        return transformedCarInfo;
+    };
+
+    const uniqueCarInfoValues = data.allWpCar.nodes.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
+        const carInfo = car.carInfo;
+        const transformedCarInfo = transformCarInfo(carInfo);
+
+        Object.keys(transformedCarInfo).forEach((key) => {
             if (!result[key]) {
                 result[key] = [];
             }
 
             const valuesArray = result[key];
-            const value = carInfo[key];
+            const value = transformedCarInfo[key];
 
             if (!valuesArray.some((existingValue: any) => JSON.stringify(existingValue) === JSON.stringify(value))) {
                 valuesArray.push(value);
@@ -135,9 +230,9 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         });
 
         return result;
-    }, {})
+    }, {});
 
-    console.log(uniqueCarInfoValues);
+
 
 
     return (
@@ -187,7 +282,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                         </Col>
                     </Row>
 
-                    {Object.values(uniqueCategories).map((category: any, index: number) => (
+                    {/* {Object.values(uniqueCategories).map((category: any, index: number) => (
                         <Accordion.Item key={index} eventKey={index.toString()}>
                             <Accordion.Header className='accordion-title'>{category.wpParent.node.name}</Accordion.Header>
                             <Accordion.Body>
@@ -207,9 +302,9 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                 ))}
                             </Accordion.Body>
                         </Accordion.Item>
-                    ))}
+                    ))} */}
 
-                    {/* <Accordion>
+                    <Accordion>
                         {Object.keys(uniqueCarInfoValues).map((key, index) => (
                             <Accordion.Item key={index} eventKey={index.toString()}>
                                 <Accordion.Header className='accordion-title'>{key}</Accordion.Header>
@@ -217,22 +312,48 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                     {uniqueCarInfoValues[key].map((valueName: any, valueIndex: any) => (
                                         <Form key={valueIndex}>
                                             <Form.Group className="" controlId={valueName}>
-                                                <Form.Check
-                                                    type="checkbox"
-                                                    id={valueName}
-                                                    label={valueName}
-                                                    value={valueName}
-                                                    name={valueName}
-                                                    onChange={(e) => { filteredCategoryHandler(e.target.value); }}
-                                                />
+                                                {key === "Krāsa" ? (
+                                                    <div className='form-check'>
+                                                        <input
+                                                            type="checkbox"
+                                                            id={valueName}
+                                                            // label={valueName}
+                                                            value={valueName}
+                                                            name={valueName}
+                                                            className='form-check-input'
+                                                        />
+                                                        <label
+                                                            htmlFor={valueName}
+                                                            className='form-check-label'>
+                                                            <span
+                                                                style={{
+                                                                    display: "inline-block",
+                                                                    width: "20px",
+                                                                    height: "20px",
+                                                                    backgroundColor: valueName,
+                                                                    marginLeft: "10px",
+                                                                }}
+                                                            ></span></label>
+                                                    </div>
+                                                ) : (
+                                                    <Form.Check
+                                                        type="checkbox"
+                                                        id={valueName}
+                                                        label={valueName}
+                                                        value={valueName}
+                                                        name={valueName}
+                                                        onChange={(e) => {
+                                                            filteredCategoryHandler(e.target.value);
+                                                        }}
+                                                    />
+                                                )}
                                             </Form.Group>
                                         </Form>
                                     ))}
                                 </Accordion.Body>
                             </Accordion.Item>
                         ))}
-                    </Accordion> */}
-
+                    </Accordion>
                 </div>
             </div>
         </Accordion >);

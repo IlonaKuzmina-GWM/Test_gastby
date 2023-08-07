@@ -22,6 +22,13 @@ type CarInfo = {
   carGallery: CarGalleryImage[];
 }
 
+export type CarEquipment = {
+  drosiba: string[];
+  elektronika: string[];
+  hiFi: string[];
+  papildaprikojums: string[];
+}
+
 export type Car = {
   content: string;
   carCategories: {
@@ -32,6 +39,7 @@ export type Car = {
   featuredImage: FeaturedImage;
   carInfo: CarInfo;
   id: string;
+  carEquipment: CarEquipment;
 }
 
 export type AllWpCar = {

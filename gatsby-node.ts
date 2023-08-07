@@ -29,6 +29,22 @@ exports.createPages = async ({ graphql, actions }: any) => {
             carGallery {
               gatsbyImage(formats: WEBP, placeholder: BLURRED, width: 976, height: 549)
             }
+            atrasanasVieta
+            atrumkarba
+            autoStavoklis
+            virsbuvesTips
+            piedzina
+            marka
+            krasa
+            gads
+            dzinejs
+            durvjuSkaits
+          }
+          carEquipment {
+            drosiba
+            elektronika
+            hiFi
+            papildaprikojums
           }
         }
       }
