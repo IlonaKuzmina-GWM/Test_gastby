@@ -14,16 +14,15 @@ import Button from "./Button";
 
 type CheckoutBoxProps = {
     title: string;
-    carType: React.ReactNode;
+    carType: string;
     price: number;
-    brokerName: React.ReactNode;
-    brokerSlug: number;
-    carCondition: React.ReactElement;
+    brokerName: string;
+    carCondition: string;
     isElementorLocationFooterVisible: boolean;
     slug: string;
 }
 
-const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, brokerSlug, carCondition, isElementorLocationFooterVisible }) => {
+const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible }) => {
     const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
     const [shareBlockShown, setShareBlockShown] = useState(false);
     const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
@@ -48,7 +47,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                     className="colapse-button mb-3"
                     onClick={toggleCheckoutIcons}></button>
                 <Row>
-                    <Col xs={8}>
+                    <Col xs={8} className="mb-2">
                         <h5>{title}</h5>
                         <span className="version-type-wrapper">{carType}</span>
                     </Col>
@@ -74,7 +73,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                                 <Link to={`/shop`} className="nav-link">
                                     <div className="d-flex justify-content-center align-items-center mt-2">
                                         <img className="mb-3" src={PinsBroker} width={15} height={15} alt="pin" />
-                                        {brokerName}
+                                       <span className="mb-3">{brokerName}</span>
                                     </div>
                                 </Link>
                             </Col>

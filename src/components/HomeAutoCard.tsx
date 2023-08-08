@@ -10,20 +10,20 @@ type HomeAutoCardProps = {
     children?: JSX.Element;
     labels?: CarCategory[];
     slug?: string;
-    imagesLink?:string;
+    imagesLink?: string;
 }
 
-const HomeAutoCard: FC<HomeAutoCardProps> = React.memo(({ labels, gatsbyImageData, title, price, children, slug,imagesLink }) => {
+const HomeAutoCard: FC<HomeAutoCardProps> = React.memo(({ labels, gatsbyImageData, title, price, children, slug, imagesLink }) => {
 
     return (
         <div className="home-auto-card-wrapper">
             <Card border="light" style={{ width: '' }}>
                 <Nav.Link href={"/" + slug} >
-                    <GatsbyImage 
-                    image={gatsbyImageData} 
-                    alt={title} 
-                    loading="lazy"
-                    className="home-auto-card-image" 
+                    <GatsbyImage
+                        image={gatsbyImageData}
+                        alt={title}
+                        loading="lazy"
+                        className="home-auto-card-image"
                     />
                     <Card.Body className="auto-card-content">
                         <Card.Title className="auto-card-title">{title}</Card.Title>

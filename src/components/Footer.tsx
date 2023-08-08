@@ -1,23 +1,30 @@
-import { Link, graphql, useStaticQuery } from "gatsby";
-import React, { useState } from "react";
+import { Link } from "gatsby";
+import React from "react";
 import Button from "./Button";
 
+import useAllWpCarData from "../queries/useAllWpCarData";
 
 const Footer = ({ }) => {
-    const [dealer,] = useState(["Dealer One", "Dealer Two", "Dealer Three"])
+    const dealers = useAllWpCarData();
 
-    const data = useStaticQuery(graphql`
-    {
-     allWpCarCategory {
-       nodes {
-        wpChildren {
-        nodes {
-          name
-        }
-      }
-       }
-     }
-   }`)
+    const uniqueDealersNames = dealers.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
+        const carInfo = car.carInfo;
+
+        Object.keys(carInfo).forEach((key) => {
+            if (!result[key]) {
+                result[key] = [];
+            }
+
+            const valuesArray = result[key];
+            const value = carInfo[key];
+
+            if (!valuesArray.some((existingValue: any) => JSON.stringify(existingValue) === JSON.stringify(value))) {
+                valuesArray.push(value);
+            }
+        });
+
+        return result;
+    }, {});
 
     return (
         <div className="footer container">
@@ -36,8 +43,8 @@ const Footer = ({ }) => {
 
                 <div className="column colum-three wrapper">
                     <h3>Dīleri</h3>
-                    {dealer.map((link, index) => (
-                        <Link to="/" className="">{link}</Link>
+                    {uniqueDealersNames.dileris.map((dileris: string, index: number) => (
+                        <Link to="/" className="" key={index}>{dileris}</Link>
                     ))}
                 </div>
 

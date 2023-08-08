@@ -4,10 +4,10 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
 type TooltipBootProps = {
-    text:string;
+    text: string;
 }
 
-const TooltipBoot:FC<TooltipBootProps> = ({text}) => {
+const TooltipBoot: FC<TooltipBootProps> = ({ text }) => {
 
     const popover = (
         <Popover id="popover-basic" className='popover'>

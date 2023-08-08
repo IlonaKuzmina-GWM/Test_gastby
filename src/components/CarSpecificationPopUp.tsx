@@ -28,7 +28,7 @@ const CarSpecificationPopUp: FC<carSpecificationPopUpProps> = ({ carEquipment, o
         <div className="popup-overlay" onClick={handleOverlayClick}>
             <div className="popup-content">
 
-                <div className='close-filters-btn-wrapper' onClick={() => onCloseHandler(false)}>
+                <div onClick={() => onCloseHandler(false)}>
                     <StaticImage
                         className='popup-close-button'
                         src={"../images/cancel.svg"}

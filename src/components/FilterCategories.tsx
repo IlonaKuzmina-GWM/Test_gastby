@@ -6,6 +6,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import { CarCategory } from '../types/allWpCategoryTypes';
 import Button from './Button';
 
+import useAllWpCarData from "../queries/useAllWpCarData";
 
 type FilterCategoriesProps = {
     eventkey: number;
@@ -19,7 +20,6 @@ type FilterCategoriesProps = {
 }
 
 const FilterCategories: FC<FilterCategoriesProps> = ({
-    eventkey,
     filteredParamaterCounter,
     showFilters,
     onCloseFilters,
@@ -27,58 +27,61 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     filteredCategoryHandler,
     minPriceRangeChangeHandler,
     maxPriceRangeChangeHandler }) => {
-    const data = useStaticQuery(graphql`
-     {
-        allWpCar {
-            nodes {
-                title
-                carInfo {
-                    carPrice
-                    atrasanasVieta
-                    atrumkarba
-                    autoStavoklis
-                    dzinejs
-                    durvjuSkaits
-                    gads
-                    krasa
-                    marka
-        piedzina
-        virsbuvesTips
-      }
-      carEquipment {
-        drosiba
-        elektronika
-        fieldGroupName
-        hiFi
-        papildaprikojums
-      }
-    }
-  }
-      allWpCarCategory {
-        nodes {
-          wpParent {
-            node {
-              name
-              wpChildren {
-                nodes {
-                  name
-                  slug
-                  databaseId
-                  cars {
-                    nodes {
-                      databaseId
-                    }
-                  }
-                }
-              }
-              databaseId
-            }
-          }
-        }
-      }
-    }`)
+//     const data = useStaticQuery(graphql`
+//      {
+//         allWpCar {
+//             nodes {
+//                 title
+//                 carInfo {
+//                     carPrice
+//                     atrasanasVieta
+//                     atrumkarba
+//                     autoStavoklis
+//                     dzinejs
+//                     durvjuSkaits
+//                     gads
+//                     krasa
+//                     marka
+//         piedzina
+//         virsbuvesTips
+//       }
+//       carEquipment {
+//         drosiba
+//         elektronika
+//         fieldGroupName
+//         hiFi
+//         papildaprikojums
+//       }
+//     }
+//   }
+//     #   allWpCarCategory {
+//     #     nodes {
+//     #       wpParent {
+//     #         node {
+//     #           name
+//     #           wpChildren {
+//     #             nodes {
+//     #               name
+//     #               slug
+//     #               databaseId
+//     #               cars {
+//     #                 nodes {
+//     #                   databaseId
+//     #                 }
+//     #               }
+//     #             }
+//     #           }
+//     #           databaseId
+//     #         }
+//     #       }
+//     #     }
+//     #   }
+//     }`)
 
-    const filters = data.allWpCarCategory.nodes;
+    // const filters = data.allWpCarCategory.nodes;
+    
+    const data = useAllWpCarData();
+
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
 
@@ -92,33 +95,36 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         maxPriceRangeChangeHandler(parseInt(e.target.value));
     };
 
-    const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: {
-        wpParent: {
-            node: {
-                [x: string]: any; databaseId: string | number;
-            }; wpChildren: { nodes: CarCategory[]; };
-        };
-    }) => {
-        if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
-            unique[category.wpParent.node.databaseId] = {
-                ...category,
-                wpParent: {
-                    ...category.wpParent,
-                    node: {
-                        ...category.wpParent.node,
-                        wpChildren: {
-                            ...category.wpParent.node.wpChildren,
-                            nodes: category.wpParent.node.wpChildren.nodes.map((node: CarCategory) => ({
-                                ...node,
-                                isChecked: false
-                            }))
-                        }
-                    }
-                }
-            };
-        }
-        return unique;
-    }, {});
+    // const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: {
+    //     wpParent: {
+    //         node: {
+    //             [x: string]: any; databaseId: string | number;
+    //         }; wpChildren: { nodes: CarCategory[]; };
+    //     };
+    // }) => {
+    //     if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
+    //         unique[category.wpParent.node.databaseId] = {
+    //             ...category,
+    //             wpParent: {
+    //                 ...category.wpParent,
+    //                 node: {
+    //                     ...category.wpParent.node,
+    //                     wpChildren: {
+    //                         ...category.wpParent.node.wpChildren,
+    //                         nodes: category.wpParent.node.wpChildren.nodes.map((node: CarCategory) => ({
+    //                             ...node,
+    //                             isChecked: false
+    //                         }))
+    //                     }
+    //                 }
+    //             }
+    //         };
+    //     }
+    //     return unique;
+    // }, {});
+
+    //Te es sāku pāŗtaisīt visa koda loģiku. Tagad no WP visas auto  detaļas nāks caur ACF, nevis categorijām
+    //tādēļ jāmaina viss kods, visā projektā, adaptējot jauniem datiem, filtrs jāraksta no nulles. 
 
     const uncheckAllCheckboxes = () => {
         const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
@@ -126,48 +132,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
             checkbox.checked = false;
         });
     };
-
-
-
-    //Te es sāku pāŗtaisīt visa koda loģiku. Tagad no WP visas auto  detaļas nāks caur ACF, nevis categorijām
-    //tādēļ jāmaina viss kods, visā projektā, adaptējot jauniem datiem, filtrs jāraksta no nulles. 
-    //
-
-    // const replacements = {
-    //     "atrasanasVieta": "Atrašanās vieta",
-    //     "atrumkarba": "Ātrumkārba",
-    //     "autoStavoklis": "Auto stāvoklis",
-    //     "virsbuvesTips": "Virsbūves tips",
-    //     "piedzina": "Piedziņa",
-    //     "marka": "Marka",
-    //     "krasa": "Krāsa",
-    //     "gads": "Gads",
-    //     "dzinejs": "Dzinējs",
-    //     "durvjuSkaits": "Durvju skaits",
-    //     "carPrice": "Cena",
-    //     "atrasanas Vieta": "Atrašanās vieta",
-    // };
-
-    // const uniqueCarInfoValues = data.allWpCar.nodes.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
-    //     const carInfo = car.carInfo;
-    //     const transformedCarInfo = {};
-
-    //     Object.keys(carInfo).forEach((key) => {
-    //         if (!result[key]) {
-    //             result[key] = [];
-    //         }
-
-    //         const valuesArray = result[key];
-    //         const value = carInfo[key];
-    //         let transformedValue = value;
-
-    //         if (!valuesArray.some((existingValue: any) => JSON.stringify(existingValue) === JSON.stringify(value))) {
-    //             valuesArray.push(value);
-    //         }
-    //     });
-
-    //     return result;
-    // }, {});
 
     type CarInfoProperty = keyof Replacements;
 
@@ -183,6 +147,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         dzinejs: string;
         durvjuSkaits: string;
         carPrice: string;
+        dileris: string;
     };
 
     const replacements: Replacements = {
@@ -197,10 +162,15 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         "dzinejs": "Dzinējs",
         "durvjuSkaits": "Durvju skaits",
         "carPrice": "Cena",
+        "dileris": "Dīleris",
     };
 
     const transformCarInfo = (carInfo: { [x: string]: any; }) => {
-        // const transformedCarInfo = {};
+
+        if (carInfo.hasOwnProperty("carPrice")) {
+            delete carInfo["carPrice"];
+        }
+
         const transformedCarInfo: Record<string, any> = {};
 
         Object.keys(carInfo).forEach((key) => {
@@ -212,7 +182,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         return transformedCarInfo;
     };
 
-    const uniqueCarInfoValues = data.allWpCar.nodes.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
+    const uniqueCarInfoValues = data.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
         const carInfo = car.carInfo;
         const transformedCarInfo = transformCarInfo(carInfo);
 
@@ -231,9 +201,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
         return result;
     }, {});
-
-
-
 
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
@@ -309,44 +276,48 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                             <Accordion.Item key={index} eventKey={index.toString()}>
                                 <Accordion.Header className='accordion-title'>{key}</Accordion.Header>
                                 <Accordion.Body>
-                                    {uniqueCarInfoValues[key].map((valueName: any, valueIndex: any) => (
+                                    {uniqueCarInfoValues[key].map((valueName: string | number, valueIndex: number) => (
                                         <Form key={valueIndex}>
-                                            <Form.Group className="" controlId={valueName}>
-                                                {key === "Krāsa" ? (
-                                                    <div className='form-check'>
-                                                        <input
+                                            <Form.Group className="" controlId={valueName.toString()}>
+                                                {key === "Krāsa"
+                                                    ? (
+                                                        <div className='form-check'>
+                                                            <input
+                                                                type="checkbox"
+                                                                id={valueName.toString()}
+                                                                // label={valueName}
+                                                                value={valueName}
+                                                                name={valueName.toString()}
+                                                                className='form-check-input color-checkbox'
+                                                                onChange={(e) => { filteredCategoryHandler(e.target.value) }}
+                                                            />
+                                                            <label
+                                                                htmlFor={valueName.toString()}
+                                                                className='form-check-label'>
+                                                                <span
+                                                                    style={{
+                                                                        display: "inline-block",
+                                                                        width: "90%",
+                                                                        height: "20px",
+                                                                        backgroundColor: valueName.toString(),
+                                                                        marginLeft: "10px",
+                                                                        marginTop: "3px",
+                                                                        borderRadius: "8px"
+                                                                    }} />
+                                                            </label>
+                                                        </div>
+                                                    ) : (
+                                                        <Form.Check
                                                             type="checkbox"
-                                                            id={valueName}
-                                                            // label={valueName}
+                                                            id={valueName.toString()}
+                                                            label={valueName}
                                                             value={valueName}
-                                                            name={valueName}
-                                                            className='form-check-input'
+                                                            name={valueName.toString()}
+                                                            onChange={(e) => {
+                                                                filteredCategoryHandler(e.target.value)
+                                                            }}
                                                         />
-                                                        <label
-                                                            htmlFor={valueName}
-                                                            className='form-check-label'>
-                                                            <span
-                                                                style={{
-                                                                    display: "inline-block",
-                                                                    width: "20px",
-                                                                    height: "20px",
-                                                                    backgroundColor: valueName,
-                                                                    marginLeft: "10px",
-                                                                }}
-                                                            ></span></label>
-                                                    </div>
-                                                ) : (
-                                                    <Form.Check
-                                                        type="checkbox"
-                                                        id={valueName}
-                                                        label={valueName}
-                                                        value={valueName}
-                                                        name={valueName}
-                                                        onChange={(e) => {
-                                                            filteredCategoryHandler(e.target.value);
-                                                        }}
-                                                    />
-                                                )}
+                                                    )}
                                             </Form.Group>
                                         </Form>
                                     ))}

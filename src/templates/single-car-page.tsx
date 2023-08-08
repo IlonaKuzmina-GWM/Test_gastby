@@ -1,4 +1,4 @@
-import { HeadFC, graphql, useStaticQuery } from "gatsby";
+import { HeadFC } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import React, { FC, useEffect, useState } from "react";
 import { Carousel, Col, Container, Nav, Row } from "react-bootstrap";
@@ -10,33 +10,18 @@ import AndroidAuto from "../images/icons/AndroidAuto.svg";
 import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
 import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
-import { Car, CarEquipment } from "../types/allWpCarTypes";
+import { Car } from "../types/allWpCarTypes";
 import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
+
+import useAllWpCarData from "../queries/useAllWpCarData";
 
 type SingleCarProps = {
     pageContext: Car;
 };
 
 const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
-    const recommendedForYou = useStaticQuery(graphql`
-    {
-      allWpCar {
-        nodes {
-          slug
-          title
-          id
-          featuredImage {
-            node {
-              gatsbyImage(formats: WEBP, placeholder: BLURRED, width: 350, height: 200)
-            }
-          }
-          carInfo {
-            carPrice
-          }
-        }
-      }
-    }
-  `);
+    const recommendedForYou = useAllWpCarData();
+
     const [isElementorLocationFooterVisible, setIsElementorLocationFooterVisible] = useState(false);
     const singleCarInformation = pageContext;
     const carEquipment = singleCarInformation.carEquipment;
@@ -73,6 +58,56 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
             window.removeEventListener('resize', setCheckoutBoxVisibility);
         };
     }, []);
+
+        const openPopUp = (index: number) => {
+        setSelectedImageIndex(index);
+        setShowPopUp(true);
+    }
+
+      const closeSpecPopup = (closeSpecPopup:boolean) => {
+        setCarSpecificationPopUp(closeSpecPopup)
+    };
+
+    // const renderMainCarCategory = (title: string, carSpecification: string) => {
+    //     const categories = singleCarInformation.carCategories.nodes
+    //         .filter((filterdById: { parentDatabaseId: number }) => (filterdById.parentDatabaseId === parentDatabaseId))
+    //         .slice(0, 3);
+
+    //     const categoriHeading = (title: string) => title === "" ? null : <h5>{title}</h5>;
+
+    //     const specialSubCategoryIcons = (categoryName: string) => {
+    //         switch (categoryName) {
+    //             case "Bluetooth":
+    //                 return <img src={BluetoothDrive} width={100} height={50}></img>;
+    //             case "Android auto":
+    //                 return <img src={AndroidAuto} width={100} height={40}></img>;
+    //             case "CarPlay":
+    //                 return <img src={CarFront} width={100} height={50}></img>;
+    //             default:
+    //                 return null;
+    //         }
+    //     };
+
+    //     if (parentDatabaseId !== 316) {
+    //         return (
+    //             <div className="d-flex">
+    //                 <>{categoriHeading(title)}&nbsp;</>
+    //                 {categories.map((specialSubCategory: { name: string }, index: number) => (
+    //                     <span className="mb-3" key={index}>{specialSubCategory.name}{index !== categories.length - 1 ? ', ' : ''}</span>
+    //                 ))}
+    //             </div>
+    //         )
+    //     } return (
+    //         <Row md={3} className="category-icon-row">
+    //             {categories.map((specialSubCategory: { name: string }, index: number) => (
+    //                 <div className="d-flex align-items-center" key={index}>
+    //                     {specialSubCategoryIcons(specialSubCategory.name)}
+    //                     <span>{specialSubCategory.name}</span>
+    //                 </div>
+    //             ))}
+    //         </Row>
+    //     )
+    // }
 
     const renderMainCarCategory = (title: string, parentDatabaseId: number) => {
         const categories = singleCarInformation.carCategories.nodes
@@ -115,10 +150,8 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         )
     }
 
-    const openPopUp = (index: number) => {
-        setSelectedImageIndex(index);
-        setShowPopUp(true);
-    }
+
+
 
     // const [selectedCar, setSelectedCar] = useState({} as CarEquipment);;
 
@@ -126,9 +159,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     //     setCarSpecificationPopUp(true);
     // };
 
-    const closeSpecPopup = (closeSpecPopup:boolean) => {
-        setCarSpecificationPopUp(closeSpecPopup)
-    };
+  
 
     return (
         <MainLayout>
@@ -177,6 +208,14 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                     {renderMainCarCategory('Virsbūves tips: ', 249)}
                                 </Row>
 
+                                {/* <Row md={2}>
+                                    {renderMainCarCategory("Durvju skaits: ", "durvjuSkaits")}
+                                    {renderMainCarCategory('Ātrumkārba: ', "atrumkarba")}
+                                    {renderMainCarCategory('Dzinējs: ', "dzinejs")}
+                                    {renderMainCarCategory('Gads: ', "gads")}
+                                    {renderMainCarCategory('Virsbūves tips: ', "virsbuvesTips")}
+                                </Row> */}
+
                                 <Row>
                                     <Nav.Link href="#allFeatures">
                                         <Button
@@ -201,13 +240,13 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 <h3 className="mb-3">Rekomendējam tieši tev</h3>
                             </Col>
                             <Row md={3}>
-                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: Car, index: number) => (
+                                {recommendedForYou.slice(0, 3).map((car: Car, index:number) => (
                                     <Col className="mb-3" key={index}>
                                         <ShopAutoCard
                                             gatsbyImageData={car.featuredImage.node.gatsbyImage}
-                                            slug={car.slug} title={car.title}
-                                            price={car.carInfo.carPrice}
-                                            handleClick={() => { }} />
+                                            slug={car.slug} 
+                                            title={car.title}
+                                            price={car.carInfo.carPrice} />
                                     </Col>
                                 ))}
                             </Row>
@@ -217,11 +256,10 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                     <CheckoutBox
                         title={singleCarInformation.title}
                         slug={singleCarInformation.slug}
-                        carType={renderMainCarCategory('', 366)}
+                        carType={singleCarInformation.carInfo.versija}
                         price={singleCarInformation.carInfo.carPrice}
-                        brokerName={renderMainCarCategory('', 357)}
-                        brokerSlug={363}
-                        carCondition={renderMainCarCategory('', 202)}
+                        brokerName={singleCarInformation.carInfo.dileris}
+                        carCondition={singleCarInformation.carInfo.autoStavoklis}
                         isElementorLocationFooterVisible={isElementorLocationFooterVisible} />
                 </Row>
 
