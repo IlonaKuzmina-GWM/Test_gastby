@@ -1,4 +1,4 @@
-import { HeadFC } from "gatsby";
+import { HeadFC, graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import React, { FC, useEffect, useState } from "react";
 import { Carousel, Col, Container, Nav, Row } from "react-bootstrap";
@@ -20,7 +20,25 @@ type SingleCarProps = {
 };
 
 const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
-    const recommendedForYou = useAllWpCarData();
+    // const recommendedForYou = useAllWpCarData();
+    const recommendedForYou = useStaticQuery(graphql`
+    {
+      allWpCar {
+        nodes {
+          slug
+          title
+          featuredImage {
+            node {
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 302, height: 172)
+            }
+          }
+          carInfo {
+            carPrice
+          }
+        }
+      }
+    }
+  `);
 
     const [isElementorLocationFooterVisible, setIsElementorLocationFooterVisible] = useState(false);
     const singleCarInformation = pageContext;
@@ -172,7 +190,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 <h3 className="mb-3">Rekomendējam tieši tev</h3>
                             </Col>
                             <Row md={3}>
-                                {recommendedForYou.slice(0, 3).map((car: Car, index: number) => (
+                                {recommendedForYou.allWpCar.nodes.slice(0, 3).map((car: Car, index: number) => (
                                     <Col className="mb-3" key={index}>
                                         <ShopAutoCard
                                             gatsbyImageData={car.featuredImage.node.gatsbyImage}
