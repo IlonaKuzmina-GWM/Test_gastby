@@ -121,7 +121,18 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3"> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
                                 <div className="icon-wrapper">
-                                     ??  te vēl vajag izdomāt ko vēlamies parādīt
+                                    <div className="icon-wrapper_item">
+                                        <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} />
+                                        <p>{singleCarInformation.carEquipment.hiFi[0]}</p>
+                                    </div>
+                                    <div className="icon-wrapper_item">
+                                        <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} />
+                                        <p> {singleCarInformation.carEquipment.drosiba[0]}</p>
+                                    </div>
+                                    <div className="icon-wrapper_item">
+                                        <img src={CarFront} alt="CarFront" width={"40px"} />
+                                        <p> {singleCarInformation.carEquipment.papildaprikojums[0]}</p>
+                                    </div>
                                 </div>
                             </Col>
                         </Row>

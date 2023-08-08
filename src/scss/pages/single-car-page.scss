@@ -26,6 +26,23 @@
     background-color: $gold-primary;
     border-radius: 15px;
     padding: 30px 20px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    justify-content:space-evenly;
+  }
+
+  .icon-wrapper_item{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    align-items: center
+  }
+
+  .icon-wrapper_item p {
+    // padding: 0;
+    margin: 0;
+    display: block;
   }
 
   .item {
