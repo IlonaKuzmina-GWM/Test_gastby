@@ -61,3 +61,18 @@ export type AllWpCar = {
 export type MyQueryResult = {
   allWpCar: AllWpCar;
 }
+
+export type Replacements = {
+  atrasanasVieta: string;
+  atrumkarba: string;
+  autoStavoklis: string;
+  virsbuvesTips: string;
+  piedzina: string;
+  marka: string;
+  krasa: string;
+  gads: string;
+  dzinejs: string;
+  durvjuSkaits: string;
+  carPrice: string;
+  dileris: string;
+};

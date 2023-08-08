@@ -7,6 +7,7 @@ import { CarCategory } from '../types/allWpCategoryTypes';
 import Button from './Button';
 
 import useAllWpCarData from "../queries/useAllWpCarData";
+import { Replacements } from '../types/allWpCarTypes';
 
 type FilterCategoriesProps = {
     eventkey: number;
@@ -27,59 +28,59 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     filteredCategoryHandler,
     minPriceRangeChangeHandler,
     maxPriceRangeChangeHandler }) => {
-//     const data = useStaticQuery(graphql`
-//      {
-//         allWpCar {
-//             nodes {
-//                 title
-//                 carInfo {
-//                     carPrice
-//                     atrasanasVieta
-//                     atrumkarba
-//                     autoStavoklis
-//                     dzinejs
-//                     durvjuSkaits
-//                     gads
-//                     krasa
-//                     marka
-//         piedzina
-//         virsbuvesTips
-//       }
-//       carEquipment {
-//         drosiba
-//         elektronika
-//         fieldGroupName
-//         hiFi
-//         papildaprikojums
-//       }
-//     }
-//   }
-//     #   allWpCarCategory {
-//     #     nodes {
-//     #       wpParent {
-//     #         node {
-//     #           name
-//     #           wpChildren {
-//     #             nodes {
-//     #               name
-//     #               slug
-//     #               databaseId
-//     #               cars {
-//     #                 nodes {
-//     #                   databaseId
-//     #                 }
-//     #               }
-//     #             }
-//     #           }
-//     #           databaseId
-//     #         }
-//     #       }
-//     #     }
-//     #   }
-//     }`)
+    //     const data = useStaticQuery(graphql`
+    //      {
+    //         allWpCar {
+    //             nodes {
+    //                 title
+    //                 carInfo {
+    //                     carPrice
+    //                     atrasanasVieta
+    //                     atrumkarba
+    //                     autoStavoklis
+    //                     dzinejs
+    //                     durvjuSkaits
+    //                     gads
+    //                     krasa
+    //                     marka
+    //         piedzina
+    //         virsbuvesTips
+    //       }
+    //       carEquipment {
+    //         drosiba
+    //         elektronika
+    //         fieldGroupName
+    //         hiFi
+    //         papildaprikojums
+    //       }
+    //     }
+    //   }
+    //     #   allWpCarCategory {
+    //     #     nodes {
+    //     #       wpParent {
+    //     #         node {
+    //     #           name
+    //     #           wpChildren {
+    //     #             nodes {
+    //     #               name
+    //     #               slug
+    //     #               databaseId
+    //     #               cars {
+    //     #                 nodes {
+    //     #                   databaseId
+    //     #                 }
+    //     #               }
+    //     #             }
+    //     #           }
+    //     #           databaseId
+    //     #         }
+    //     #       }
+    //     #     }
+    //     #   }
+    //     }`)
 
     // const filters = data.allWpCarCategory.nodes;
-    
+
     const data = useAllWpCarData();
 
     const [minPrice, setMinPrice] = useState(0);
@@ -135,20 +136,20 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
     type CarInfoProperty = keyof Replacements;
 
-    type Replacements = {
-        atrasanasVieta: string;
-        atrumkarba: string;
-        autoStavoklis: string;
-        virsbuvesTips: string;
-        piedzina: string;
-        marka: string;
-        krasa: string;
-        gads: string;
-        dzinejs: string;
-        durvjuSkaits: string;
-        carPrice: string;
-        dileris: string;
-    };
+    // type Replacements = {
+    //     atrasanasVieta: string;
+    //     atrumkarba: string;
+    //     autoStavoklis: string;
+    //     virsbuvesTips: string;
+    //     piedzina: string;
+    //     marka: string;
+    //     krasa: string;
+    //     gads: string;
+    //     dzinejs: string;
+    //     durvjuSkaits: string;
+    //     carPrice: string;
+    //     dileris: string;
+    // };
 
     const replacements: Replacements = {
         "atrasanasVieta": "Atrašanās vieta",
@@ -165,23 +166,23 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         "dileris": "Dīleris",
     };
 
-    const transformCarInfo = (carInfo: { [x: string]: any; }) => {
-
-        if (carInfo.hasOwnProperty("carPrice")) {
-            delete carInfo["carPrice"];
-        }
-
-        const transformedCarInfo: Record<string, any> = {};
-
-        Object.keys(carInfo).forEach((key) => {
-            const value = carInfo[key as CarInfoProperty];
+    type CarInfo = {
+        [key: string]: string | number;
+    };
+    
+    const transformCarInfo = (carInfo: CarInfo): CarInfo => {
+        const { carPrice, versija, ...restCarInfo } = carInfo;
+    
+        const transformedCarInfo: CarInfo = {};
+    
+        for (const [key, value] of Object.entries(restCarInfo)) {
             const transformedKey = replacements[key as CarInfoProperty] || key;
             transformedCarInfo[transformedKey] = value;
-        });
-
+        }
+    
         return transformedCarInfo;
     };
-
+    
     const uniqueCarInfoValues = data.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
         const carInfo = car.carInfo;
         const transformedCarInfo = transformCarInfo(carInfo);

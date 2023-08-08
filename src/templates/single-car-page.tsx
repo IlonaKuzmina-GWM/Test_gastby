@@ -10,7 +10,7 @@ import AndroidAuto from "../images/icons/AndroidAuto.svg";
 import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
 import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
-import { Car } from "../types/allWpCarTypes";
+import { Car, Replacements } from "../types/allWpCarTypes";
 import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
 
 import useAllWpCarData from "../queries/useAllWpCarData";
@@ -59,107 +59,37 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         };
     }, []);
 
-        const openPopUp = (index: number) => {
+    const openPopUp = (index: number) => {
         setSelectedImageIndex(index);
         setShowPopUp(true);
     }
 
-      const closeSpecPopup = (closeSpecPopup:boolean) => {
+    const closeSpecPopup = (closeSpecPopup: boolean) => {
         setCarSpecificationPopUp(closeSpecPopup)
     };
 
-    // const renderMainCarCategory = (title: string, carSpecification: string) => {
-    //     const categories = singleCarInformation.carCategories.nodes
-    //         .filter((filterdById: { parentDatabaseId: number }) => (filterdById.parentDatabaseId === parentDatabaseId))
-    //         .slice(0, 3);
+    type CarInfoProperty = keyof Replacements;
 
-    //     const categoriHeading = (title: string) => title === "" ? null : <h5>{title}</h5>;
+    const renderMainCarCategory = (title: string, carSpecification: string) => {
+        const filteredCarSpecification = singleCarInformation.carInfo;
 
-    //     const specialSubCategoryIcons = (categoryName: string) => {
-    //         switch (categoryName) {
-    //             case "Bluetooth":
-    //                 return <img src={BluetoothDrive} width={100} height={50}></img>;
-    //             case "Android auto":
-    //                 return <img src={AndroidAuto} width={100} height={40}></img>;
-    //             case "CarPlay":
-    //                 return <img src={CarFront} width={100} height={50}></img>;
-    //             default:
-    //                 return null;
-    //         }
-    //     };
-
-    //     if (parentDatabaseId !== 316) {
-    //         return (
-    //             <div className="d-flex">
-    //                 <>{categoriHeading(title)}&nbsp;</>
-    //                 {categories.map((specialSubCategory: { name: string }, index: number) => (
-    //                     <span className="mb-3" key={index}>{specialSubCategory.name}{index !== categories.length - 1 ? ', ' : ''}</span>
-    //                 ))}
-    //             </div>
-    //         )
-    //     } return (
-    //         <Row md={3} className="category-icon-row">
-    //             {categories.map((specialSubCategory: { name: string }, index: number) => (
-    //                 <div className="d-flex align-items-center" key={index}>
-    //                     {specialSubCategoryIcons(specialSubCategory.name)}
-    //                     <span>{specialSubCategory.name}</span>
-    //                 </div>
-    //             ))}
-    //         </Row>
-    //     )
-    // }
-
-    const renderMainCarCategory = (title: string, parentDatabaseId: number) => {
-        const categories = singleCarInformation.carCategories.nodes
-            .filter((filterdById: { parentDatabaseId: number }) => (filterdById.parentDatabaseId === parentDatabaseId))
-            .slice(0, 3);
+        const shouldRender = carSpecification in filteredCarSpecification
+            ? filteredCarSpecification[carSpecification as CarInfoProperty]
+            : null;
 
         const categoriHeading = (title: string) => title === "" ? null : <h5>{title}</h5>;
 
-        const specialSubCategoryIcons = (categoryName: string) => {
-            switch (categoryName) {
-                case "Bluetooth":
-                    return <img src={BluetoothDrive} width={100} height={50}></img>;
-                case "Android auto":
-                    return <img src={AndroidAuto} width={100} height={40}></img>;
-                case "CarPlay":
-                    return <img src={CarFront} width={100} height={50}></img>;
-                default:
-                    return null;
-            }
-        };
-
-        if (parentDatabaseId !== 316) {
-            return (
-                <div className="d-flex">
-                    <>{categoriHeading(title)}&nbsp;</>
-                    {categories.map((specialSubCategory: { name: string }, index: number) => (
-                        <span className="mb-3" key={index}>{specialSubCategory.name}{index !== categories.length - 1 ? ', ' : ''}</span>
-                    ))}
-                </div>
-            )
-        } return (
-            <Row md={3} className="category-icon-row">
-                {categories.map((specialSubCategory: { name: string }, index: number) => (
-                    <div className="d-flex align-items-center" key={index}>
-                        {specialSubCategoryIcons(specialSubCategory.name)}
-                        <span>{specialSubCategory.name}</span>
-                    </div>
-                ))}
-            </Row>
+        return (
+            <div className="d-flex">
+                {categoriHeading(title)}&nbsp;
+                <span className="mb-3">
+                    {Array.isArray(shouldRender)
+                        ? shouldRender.join(', ')
+                        : shouldRender}
+                </span>
+            </div>
         )
     }
-
-
-
-
-    // const [selectedCar, setSelectedCar] = useState({} as CarEquipment);;
-
-    // const openPopup = (carInfo: CarEquipment) => {
-    //     setCarSpecificationPopUp(true);
-    // };
-
-  
 
     return (
         <MainLayout>
@@ -191,7 +121,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3"> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
                                 <div className="icon-wrapper">
-                                    {renderMainCarCategory("", 316)}
+                                     ??  te vēl vajag izdomāt ko vēlamies parādīt
                                 </div>
                             </Col>
                         </Row>
@@ -199,22 +129,13 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                         <Row className="mb-5">
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3">{singleCarInformation.title} specifikācija</h3>
-
                                 <Row md={2}>
-                                    {renderMainCarCategory("Durvju skaits: ", 273)}
-                                    {renderMainCarCategory('Ātrumkārba: ', 199)}
-                                    {renderMainCarCategory('Dzinējs: ', 194)}
-                                    {renderMainCarCategory('Gads: ', 304)}
-                                    {renderMainCarCategory('Virsbūves tips: ', 249)}
-                                </Row>
-
-                                {/* <Row md={2}>
                                     {renderMainCarCategory("Durvju skaits: ", "durvjuSkaits")}
                                     {renderMainCarCategory('Ātrumkārba: ', "atrumkarba")}
                                     {renderMainCarCategory('Dzinējs: ', "dzinejs")}
                                     {renderMainCarCategory('Gads: ', "gads")}
                                     {renderMainCarCategory('Virsbūves tips: ', "virsbuvesTips")}
-                                </Row> */}
+                                </Row>
 
                                 <Row>
                                     <Nav.Link href="#allFeatures">
@@ -240,11 +161,11 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 <h3 className="mb-3">Rekomendējam tieši tev</h3>
                             </Col>
                             <Row md={3}>
-                                {recommendedForYou.slice(0, 3).map((car: Car, index:number) => (
+                                {recommendedForYou.slice(0, 3).map((car: Car, index: number) => (
                                     <Col className="mb-3" key={index}>
                                         <ShopAutoCard
                                             gatsbyImageData={car.featuredImage.node.gatsbyImage}
-                                            slug={car.slug} 
+                                            slug={car.slug}
                                             title={car.title}
                                             price={car.carInfo.carPrice} />
                                     </Col>
