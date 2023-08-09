@@ -1,9 +1,7 @@
-import { graphql, useStaticQuery } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
 import React, { FC, useState } from 'react';
 import { Col, Form, FormControl, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
-import { CarCategory } from '../types/allWpCategoryTypes';
 import Button from './Button';
 
 import useAllWpCarData from "../queries/useAllWpCarData";
@@ -28,58 +26,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     filteredCategoryHandler,
     minPriceRangeChangeHandler,
     maxPriceRangeChangeHandler }) => {
-    //     const data = useStaticQuery(graphql`
-    //      {
-    //         allWpCar {
-    //             nodes {
-    //                 title
-    //                 carInfo {
-    //                     carPrice
-    //                     atrasanasVieta
-    //                     atrumkarba
-    //                     autoStavoklis
-    //                     dzinejs
-    //                     durvjuSkaits
-    //                     gads
-    //                     krasa
-    //                     marka
-    //         piedzina
-    //         virsbuvesTips
-    //       }
-    //       carEquipment {
-    //         drosiba
-    //         elektronika
-    //         fieldGroupName
-    //         hiFi
-    //         papildaprikojums
-    //       }
-    //     }
-    //   }
-    //     #   allWpCarCategory {
-    //     #     nodes {
-    //     #       wpParent {
-    //     #         node {
-    //     #           name
-    //     #           wpChildren {
-    //     #             nodes {
-    //     #               name
-    //     #               slug
-    //     #               databaseId
-    //     #               cars {
-    //     #                 nodes {
-    //     #                   databaseId
-    //     #                 }
-    //     #               }
-    //     #             }
-    //     #           }
-    //     #           databaseId
-    //     #         }
-    //     #       }
-    //     #     }
-    //     #   }
-    //     }`)
-
-    // const filters = data.allWpCarCategory.nodes;
 
     const data = useAllWpCarData();
 
@@ -96,37 +42,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         maxPriceRangeChangeHandler(parseInt(e.target.value));
     };
 
-    // const uniqueCategories = filters.reduce((unique: { [x: string]: any; }, category: {
-    //     wpParent: {
-    //         node: {
-    //             [x: string]: any; databaseId: string | number;
-    //         }; wpChildren: { nodes: CarCategory[]; };
-    //     };
-    // }) => {
-    //     if (category.wpParent && !unique[category.wpParent.node.databaseId]) {
-    //         unique[category.wpParent.node.databaseId] = {
-    //             ...category,
-    //             wpParent: {
-    //                 ...category.wpParent,
-    //                 node: {
-    //                     ...category.wpParent.node,
-    //                     wpChildren: {
-    //                         ...category.wpParent.node.wpChildren,
-    //                         nodes: category.wpParent.node.wpChildren.nodes.map((node: CarCategory) => ({
-    //                             ...node,
-    //                             isChecked: false
-    //                         }))
-    //                     }
-    //                 }
-    //             }
-    //         };
-    //     }
-    //     return unique;
-    // }, {});
-
-    //Te es sāku pāŗtaisīt visa koda loģiku. Tagad no WP visas auto  detaļas nāks caur ACF, nevis categorijām
-    //tādēļ jāmaina viss kods, visā projektā, adaptējot jauniem datiem, filtrs jāraksta no nulles. 
-
     const uncheckAllCheckboxes = () => {
         const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
         checkboxes.forEach((checkbox) => {
@@ -135,21 +50,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     };
 
     type CarInfoProperty = keyof Replacements;
-
-    // type Replacements = {
-    //     atrasanasVieta: string;
-    //     atrumkarba: string;
-    //     autoStavoklis: string;
-    //     virsbuvesTips: string;
-    //     piedzina: string;
-    //     marka: string;
-    //     krasa: string;
-    //     gads: string;
-    //     dzinejs: string;
-    //     durvjuSkaits: string;
-    //     carPrice: string;
-    //     dileris: string;
-    // };
 
     const replacements: Replacements = {
         "atrasanasVieta": "Atrašanās vieta",
@@ -169,20 +69,20 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     type CarInfo = {
         [key: string]: string | number;
     };
-    
+
     const transformCarInfo = (carInfo: CarInfo): CarInfo => {
         const { carPrice, versija, ...restCarInfo } = carInfo;
-    
+
         const transformedCarInfo: CarInfo = {};
-    
+
         for (const [key, value] of Object.entries(restCarInfo)) {
             const transformedKey = replacements[key as CarInfoProperty] || key;
             transformedCarInfo[transformedKey] = value;
         }
-    
+
         return transformedCarInfo;
     };
-    
+
     const uniqueCarInfoValues = data.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
         const carInfo = car.carInfo;
         const transformedCarInfo = transformCarInfo(carInfo);

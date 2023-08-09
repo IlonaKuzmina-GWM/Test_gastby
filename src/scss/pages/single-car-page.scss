@@ -29,18 +29,17 @@
     display: flex;
     flex-direction: row;
     column-gap: 20px;
-    justify-content:space-evenly;
+    justify-content: space-evenly;
   }
 
-  .icon-wrapper_item{
+  .icon-wrapper_item {
     display: flex;
     flex-direction: row;
     column-gap: 10px;
-    align-items: center
+    align-items: center;
   }
 
   .icon-wrapper_item p {
-    // padding: 0;
     margin: 0;
     display: block;
   }
@@ -84,6 +83,15 @@
   }
 }
 
-.category-icon-row{
-row-gap: 20px;
+.category-icon-row {
+  row-gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .single-car-container {
+    .icon-wrapper {
+      flex-direction: column;
+      row-gap: 20px;
+    }
+  }
 }

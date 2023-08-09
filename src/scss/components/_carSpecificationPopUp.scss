@@ -34,14 +34,17 @@
     color: $white;
     background-color: $gold_primary;
   }
-}
 
-.popup-close-button {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  border: none;
-  cursor: pointer;
+  .popup-image_wrapper{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+
+  .popup-close-button {
+    border: none;
+    cursor: pointer;
+  }
 }
 
 @media only screen and (max-width: 768px) {

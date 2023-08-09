@@ -1,6 +1,6 @@
-import React, { useState, FC, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { CarEquipment } from '../types/allWpCarTypes';
-import { Accordion, Card } from 'react-bootstrap';
+import { Accordion } from 'react-bootstrap';
 import { StaticImage } from 'gatsby-plugin-image';
 
 
@@ -27,8 +27,7 @@ const CarSpecificationPopUp: FC<carSpecificationPopUpProps> = ({ carEquipment, o
     return (
         <div className="popup-overlay" onClick={handleOverlayClick}>
             <div className="popup-content">
-
-                <div onClick={() => onCloseHandler(false)}>
+                <div className='popup-image_wrapper' onClick={() => onCloseHandler(false)}>
                     <StaticImage
                         className='popup-close-button'
                         src={"../images/cancel.svg"}
@@ -48,7 +47,8 @@ const CarSpecificationPopUp: FC<carSpecificationPopUpProps> = ({ carEquipment, o
                                         <li key={itemIndex}>{item}</li>
                                     ))}
                                 </ul>
-                            </Accordion.Body></Accordion.Item>
+                            </Accordion.Body>
+                        </Accordion.Item>
                     ))}
                 </Accordion>
             </div>
