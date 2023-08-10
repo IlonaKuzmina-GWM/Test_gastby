@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../components/Button";
 import TooltipBoot from "../components/Tooltip";
 import MainLayout from "../layouts/MainLayout";
-import { Car, MyQueryResult } from "../types/allWpCarTypes";
+import { Car, CarInfo, MyQueryResult, Replacements } from "../types/allWpCarTypes";
 
 import HomeAutoCard from '../components/HomeAutoCard';
 import HeroSection from '../components/HeroSection';
@@ -19,35 +19,81 @@ type SearchFunction = (
 ) => Car[];
 
 const searchCars: SearchFunction = (query, cars) => {
+  // Normalize the query and store it in a variable
   const normalizedQuery = query.toLowerCase().trim();
 
-  return cars.filter((car) => {
+  // Filter the cars array based on the search query
+  return cars.filter((car: Car) => {
+    const carInfo: CarInfo = car.carInfo;
+    const carEquipment = car.carEquipment;
+    const price = carInfo.carPrice.toString();
 
+    // Search in the car title
     if (car.title.toLowerCase().includes(normalizedQuery)) {
       return true;
     }
 
-    if (car.carInfo.carPrice.toString().includes(normalizedQuery)) {
+    // Search in the car price
+    if (price.includes(normalizedQuery)) {
       return true;
     }
 
-    if (
-      car.carCategories.nodes.some(
-        (category) => {
-          const categoryName = category.name.toLowerCase();
+    // type CarInfoProperty = keyof Replacements;
 
-          return categoryName.includes(normalizedQuery) && categoryName !== "jauns/mazlietots";
-        }
-      )
-    ) {
+
+
+    // Search in specific properties using Array.some
+    const searchableCarInfoProperties = [
+      'atrasanasVieta',
+      'atrumkarba',
+      'autoStavoklis',
+      'virsbuvesTips',
+      'piedzina',
+      'marka',
+      'krasa',
+      'gads',
+      'dzinejs',
+      'durvjuSkaits',
+      'versija',
+      'dileris',
+    ];
+
+
+    type CarEquipmentType = {
+      drosiba: string[] | string,
+      elektronika: string[] | string,
+      hiFi: string[] | string,
+      papildaprikojums: string[] | string,
+    };
+
+    const searchableEquipmentProperties = [
+      'drosiba',
+      'elektronika',
+      'hiFi',
+      'papildaprikojums',
+    ];
+
+
+
+    if (searchableCarInfoProperties.some((property) => {
+      const propertyValue = carInfo[property as keyof Replacements];
+      if (Array.isArray(propertyValue)) {
+        return propertyValue.some(value => value.toLowerCase().includes(normalizedQuery));
+      } else {
+        return propertyValue.toString().toLowerCase().includes(normalizedQuery);
+      }
+    })) {
       return true;
     }
 
-    if (
-      car.carCategories.nodes.some(
-        (category) => category.databaseId.toString().includes(normalizedQuery)
-      )
-    ) {
+    if (searchableEquipmentProperties.some((property) => {
+      const propertyValue = carEquipment[property as keyof CarEquipmentType];
+      if (Array.isArray(propertyValue)) {
+        return propertyValue.some(value => value.toLowerCase().includes(normalizedQuery));
+      } else {
+        return propertyValue.toLowerCase().includes(normalizedQuery);
+      }
+    })) {
       return true;
     }
 
@@ -172,28 +218,36 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             className='pb-5'
           >
             {data.allWpCar.nodes.slice(0, 8).map((car: Car) => {
-              const carLabels = car.carCategories.nodes
+              const carInfo = car.carInfo;
 
-              const filteredLabels = carLabels.filter((label: any) => {
-                return (
-                  label.parentDatabaseId === 304 ||
-                  label.parentDatabaseId === 202 ||
-                  label.parentDatabaseId === 211
-                );
-              });
+              const filteredLabels = Object.keys(carInfo)
+                .filter((key) => {
+                  return (
+                    key === 'atrasanasVieta' ||
+                    key === 'autoStavoklis' ||
+                    key === 'gads'
+                  );
+                })
+                .reduce((acc:any, key:any) => {
+                  acc[key] = carInfo[key];
+                  return acc;
+                }, {});
 
-              return <SwiperSlide key={car.id}>
-                <HomeAutoCard
-                  gatsbyImageData={car.featuredImage.node.gatsbyImage}
-                  title={car.title}
-                  price={car.carInfo.carPrice}
-                  slug={car.slug}
-                  labels={filteredLabels}
-                  imagesLink={car.featuredImage.node.sourceUrl}
-                ></HomeAutoCard>
-              </SwiperSlide>
+              return (
+                <SwiperSlide key={car.id}>
+                  <HomeAutoCard
+                    gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                    title={car.title}
+                    price={carInfo.carPrice}
+                    slug={car.slug}
+                    labels={filteredLabels}
+                    imagesLink={car.featuredImage.node.sourceUrl}
+                  />
+                </SwiperSlide>
+              );
             })}
           </Swiper>
+
         </div>
 
 
@@ -269,13 +323,13 @@ export const query = graphql`
 query AllCarsDetails {
   allWpCar {
     nodes {
-      carCategories {
-        nodes {
-          name
-          databaseId
-          parentDatabaseId
-        }
-      }
+      # carCategories {
+      #   nodes {
+      #     name
+      #     databaseId
+      #     parentDatabaseId
+      #   }
+      # }
       slug
       title
       id
@@ -294,6 +348,24 @@ query AllCarsDetails {
       }
       carInfo {
         carPrice
+        atrasanasVieta
+        atrumkarba
+        autoStavoklis
+        virsbuvesTips
+        piedzina
+        marka
+        krasa
+        gads
+        dzinejs
+        durvjuSkaits
+        versija
+        dileris
+      }
+      carEquipment {
+        drosiba
+        elektronika
+        hiFi
+        papildaprikojums
       }
     }
   }

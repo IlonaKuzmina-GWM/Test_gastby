@@ -1,5 +1,6 @@
 import React from "react";
 import MainLayout from "../layouts/MainLayout";
+import { HeadFC } from "gatsby";
 
 const Contact = () => {
     return (
@@ -12,3 +13,5 @@ const Contact = () => {
 };
 
 export default Contact;
+
+export const Head: HeadFC = () => <title>Pirkt Auto</title>;

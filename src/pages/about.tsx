@@ -1,5 +1,6 @@
 import React from "react";
 import MainLayout from "../layouts/MainLayout";
+import { HeadFC } from "gatsby";
 
 const AboutUs = () => {
     return (
@@ -12,3 +13,5 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
+
+export const Head: HeadFC = () => <title>Pirkt Auto</title>;

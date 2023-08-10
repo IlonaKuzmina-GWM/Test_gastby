@@ -8,7 +8,7 @@ type HomeAutoCardProps = {
     title: string;
     price: number;
     children?: JSX.Element;
-    labels?: CarCategory[];
+    labels?: { [key: string]: string };
     slug?: string;
     imagesLink?: string;
 }
@@ -29,9 +29,11 @@ const HomeAutoCard: FC<HomeAutoCardProps> = React.memo(({ labels, gatsbyImageDat
                         <Card.Title className="auto-card-title">{title}</Card.Title>
                         <Card.Text className="auto-card-price">€ {price}</Card.Text>
                     </Card.Body>
-                    <ListGroup className="label-wrapper" horizontal >
-                        {labels && labels.map((label: any) => (
-                            <ListGroupItem key={label} className="label-item">{label.name}</ListGroupItem>
+                    <ListGroup className="label-wrapper" horizontal>
+                        {labels && Object.keys(labels).map((key) => (
+                            <ListGroupItem key={key} className="label-item">
+                                {labels[key]}
+                            </ListGroupItem>
                         ))}
                     </ListGroup>
                 </Nav.Link>

@@ -13,7 +13,7 @@ type FilterCategoriesProps = {
     showFilters: boolean;
     onCloseFilters: () => void;
     clearFilteredValues: () => void;
-    filteredCategoryHandler: (category: string) => void;
+    filteredCategoryHandler: (filteredCategoryKey: string, filteredCategoryValue: string) => void;
     minPriceRangeChangeHandler: (minPrice: number) => void;
     maxPriceRangeChangeHandler: (maxPrice: number) => void;
 }
@@ -25,7 +25,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     clearFilteredValues,
     filteredCategoryHandler,
     minPriceRangeChangeHandler,
-    maxPriceRangeChangeHandler }) => {
+    maxPriceRangeChangeHandler }) => { 
 
     const data = useAllWpCarData();
 
@@ -150,28 +150,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                         </Col>
                     </Row>
 
-                    {/* {Object.values(uniqueCategories).map((category: any, index: number) => (
-                        <Accordion.Item key={index} eventKey={index.toString()}>
-                            <Accordion.Header className='accordion-title'>{category.wpParent.node.name}</Accordion.Header>
-                            <Accordion.Body>
-                                {category.wpParent.node.wpChildren.nodes.map((subcategory: CarCategory, index: number) => (
-                                    <Form key={index}>
-                                        <Form.Group className="" controlId={subcategory.databaseId.toString()}>
-                                            <Form.Check
-                                                type="checkbox"
-                                                id={subcategory.databaseId.toString()}
-                                                label={subcategory.name}
-                                                value={subcategory.databaseId}
-                                                name={subcategory.databaseId.toString()}
-                                                onChange={(e) => { filteredCategoryHandler(e.target.value); }}
-                                            />
-                                        </Form.Group>
-                                    </Form>
-                                ))}
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    ))} */}
-
                     <Accordion>
                         {Object.keys(uniqueCarInfoValues).map((key, index) => (
                             <Accordion.Item key={index} eventKey={index.toString()}>
@@ -190,7 +168,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                                                 value={valueName}
                                                                 name={valueName.toString()}
                                                                 className='form-check-input color-checkbox'
-                                                                onChange={(e) => { filteredCategoryHandler(e.target.value) }}
+                                                                onChange={(e) => { filteredCategoryHandler(key, valueName.toString()) }}
                                                             />
                                                             <label
                                                                 htmlFor={valueName.toString()}
@@ -215,7 +193,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                                             value={valueName}
                                                             name={valueName.toString()}
                                                             onChange={(e) => {
-                                                                filteredCategoryHandler(e.target.value)
+                                                                filteredCategoryHandler(key, valueName.toString())
                                                             }}
                                                         />
                                                     )}

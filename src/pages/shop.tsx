@@ -1,4 +1,4 @@
-import { graphql } from "gatsby";
+import { HeadFC, graphql, navigate } from "gatsby";
 import React, { FC, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
@@ -6,6 +6,7 @@ import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
 import slugify from 'slugify';
+
 
 type ShopProps = {
     data: MyQueryResult;
@@ -18,18 +19,25 @@ type ShopProps = {
 
 const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const allWpCars = data.allWpCar.nodes;
+    const [allCars, setAllCars] = useState<Car[]>([]);
     const [filteredValues, setFilteredValues] = useState<string[]>([])
-    const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: string[] }>({});
+    const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
     const [searchResults, setSearchResults] = useState<Car[]>(location.state?.searchResults || []);
     const [showFilters, setShowFilters] = useState(false);
+    const [countedSelectedValues, setCountedSelectedValues] = useState(0);
+
+    console.log("searchresults",location.state?.searchResults)
 
     useEffect(() => {
+        setAllCars(data.allWpCar.nodes);
         findDefaultMinAndMaxPrice();
-    }, []);
+    }, [data.allWpCar.nodes]);
 
-
+    useEffect(() => {
+        updateUrlWithSlugs();
+    }, [filteredCategoriesObject]);
 
     const findDefaultMinAndMaxPrice = () => {
         const prices = allWpCars.map((car: Car) => car.carInfo.carPrice);
@@ -40,54 +48,15 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setMaxPrice(maxDefaultPrice);
     };
 
-
     const clearFilteredValues = () => {
-        setFilteredValues([]);
+        // setFilteredValues([]);
+        setFilteredCategoriesObject({});
         setSearchResults([]);
         findDefaultMinAndMaxPrice();
+
+        // Update the URL with query parameters
+        navigate(``, { replace: true });
     };
-
-
-    // const filteredCategoryHandler = (categoryId: string) => {
-    //     const selectedCategory = allWpCars.find((car) =>
-    //         car.carCategories.nodes.some((node: any) => node.databaseId.toString() === categoryId)
-    //     );
-
-    //     if (selectedCategory) {
-    //         const selectedSubcategory = selectedCategory.carCategories.nodes.find(
-    //             (node: any) => node.databaseId.toString() === categoryId
-    //         );
-
-    //         if (selectedSubcategory) {
-    //             const subcategorySlug = slugify(selectedSubcategory.name, { lower: true });
-
-
-    //             const isCheckedArray = filteredValues.includes(subcategorySlug);
-
-    //             if (isCheckedArray) {
-    //                 const updatedCategories = filteredValues.filter((slug) => slug !== subcategorySlug);
-    //                 setFilteredValues(updatedCategories);
-    //             } else {
-    //                 const updatedCategories = [...filteredValues, subcategorySlug];
-    //                 setFilteredValues(updatedCategories);
-    //             }
-    //         }
-    //     }
-    // };
-
-
-    const filteredCategoryHandler = (categoryId: string) => {
-        const isCheckedArray = filteredValues.includes(categoryId);
-
-        if (isCheckedArray) {
-            const updateCategories = filteredValues.filter((id) => id !== categoryId);
-            setFilteredValues(updateCategories)
-        } else {
-            const updateCategories = [...filteredValues, categoryId];
-            setFilteredValues(updateCategories)
-        }
-    }
-
 
     const minPriceRangeChangeHandler = (minPri: number) => {
         setMinPrice(minPri);
@@ -97,36 +66,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setMaxPrice(maxPri);
     }
 
-    const filteredCars = allWpCars.filter((car: Car) => {
-        if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
-            return true;
-        }
-
-        const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
-
-        const allSelectedCategoriesMatch = filteredValues.every((categoryId) => {
-            return carCategoryIds.includes(categoryId);
-        });
-
-        return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
-    });
-
-    const searchResultsFilteredCars = searchResults.filter((car: Car) => {
-        if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
-            return true;
-        }
-
-        const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
-
-        const allSelectedCategoriesMatch = filteredValues.every((categoryId) => {
-            return carCategoryIds.includes(categoryId);
-        });
-
-        return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
-    });
-
-    const carsToRender = searchResults.length > 1 ? searchResultsFilteredCars : filteredCars;
-
     const toggleFilters = () => {
         setShowFilters(!showFilters);
     };
@@ -134,6 +73,114 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const closeFilters = () => {
         setShowFilters(false);
     };
+
+
+    const filteredCategoryHandler = (filteredCategoryKey: string, filteredCategoryValue: string) => {
+        const isCheckedArray = filteredValues.includes(filteredCategoryValue);
+
+        if (isCheckedArray) {
+            const updateCategories = filteredValues.filter((category) => category !== filteredCategoryValue);
+            setFilteredValues(updateCategories);
+        } else {
+            const updateCategories = [...filteredValues, filteredCategoryValue];
+            setFilteredValues(updateCategories);
+        }
+
+        // Update the filteredCategoriesObject
+        if (isCheckedArray) {
+            const updatedObject: { [key: string]: string[] } = { ...filteredCategoriesObject };
+            updatedObject[filteredCategoryKey] = updatedObject[filteredCategoryKey].filter((value) => value !== filteredCategoryValue);
+            setFilteredCategoriesObject(updatedObject);
+        } else {
+            setFilteredCategoriesObject((prevObject) => ({
+                ...prevObject,
+                [filteredCategoryKey]: [...(prevObject[filteredCategoryKey] || []), filteredCategoryValue],
+            }));
+        }
+    };
+
+    const updateUrlWithSlugs = () => {
+        const selectedSlugs: string[] = [];
+
+        // Loop through each key-value pair in the filteredValues object
+        Object.entries(filteredCategoriesObject).forEach(([key, values]) => {
+            // If the value is an array, create slugs for each value within the array
+            if (Array.isArray(values)) {
+                values.forEach((value) => {
+                    const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
+                    selectedSlugs.push(`${key}=${slug}`);
+                });
+            } else {
+                // If the value is not an array, create a slug for the value
+                const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
+                selectedSlugs.push(`${key}=${slug}`);
+            }
+        });
+
+        // Construct the query parameters string
+        const queryParams = selectedSlugs.join('&');
+
+        // Update the URL with query parameters
+        // navigate(`?${queryParams}`, { replace: true });
+    };
+
+    // here start code what i should change, according new data and add slugify
+
+    const filteredCars = allWpCars.filter((car: Car) => {
+        if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
+            return true;
+        }
+
+        const carInfo = car.carInfo;
+        const carPrice = carInfo.carPrice;
+
+        const attributeMatches = Object.keys(carInfo).some((attributeName) => {
+            const attributeValues = carInfo[attributeName];
+
+            if (!Array.isArray(attributeValues)) {
+                return false;
+            }
+
+            return attributeValues.some((attributeValue) => filteredValues.includes(attributeValue));
+            // return attributeValues.every((attributeValue) => filteredValues.includes(attributeValue));
+        });
+
+
+        return attributeMatches && carPrice >= minPrice && carPrice <= maxPrice;
+    });
+
+    const searchResultsFilteredCars = searchResults.filter((car: Car) => {
+
+        // if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
+        //     return true;
+        // }
+
+        // const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
+
+        // const allSelectedCategoriesMatch = filteredValues.every((categoryId) => {
+        //     return carCategoryIds.includes(categoryId);
+        // });
+
+        // return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
+    });
+
+    const carsToRender = searchResults.length >= 1 ? searchResults : filteredCars;
+    // const carsToRender = searchResults.length > 1 ? searchResultsFilteredCars : filteredCars;
+
+    // const countValues = (filteredCategoriesObject: any) => {
+    //     const count = {};
+
+    //     for (const key in filteredCategoriesObject) {
+    //         if (filteredCategoriesObject.hasOwnProperty(key)) {
+    //             count[key] = filteredCategoriesObject[key].length;
+    //         }
+    //     }
+
+    //     return setCountedSelectedValues(count);
+    // };
+
+    // const carsToRender = Object.keys(filteredCategoriesObject).length === 0 ? allCars : allCars;
+    // console.log(filteredCategoriesObject)
 
     return (
         <MainLayout>
@@ -149,7 +196,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         filteredCategoryHandler={filteredCategoryHandler}
                         minPriceRangeChangeHandler={minPriceRangeChangeHandler}
                         maxPriceRangeChangeHandler={maxPriceRangeChangeHandler}
-                        filteredParamaterCounter={filteredValues.length}
+                        filteredParamaterCounter={9999}
                         showFilters={showFilters}
                         onCloseFilters={closeFilters}
                     />
@@ -157,7 +204,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
                 <Container className="auto-cards-container">
                     <Row className="d-flex align-items-center mt-2 border-bottom">
-                        <p className="small-info-text">"{filteredCars.length}" šitik daudz auto mums ir :D</p>
+                        <p className="small-info-text">"{carsToRender.length}" šitik daudz auto mums ir :D</p>
                     </Row>
 
                     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
@@ -173,12 +220,14 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         }
                     </Row>
 
-                    {/* <Row xs={12} className="g-4 mt-5">
-                        {filteredCars.length < 1 || carsToRender.length < 1 && <div className="d-flex justify-content-center align-items-center">
+                    <Row xs={12} className="g-4 mt-5">
+                        {carsToRender.length < 1 && <div className="d-flex justify-content-center align-items-center">
                             <h3 className="text-center">Diemžēl pēc izvēlētiem kriterijiem nekas nav atrasts</h3>
                         </div>}
-                    </Row> */}
+                    </Row>
                 </Container>
+                <div>
+                </div>
             </div>
         </MainLayout>
     );
@@ -186,16 +235,12 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
 export default ShopPage;
 
+export const Head: HeadFC = () => <title>Pirkt Auto</title>;
+
 export const query = graphql`
 query AllCarsDetails {
     allWpCar {
     nodes {
-      carCategories {
-        nodes {
-          name
-          databaseId
-        }
-      }
       slug
       title
       id
@@ -213,6 +258,24 @@ query AllCarsDetails {
       }
       carInfo {
         carPrice
+        atrasanasVieta
+        atrumkarba
+        autoStavoklis
+        virsbuvesTips
+        piedzina
+        marka
+        krasa
+        gads
+        dzinejs
+        durvjuSkaits
+        versija
+        dileris
+      }
+      carEquipment {
+        drosiba
+        elektronika
+        hiFi
+        papildaprikojums
       }
     }
   }
