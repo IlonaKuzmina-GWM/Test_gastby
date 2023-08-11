@@ -19,30 +19,21 @@ type SearchFunction = (
 ) => Car[];
 
 const searchCars: SearchFunction = (query, cars) => {
-  // Normalize the query and store it in a variable
   const normalizedQuery = query.toLowerCase().trim();
 
-  // Filter the cars array based on the search query
   return cars.filter((car: Car) => {
     const carInfo: CarInfo = car.carInfo;
     const carEquipment = car.carEquipment;
     const price = carInfo.carPrice.toString();
 
-    // Search in the car title
     if (car.title.toLowerCase().includes(normalizedQuery)) {
       return true;
     }
 
-    // Search in the car price
     if (price.includes(normalizedQuery)) {
       return true;
     }
 
-    // type CarInfoProperty = keyof Replacements;
-
-
-
-    // Search in specific properties using Array.some
     const searchableCarInfoProperties = [
       'atrasanasVieta',
       'atrumkarba',
@@ -58,7 +49,6 @@ const searchCars: SearchFunction = (query, cars) => {
       'dileris',
     ];
 
-
     type CarEquipmentType = {
       drosiba: string[] | string,
       elektronika: string[] | string,
@@ -72,8 +62,6 @@ const searchCars: SearchFunction = (query, cars) => {
       'hiFi',
       'papildaprikojums',
     ];
-
-
 
     if (searchableCarInfoProperties.some((property) => {
       const propertyValue = carInfo[property as keyof Replacements];

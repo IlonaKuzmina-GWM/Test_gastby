@@ -4,7 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
-import { Car, MyQueryResult } from "../types/allWpCarTypes";
+import { AllWpCar, Car, MyQueryResult } from "../types/allWpCarTypes";
 import slugify from 'slugify';
 
 
@@ -18,7 +18,7 @@ type ShopProps = {
 };
 
 const ShopPage: FC<ShopProps> = ({ location, data }) => {
-    const allWpCars = data.allWpCar.nodes;
+    // const allWpCars = data.allWpCar.nodes;
     const [allCars, setAllCars] = useState<Car[]>([]);
     const [filteredValues, setFilteredValues] = useState<string[]>([])
     const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
@@ -28,8 +28,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [showFilters, setShowFilters] = useState(false);
     const [countedSelectedValues, setCountedSelectedValues] = useState(0);
 
-    console.log("searchresults",location.state?.searchResults)
-
     useEffect(() => {
         setAllCars(data.allWpCar.nodes);
         findDefaultMinAndMaxPrice();
@@ -37,10 +35,11 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
     useEffect(() => {
         updateUrlWithSlugs();
+        countValues(filteredCategoriesObject);
     }, [filteredCategoriesObject]);
 
     const findDefaultMinAndMaxPrice = () => {
-        const prices = allWpCars.map((car: Car) => car.carInfo.carPrice);
+        const prices = allCars.map((car: Car) => car.carInfo.carPrice);
         const minDefaultPrice = Math.min(...prices);
         const maxDefaultPrice = Math.max(...prices);
 
@@ -49,13 +48,13 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     };
 
     const clearFilteredValues = () => {
-        // setFilteredValues([]);
+        setFilteredValues([]);
         setFilteredCategoriesObject({});
         setSearchResults([]);
         findDefaultMinAndMaxPrice();
 
         // Update the URL with query parameters
-        navigate(``, { replace: true });
+        // navigate(``, { replace: true });
     };
 
     const minPriceRangeChangeHandler = (minPri: number) => {
@@ -73,7 +72,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const closeFilters = () => {
         setShowFilters(false);
     };
-
 
     const filteredCategoryHandler = (filteredCategoryKey: string, filteredCategoryValue: string) => {
         const isCheckedArray = filteredValues.includes(filteredCategoryValue);
@@ -124,9 +122,12 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         // navigate(`?${queryParams}`, { replace: true });
     };
 
-    // here start code what i should change, according new data and add slugify
+    console.log("filteredCategoriesObject", filteredCategoriesObject)
+    console.log("filteredValues", filteredValues)
 
-    const filteredCars = allWpCars.filter((car: Car) => {
+
+    const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
+
         if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
             return true;
         }
@@ -142,45 +143,30 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             }
 
             return attributeValues.some((attributeValue) => filteredValues.includes(attributeValue));
-            // return attributeValues.every((attributeValue) => filteredValues.includes(attributeValue));
         });
-
 
         return attributeMatches && carPrice >= minPrice && carPrice <= maxPrice;
     });
 
-    const searchResultsFilteredCars = searchResults.filter((car: Car) => {
+    const countValues = (filteredCategoriesObject: any) => {
+        let totalCount = 0;
 
-        // if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
-        //     return true;
-        // }
+        for (const key in filteredCategoriesObject) {
+            if (filteredCategoriesObject.hasOwnProperty(key)) {
+                totalCount += filteredCategoriesObject[key].length;
+            }
+        }
 
-        // const carCategoryIds = car.carCategories.nodes.map((category) => category.databaseId?.toString());
+        setCountedSelectedValues(totalCount);
+    };
 
-        // const allSelectedCategoriesMatch = filteredValues.every((categoryId) => {
-        //     return carCategoryIds.includes(categoryId);
-        // });
+    let carsToRender;
 
-        // return allSelectedCategoriesMatch && car.carInfo.carPrice >= minPrice && car.carInfo.carPrice <= maxPrice;
-    });
-
-    const carsToRender = searchResults.length >= 1 ? searchResults : filteredCars;
-    // const carsToRender = searchResults.length > 1 ? searchResultsFilteredCars : filteredCars;
-
-    // const countValues = (filteredCategoriesObject: any) => {
-    //     const count = {};
-
-    //     for (const key in filteredCategoriesObject) {
-    //         if (filteredCategoriesObject.hasOwnProperty(key)) {
-    //             count[key] = filteredCategoriesObject[key].length;
-    //         }
-    //     }
-
-    //     return setCountedSelectedValues(count);
-    // };
-
-    // const carsToRender = Object.keys(filteredCategoriesObject).length === 0 ? allCars : allCars;
-    // console.log(filteredCategoriesObject)
+    if (filteredCars.length >= 1 || searchResults.length >= 1) {
+        carsToRender = filteredCars.length >= 1 ? filteredCars : searchResults;
+    } else {
+        carsToRender = allCars;
+    }
 
     return (
         <MainLayout>
@@ -196,7 +182,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         filteredCategoryHandler={filteredCategoryHandler}
                         minPriceRangeChangeHandler={minPriceRangeChangeHandler}
                         maxPriceRangeChangeHandler={maxPriceRangeChangeHandler}
-                        filteredParamaterCounter={9999}
+                        filteredParamaterCounter={countedSelectedValues}
                         showFilters={showFilters}
                         onCloseFilters={closeFilters}
                     />
@@ -221,9 +207,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                     </Row>
 
                     <Row xs={12} className="g-4 mt-5">
-                        {carsToRender.length < 1 && <div className="d-flex justify-content-center align-items-center">
+                        {/* {filteredCars.length >= 1 && searchResults.length >= 1 && <div className="d-flex justify-content-center align-items-center">
                             <h3 className="text-center">Diemžēl pēc izvēlētiem kriterijiem nekas nav atrasts</h3>
-                        </div>}
+                        </div>} */}
                     </Row>
                 </Container>
                 <div>
