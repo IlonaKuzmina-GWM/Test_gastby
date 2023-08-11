@@ -113,7 +113,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
                 <Row className='filter-results mb-3 px-3 justify-content-between align-items-center'>
                     <Col className='px-0 clear_results'>
-                        <span>izvēlēti "{filteredParamaterCounter}" parametri</span>
+                        <span>{filteredParamaterCounter === 1 ? 'izvēlēts' : 'izvēlēti'} "{filteredParamaterCounter}" {filteredParamaterCounter === 1 ? 'parametrs' : 'parametri'}</span>
                     </Col>
 
                     <Col className='px-0  row filter_results_btn-wrapper'>

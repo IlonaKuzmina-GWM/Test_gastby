@@ -18,8 +18,8 @@ type ShopProps = {
 };
 
 const ShopPage: FC<ShopProps> = ({ location, data }) => {
-    // const allWpCars = data.allWpCar.nodes;
-    const [allCars, setAllCars] = useState<Car[]>([]);
+    const allCars = data.allWpCar.nodes;
+    // const [allCars, setAllCars] = useState<Car[]>([]);
     const [filteredValues, setFilteredValues] = useState<string[]>([])
     const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
     const [minPrice, setMinPrice] = useState(0);
@@ -29,9 +29,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [countedSelectedValues, setCountedSelectedValues] = useState(0);
 
     useEffect(() => {
-        setAllCars(data.allWpCar.nodes);
+        // setAllCars(data.allWpCar.nodes);
         findDefaultMinAndMaxPrice();
-    }, [data.allWpCar.nodes]);
+    }, []);
 
     useEffect(() => {
         updateUrlWithSlugs();
@@ -48,7 +48,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     };
 
     const clearFilteredValues = () => {
-        setFilteredValues([]);
+        // setFilteredValues([]);
         setFilteredCategoriesObject({});
         setSearchResults([]);
         findDefaultMinAndMaxPrice();
@@ -73,43 +73,52 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setShowFilters(false);
     };
 
+
     const filteredCategoryHandler = (filteredCategoryKey: string, filteredCategoryValue: string) => {
         const isCheckedArray = filteredValues.includes(filteredCategoryValue);
 
-        if (isCheckedArray) {
-            const updateCategories = filteredValues.filter((category) => category !== filteredCategoryValue);
-            setFilteredValues(updateCategories);
-        } else {
-            const updateCategories = [...filteredValues, filteredCategoryValue];
-            setFilteredValues(updateCategories);
-        }
+        const replacements = {
+            "Atrašanās vieta": "atrasanasVieta",
+            "Ātrumkārba": "atrumkarba",
+            "Auto stāvoklis": "autoStavoklis",
+            "Virsbūves tips": "virsbuvesTips",
+            "Piedziņa": "piedzina",
+            "Marka": "marka",
+            "Krāsa": "krasa",
+            "Gads": "gads",
+            "Dzinējs": "dzinejs",
+            "Durvju skaits": "durvjuSkaits",
+            "Cena": "carPrice",
+            "Dīleris": "dileris",
+        };
+
+        // Transform the key using the replacements
+        const transformedCategoryKey = replacements[filteredCategoryKey] || filteredCategoryKey;
 
         // Update the filteredCategoriesObject
         if (isCheckedArray) {
             const updatedObject: { [key: string]: string[] } = { ...filteredCategoriesObject };
-            updatedObject[filteredCategoryKey] = updatedObject[filteredCategoryKey].filter((value) => value !== filteredCategoryValue);
+            updatedObject[transformedCategoryKey] = updatedObject[transformedCategoryKey].filter((value) => value !== filteredCategoryValue);
             setFilteredCategoriesObject(updatedObject);
         } else {
             setFilteredCategoriesObject((prevObject) => ({
                 ...prevObject,
-                [filteredCategoryKey]: [...(prevObject[filteredCategoryKey] || []), filteredCategoryValue],
+                [transformedCategoryKey]: [...(prevObject[transformedCategoryKey] || []), filteredCategoryValue],
             }));
         }
     };
 
+
     const updateUrlWithSlugs = () => {
         const selectedSlugs: string[] = [];
 
-        // Loop through each key-value pair in the filteredValues object
         Object.entries(filteredCategoriesObject).forEach(([key, values]) => {
-            // If the value is an array, create slugs for each value within the array
             if (Array.isArray(values)) {
                 values.forEach((value) => {
                     const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
                     selectedSlugs.push(`${key}=${slug}`);
                 });
             } else {
-                // If the value is not an array, create a slug for the value
                 const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
                 selectedSlugs.push(`${key}=${slug}`);
             }
@@ -122,31 +131,30 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         // navigate(`?${queryParams}`, { replace: true });
     };
 
-    console.log("filteredCategoriesObject", filteredCategoriesObject)
-    console.log("filteredValues", filteredValues)
-
-
     const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
-
-        if (filteredValues.length === 0 && minPrice === 0 && maxPrice === 0) {
-            return true;
-        }
-
         const carInfo = car.carInfo;
         const carPrice = carInfo.carPrice;
 
-        const attributeMatches = Object.keys(carInfo).some((attributeName) => {
-            const attributeValues = carInfo[attributeName];
+        const keyMatches = Object.keys(filteredCategoriesObject).every((key) => {
+            const selectedValues = filteredCategoriesObject[key];
 
-            if (!Array.isArray(attributeValues)) {
+            if (!selectedValues || selectedValues.length === 0) {
+                return true;
+            }
+
+            const carValues = carInfo[key];
+
+            if (!Array.isArray(selectedValues) || !Array.isArray(carValues)) {
                 return false;
             }
 
-            return attributeValues.some((attributeValue) => filteredValues.includes(attributeValue));
+            return selectedValues.every((selectedValue) => carValues.includes(selectedValue));
         });
 
-        return attributeMatches && carPrice >= minPrice && carPrice <= maxPrice;
+        // return keyMatches && carPrice >= minPrice && carPrice <= maxPrice;
+        return keyMatches;
     });
+
 
     const countValues = (filteredCategoriesObject: any) => {
         let totalCount = 0;

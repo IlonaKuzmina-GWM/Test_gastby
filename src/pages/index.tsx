@@ -6,7 +6,6 @@ import { useState } from 'react';
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../components/Button";
-import TooltipBoot from "../components/Tooltip";
 import MainLayout from "../layouts/MainLayout";
 import { Car, CarInfo, MyQueryResult, Replacements } from "../types/allWpCarTypes";
 
@@ -216,7 +215,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
                     key === 'gads'
                   );
                 })
-                .reduce((acc:any, key:any) => {
+                .reduce((acc: any, key: any) => {
                   acc[key] = carInfo[key];
                   return acc;
                 }, {});
@@ -311,13 +310,6 @@ export const query = graphql`
 query AllCarsDetails {
   allWpCar {
     nodes {
-      # carCategories {
-      #   nodes {
-      #     name
-      #     databaseId
-      #     parentDatabaseId
-      #   }
-      # }
       slug
       title
       id
