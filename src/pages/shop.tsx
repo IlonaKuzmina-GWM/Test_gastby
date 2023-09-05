@@ -4,7 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
-import { AllWpCar, Car, MyQueryResult } from "../types/allWpCarTypes";
+import { AllWpCar, Car, MyQueryResult, CarInfo } from "../types/allWpCarTypes";
 import slugify from 'slugify';
 
 
@@ -17,11 +17,19 @@ type ShopProps = {
     };
 };
 
+
+type ReverseReplacements = {
+    [key: string]: string;
+};
+
 const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const allCars = data.allWpCar.nodes;
     // const [allCars, setAllCars] = useState<Car[]>([]);
-    const [filteredValues, setFilteredValues] = useState<string[]>([])
-    const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
+    // const [filteredValues, setFilteredValues] = useState<string[]>([])
+    // const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
+
+
+    const [checkedValues, setCheckedValues] = useState<{ [key: string]: string[] }>({});
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
     const [searchResults, setSearchResults] = useState<Car[]>(location.state?.searchResults || []);
@@ -34,9 +42,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     }, []);
 
     useEffect(() => {
-        updateUrlWithSlugs();
-        countValues(filteredCategoriesObject);
-    }, [filteredCategoriesObject]);
+        // updateUrlWithSlugs();
+        countValues(checkedValues);
+    }, [checkedValues]);
 
     const findDefaultMinAndMaxPrice = () => {
         const prices = allCars.map((car: Car) => car.carInfo.carPrice);
@@ -49,7 +57,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
     const clearFilteredValues = () => {
         // setFilteredValues([]);
-        setFilteredCategoriesObject({});
+        setCheckedValues({});
         setSearchResults([]);
         findDefaultMinAndMaxPrice();
 
@@ -73,11 +81,8 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setShowFilters(false);
     };
 
-
-    const filteredCategoryHandler = (filteredCategoryKey: string, filteredCategoryValue: string) => {
-        const isCheckedArray = filteredValues.includes(filteredCategoryValue);
-
-        const replacements = {
+    const filteredCategoryHandler = (filteredKey: string, filteredValue: string) => {
+        const replacements: ReverseReplacements = {
             "Atrašanās vieta": "atrasanasVieta",
             "Ātrumkārba": "atrumkarba",
             "Auto stāvoklis": "autoStavoklis",
@@ -92,89 +97,99 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             "Dīleris": "dileris",
         };
 
-        // Transform the key using the replacements
-        const transformedCategoryKey = replacements[filteredCategoryKey] || filteredCategoryKey;
+        setCheckedValues((prevCheckedValues) => {
+            const newCheckedCategory = { ...prevCheckedValues };
+            const replacedKey = replacements[filteredKey] || filteredKey;
 
-        // Update the filteredCategoriesObject
-        if (isCheckedArray) {
-            const updatedObject: { [key: string]: string[] } = { ...filteredCategoriesObject };
-            updatedObject[transformedCategoryKey] = updatedObject[transformedCategoryKey].filter((value) => value !== filteredCategoryValue);
-            setFilteredCategoriesObject(updatedObject);
-        } else {
-            setFilteredCategoriesObject((prevObject) => ({
-                ...prevObject,
-                [transformedCategoryKey]: [...(prevObject[transformedCategoryKey] || []), filteredCategoryValue],
-            }));
-        }
-    };
-
-
-    const updateUrlWithSlugs = () => {
-        const selectedSlugs: string[] = [];
-
-        Object.entries(filteredCategoriesObject).forEach(([key, values]) => {
-            if (Array.isArray(values)) {
-                values.forEach((value) => {
-                    const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
-                    selectedSlugs.push(`${key}=${slug}`);
-                });
+            if (newCheckedCategory[replacedKey]) {
+                if (newCheckedCategory[replacedKey].includes(filteredValue)) {
+                    newCheckedCategory[replacedKey] = prevCheckedValues[replacedKey].filter((item) => item !== filteredValue)
+                    if (newCheckedCategory[replacedKey].length === 0) {
+                        delete newCheckedCategory[replacedKey];
+                    }
+                } else {
+                    newCheckedCategory[replacedKey].push(filteredValue);
+                }
             } else {
-                const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
-                selectedSlugs.push(`${key}=${slug}`);
+                newCheckedCategory[replacedKey] = [filteredValue];
             }
+            return newCheckedCategory;
         });
-
-        // Construct the query parameters string
-        const queryParams = selectedSlugs.join('&');
-
-        // Update the URL with query parameters
-        // navigate(`?${queryParams}`, { replace: true });
     };
+
+    // const updateUrlWithSlugs = () => {
+    //     const selectedSlugs: string[] = [];
+
+    //     Object.entries(filteredCategoriesObject).forEach(([key, values]) => {
+    //         if (Array.isArray(values)) {
+    //             values.forEach((value) => {
+    //                 const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
+    //                 selectedSlugs.push(`${key}=${slug}`);
+    //             });
+    //         } else {
+    //             const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
+    //             selectedSlugs.push(`${key}=${slug}`);
+    //         }
+    //     });
+
+    //     // Construct the query parameters string
+    //     const queryParams = selectedSlugs.join('&');
+
+    //     // Update the URL with query parameters
+    //     // navigate(`?${queryParams}`, { replace: true });
+    // };
+
+
+
+
+    // const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
+    //     const carInfo = car.carInfo;
+    //     const carPrice = carInfo.carPrice;
+
+    //     const keyMatches = Object.keys(checkedValues).every((key) => {
+    //         const selectedValues = checkedValues[key];
+
+    //         if (!selectedValues || selectedValues.length === 0) {
+    //             return true;
+    //         }
+
+    //         const carValues = carInfo[key];
+
+    //         if (!Array.isArray(selectedValues) || !Array.isArray(carValues)) {
+    //             return false;
+    //         }
+
+    //         return selectedValues.every((selectedValue) => carValues.includes(selectedValue));
+    //     });
+
+    //     // return keyMatches && carPrice >= minPrice && carPrice <= maxPrice;
+    //     return keyMatches;
+    // });
 
     const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
         const carInfo = car.carInfo;
         const carPrice = carInfo.carPrice;
 
-        const keyMatches = Object.keys(filteredCategoriesObject).every((key) => {
-            const selectedValues = filteredCategoriesObject[key];
+        const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key))
+        const valuesMatches = Object.keys(checkedValues).every(key =>
+            JSON.stringify(checkedValues[key]) === JSON.stringify(carInfo[key as keyof CarInfo])
+        );
 
-            if (!selectedValues || selectedValues.length === 0) {
-                return true;
-            }
-
-            const carValues = carInfo[key];
-
-            if (!Array.isArray(selectedValues) || !Array.isArray(carValues)) {
-                return false;
-            }
-
-            return selectedValues.every((selectedValue) => carValues.includes(selectedValue));
-        });
-
-        // return keyMatches && carPrice >= minPrice && carPrice <= maxPrice;
-        return keyMatches;
+        return keysMatches && valuesMatches && carPrice >= minPrice && carPrice <= maxPrice
     });
 
-
-    const countValues = (filteredCategoriesObject: any) => {
+    const countValues = (checkedValues: any) => {
         let totalCount = 0;
 
-        for (const key in filteredCategoriesObject) {
-            if (filteredCategoriesObject.hasOwnProperty(key)) {
-                totalCount += filteredCategoriesObject[key].length;
+        for (const key in checkedValues) {
+            if (checkedValues.hasOwnProperty(key)) {
+                totalCount += checkedValues[key].length;
             }
         }
-
         setCountedSelectedValues(totalCount);
     };
 
-    let carsToRender;
-
-    if (filteredCars.length >= 1 || searchResults.length >= 1) {
-        carsToRender = filteredCars.length >= 1 ? filteredCars : searchResults;
-    } else {
-        carsToRender = allCars;
-    }
+    let carsToRender = filteredCars;
 
     return (
         <MainLayout>
@@ -198,11 +213,11 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
                 <Container className="auto-cards-container">
                     <Row className="d-flex align-items-center mt-2 border-bottom">
-                        <p className="small-info-text">"{carsToRender.length}" šitik daudz auto mums ir :D</p>
+                        <p className="small-info-text">"{carsToRender && carsToRender.length}" šitik daudz auto mums ir :D</p>
                     </Row>
 
                     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
-                        {carsToRender.map((car: Car) => (
+                        {carsToRender && carsToRender.map((car: Car) => (
                             <Col key={car.id} className="px-1">
                                 <ShopAutoCard
                                     gatsbyImageData={car.featuredImage.node.gatsbyImage}
@@ -215,9 +230,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                     </Row>
 
                     <Row xs={12} className="g-4 mt-5">
-                        {/* {filteredCars.length >= 1 && searchResults.length >= 1 && <div className="d-flex justify-content-center align-items-center">
+                        {carsToRender && carsToRender.length === 0 && <div className="d-flex justify-content-center align-items-center">
                             <h3 className="text-center">Diemžēl pēc izvēlētiem kriterijiem nekas nav atrasts</h3>
-                        </div>} */}
+                        </div>}
                     </Row>
                 </Container>
                 <div>

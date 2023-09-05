@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../components/Button";
 import MainLayout from "../layouts/MainLayout";
-import { Car, CarInfo, MyQueryResult, Replacements } from "../types/allWpCarTypes";
+import { Car, CarInfo, MyQueryResult } from "../types/allWpCarTypes";
 
 import HomeAutoCard from '../components/HomeAutoCard';
 import HeroSection from '../components/HeroSection';
@@ -61,9 +61,10 @@ const searchCars: SearchFunction = (query, cars) => {
       'hiFi',
       'papildaprikojums',
     ];
+    
 
     if (searchableCarInfoProperties.some((property) => {
-      const propertyValue = carInfo[property as keyof Replacements];
+      const propertyValue = carInfo[property as keyof CarInfo];
       if (Array.isArray(propertyValue)) {
         return propertyValue.some(value => value.toLowerCase().includes(normalizedQuery));
       } else {
@@ -110,8 +111,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
     });
   };
 
-  const handleNavigateToShopFilteredCarNewOrUsed = (type: number) => {
-    const results = searchCars(type.toString(), data.allWpCar.nodes);
+  const handleNavigateToShopFilteredCarNewOrUsed = (type: string) => {
+    const results = searchCars(type, data.allWpCar.nodes);
     setSearchResults(results);
     navigate('/shop', {
       state: { searchResults: results },
@@ -216,7 +217,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
                   );
                 })
                 .reduce((acc: any, key: any) => {
-                  acc[key] = carInfo[key];
+                  acc[key] = carInfo[key as keyof CarInfo];
                   return acc;
                 }, {});
 
@@ -245,7 +246,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
         <p className="section-text">make your home so comfortable with refreshing plants</p>
 
         <div className="row justify-content-between px-3 mt-5 first-items-container">
-          <div className="d-flex item col-md-7 mb-5 item-link" onClick={() => handleNavigateToShopFilteredCarNewOrUsed(205)}>
+          <div className="d-flex item col-md-7 mb-5 item-link" onClick={() => handleNavigateToShopFilteredCarNewOrUsed("jauns")}>
             <StaticImage
               style={{ position: "absolute" }}
               src={"../images/1.jpg"}
@@ -277,7 +278,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
               formats={['auto', 'webp', 'avif']}
               placeholder="blurred"
             /></div>
-          <div className="d-flex item col-md-7 mb-5 item-link" onClick={() => handleNavigateToShopFilteredCarNewOrUsed(208)}>
+          <div className="d-flex item col-md-7 mb-5 item-link" onClick={() => handleNavigateToShopFilteredCarNewOrUsed("mazlietots")}>
             <StaticImage
               style={{ position: "absolute" }}
               src={"../images/4.jpg"}

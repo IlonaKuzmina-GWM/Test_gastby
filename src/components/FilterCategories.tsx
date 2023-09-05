@@ -5,7 +5,6 @@ import Accordion from 'react-bootstrap/Accordion';
 import Button from './Button';
 
 import useAllWpCarData from "../queries/useAllWpCarData";
-import { Replacements } from '../types/allWpCarTypes';
 
 type FilterCategoriesProps = {
     eventkey: number;
@@ -25,7 +24,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
     clearFilteredValues,
     filteredCategoryHandler,
     minPriceRangeChangeHandler,
-    maxPriceRangeChangeHandler }) => { 
+    maxPriceRangeChangeHandler }) => {
 
     const data = useAllWpCarData();
 
@@ -51,6 +50,10 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
     type CarInfoProperty = keyof Replacements;
 
+
+    type Replacements = {
+        [key: string]: string;
+    };
     const replacements: Replacements = {
         "atrasanasVieta": "Atrašanās vieta",
         "atrumkarba": "Ātrumkārba",
@@ -164,7 +167,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                                             <input
                                                                 type="checkbox"
                                                                 id={valueName.toString()}
-                                                                // label={valueName}
                                                                 value={valueName}
                                                                 name={valueName.toString()}
                                                                 className='form-check-input color-checkbox'
