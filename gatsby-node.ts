@@ -94,13 +94,13 @@ exports.createPages = async ({ graphql, actions }: any) => {
     });
   });
 
-  allWpPost.nodes.forEach((node: { slug: string }) => {
-    actions.createPage({
-      path: `/${node.slug}`,
-      component: singlePostTempalte,
-      context: node,
-    });
-  });
+  // allWpPost.nodes.forEach((node: { slug: string }) => {
+  //   actions.createPage({
+  //     path: `/${node.slug}`,
+  //     component: singlePostTempalte,
+  //     context: node,
+  //   });
+  // });
 };
 
 export const createPagesStatefully: GatsbyNode["createPagesStatefully"] = async ({ actions }) => {
