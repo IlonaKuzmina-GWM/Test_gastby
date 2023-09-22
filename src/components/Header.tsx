@@ -44,10 +44,11 @@ const Header = () => {
 
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-2">
-                                <Link to="/" activeClassName="current" className="fs-5 px-4 link">Home</Link>
-                                <Link to="/shop" activeClassName="current" className="fs-5 px-4 link">Shop</Link>
-                                <Link to="/about" activeClassName="current" className="fs-5 px-4 link">About Us</Link>
-                                <Link to="/contact" activeClassName="current" className="fs-5 px-4 link">Contact</Link>
+                                <Link to="/" activeClassName="current" className="fs-5 px-4 link">Sākums</Link>
+                                <Link to="/shop" activeClassName="current" className="fs-5 px-4 link">Veikals</Link>
+                                <Link to="/about" activeClassName="current" className="fs-5 px-4 link">Par Mums</Link>
+                                <Link to="/blog" activeClassName="current" className="fs-5 px-4 link">Jaunumi</Link>
+                                <Link to="/contact" activeClassName="current" className="fs-5 px-4 link">Kontakti</Link>
                             </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>

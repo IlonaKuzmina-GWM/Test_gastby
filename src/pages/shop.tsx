@@ -166,9 +166,12 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     //     return keyMatches;
     // });
 
+
     const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
         const carInfo = car.carInfo;
         const carPrice = carInfo.carPrice;
+
+        //compare carInfo key and value  with checkedValues anad give back all cars with all values within one checkedValues
 
         const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key))
         const valuesMatches = Object.keys(checkedValues).every(key =>
@@ -235,8 +238,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         </div>}
                     </Row>
                 </Container>
-                <div>
-                </div>
             </div>
         </MainLayout>
     );

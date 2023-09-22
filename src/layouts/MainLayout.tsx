@@ -10,9 +10,9 @@ type MainLayoutProps = {
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     return (
         <div className="layout-container">
-            <Header></Header>
+            <Header/>
             {children}
-            <Footer></Footer>
+            <Footer/>
         </div>
     );
 };

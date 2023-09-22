@@ -4,17 +4,40 @@ const path = require("path");
 
 exports.createPages = async ({ graphql, actions }: any) => {
   const { data } = await graphql(`
-    query allWpCarData {
+    query allWpData {
+      allWpPost {
+        totalCount
+        edges {
+          next {
+            title
+            slug
+          }
+          previous {
+            slug
+            title
+          }
+          node {
+            title
+            slug
+            author {
+              node {
+                name
+              }
+            }
+            content
+            date(formatString: "DD.MM.Y")
+            excerpt
+            featuredImage {
+              node {
+                gatsbyImage(fit: COVER, formats: WEBP, placeholder: BLURRED)
+              }
+            }
+          }
+        }
+      }
       allWpCar {
         nodes {
           content
-          carCategories {
-            nodes {
-              name
-              databaseId
-              parentDatabaseId
-            }
-          }
           slug
           title
           databaseId
@@ -58,13 +81,23 @@ exports.createPages = async ({ graphql, actions }: any) => {
   }
 
   const { allWpCar } = data;
+  const { allWpPost } = data;
 
   const singleCarTempalte = path.resolve(`src/templates/single-car-page.tsx`);
+  const singlePostTempalte = path.resolve(`src/templates/single-post-page.tsx`);
 
   allWpCar.nodes.forEach((node: { slug: string }) => {
     actions.createPage({
       path: `/${node.slug}`,
       component: singleCarTempalte,
+      context: node,
+    });
+  });
+
+  allWpPost.nodes.forEach((node: { slug: string }) => {
+    actions.createPage({
+      path: `/${node.slug}`,
+      component: singlePostTempalte,
       context: node,
     });
   });
