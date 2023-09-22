@@ -5,36 +5,36 @@ const path = require("path");
 exports.createPages = async ({ graphql, actions }: any) => {
   const { data } = await graphql(`
     query allWpData {
-      allWpPost {
-        totalCount
-        edges {
-          next {
-            title
-            slug
-          }
-          previous {
-            slug
-            title
-          }
-          node {
-            title
-            slug
-            author {
-              node {
-                name
-              }
-            }
-            content
-            date(formatString: "DD.MM.Y")
-            excerpt
-            featuredImage {
-              node {
-                gatsbyImage(fit: COVER, formats: WEBP, placeholder: BLURRED)
-              }
-            }
-          }
-        }
-      }
+      # allWpPost {
+      #   totalCount
+      #   edges {
+      #     next {
+      #       title
+      #       slug
+      #     }
+      #     previous {
+      #       slug
+      #       title
+      #     }
+      #     node {
+      #       title
+      #       slug
+      #       author {
+      #         node {
+      #           name
+      #         }
+      #       }
+      #       content
+      #       date(formatString: "DD.MM.Y")
+      #       excerpt
+      #       featuredImage {
+      #         node {
+      #           gatsbyImage(fit: COVER, formats: WEBP, placeholder: BLURRED)
+      #         }
+      #       }
+      #     }
+      #   }
+      # }
       allWpCar {
         nodes {
           content
@@ -101,9 +101,7 @@ exports.createPages = async ({ graphql, actions }: any) => {
   //     context: node,
   //   });
   // });
-};
 
-export const createPagesStatefully: GatsbyNode["createPagesStatefully"] = async ({ actions }) => {
   const { createRedirect } = actions;
 
   // Set cache headers for font files
@@ -117,3 +115,18 @@ export const createPagesStatefully: GatsbyNode["createPagesStatefully"] = async 
     },
   });
 };
+
+// export const createPagesStatefully: GatsbyNode["createPagesStatefully"] = async ({ actions }) => {
+//   const { createRedirect } = actions;
+
+//   // Set cache headers for font files
+//   createRedirect({
+//     fromPath: "static/fonts/*.woff2",
+//     toPath: "/fonts/:splat",
+//     statusCode: 200,
+//     force: true,
+//     headers: {
+//       "Cache-Control": "public, max-age=31536000",
+//     },
+//   });
+// };
