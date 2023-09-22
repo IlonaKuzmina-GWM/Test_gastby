@@ -7,7 +7,7 @@ export default function useAllWpPostData() {
         nodes {
           featuredImage {
             node {
-              gatsbyImage(aspectRatio: 1.5, fit: COVER, formats: WEBP, placeholder: BLURRED)
+              gatsbyImage(cropFocus: CENTER, fit: COVER, formats: WEBP, placeholder: BLURRED, width: 386, height: 217)
               title
             }
           }
