@@ -19,9 +19,9 @@ export type WpPost = {
         slug: string;
         title: string;
         tags: {
-            node: {
-                name: string;
-            }
+            nodes: [
+                { name: string; }
+            ]
         };
         date: string;
         author: {
