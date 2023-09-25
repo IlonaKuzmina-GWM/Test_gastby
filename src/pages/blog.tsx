@@ -47,7 +47,7 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
           <h1 className="banner__title">Jaunumi un <br /> noderīgas auto ziņas</h1>
         </div>
 
-        <div className="black-gradient"></div>
+        <div className="white-gradient"></div>
       </section>
 
       <section className="blog__tags--section container mb-4">

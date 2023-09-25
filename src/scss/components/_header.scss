@@ -27,7 +27,7 @@
     width: 100%;
   }
 
-  .header_logo {
+  .header__logo {
     max-width: 160px;
     vertical-align: middle;
   }
@@ -81,4 +81,11 @@
   .header {
     z-index: 990 !important;
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .header .navbar-brand{
+    padding: 15px 0;
+  }
+  
 }

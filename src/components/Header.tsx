@@ -26,7 +26,7 @@ const Header = () => {
                 className={`fixed-top header ${scrolled ? "scrolled" : ""}`}>
                 <Container fluid>
                     <Navbar.Brand href="/">
-                        <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_color.png" alt="logo" width={200} height={25} placeholder="blurred" />
+                        <StaticImage className="header__logo" src="../images/Pirktauto_logo_horizontal_color.png" alt="logo" width={200} height={25} placeholder="blurred" />
                     </Navbar.Brand>
                     
                     <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="header_toggle-btn"/>
