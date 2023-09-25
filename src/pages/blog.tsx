@@ -47,7 +47,7 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
           <h1 className="banner__title">Jaunumi un <br /> noderīgas auto ziņas</h1>
         </div>
 
-        <div className="white-gradient"></div>
+        <div className="white__gradient--bottom"></div>
       </section>
 
       <section className="blog__tags--section container mb-4">
@@ -69,46 +69,45 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
       </section>
 
       <section className="blog__post--section container">
-        {/* <div className="col-12 col-md-10 offset-md-1"> */}
-        <div className="col-12 col-md-10 ">
-          <Row xs={1} md={2} className="g-4" >
-            {posts.allWpPost.edges.filter((post: WpPost) => {
-              if (!filterPostsByTag) {
-                return true;
-              }
-              return post.node.tags.nodes.some(tag => tag.name === filterPostsByTag);
-            }).map((post: WpPost) => {
-              return (
-                <Col key="">
-                  <Card>
-                    <Nav.Link href={"/" + post.node.slug} >
-                      <GatsbyImage
-                        image={post.node.featuredImage.node.gatsbyImage}
-                        alt={post.node.title}
-                        loading="lazy"
-                        className="card-img-top"
-                      />
-                      <Card.Body>
-                        <Card.Title>{post.node.title}</Card.Title>
-                        <Card.Text>
-                          <div dangerouslySetInnerHTML={{ __html: post.node.excerpt }} />
-                        </Card.Text>
-                      </Card.Body>
-                      <Card.Footer>
-                        {post.node.tags.nodes.map((tag, index) => (
-                          <React.Fragment key={index}>
-                            <small>{tag.name}</small>
-                            {index < post.node.tags.nodes.length - 1 && <>, </>}
-                          </React.Fragment>
-                        ))}
-                      </Card.Footer>
-                    </Nav.Link>
-                  </Card>
-                </Col>
-              )
-            })}
-          </Row>
-        </div>
+        <Row xs={1} md={2} lg={3} className="g-4 mt-4" >
+          {posts.allWpPost.edges.filter((post: WpPost) => {
+            if (!filterPostsByTag) {
+              return true;
+            }
+            return post.node.tags.nodes.some(tag => tag.name === filterPostsByTag);
+          }).map((post: WpPost) => {
+            return (
+              <Col key="">
+                <Card className="blog__post--card">
+                  <Nav.Link href={"/" + post.node.slug} >
+                    <GatsbyImage
+                      image={post.node.featuredImage.node.gatsbyImage}
+                      alt={post.node.title}
+                      loading="lazy"
+                      className="card-img-top"
+                    />
+                    <Card.Body>
+                      <Card.Title>{post.node.title}</Card.Title>
+                      <Card.Text>
+                        <div dangerouslySetInnerHTML={{ __html: post.node.excerpt.slice(0, 100) + "..." }} />
+                        <div className="read__more--wrapper">
+                          <span className="read__more--btn" >Lasīt vairāk...</span>
+                        </div>
+                      </Card.Text>
+                    </Card.Body>
+                    <Card.Footer>
+                      {post.node.tags.nodes.map((tag, index) => (
+                        <React.Fragment key={index}>
+                          <small className="tag">{tag.name}</small>
+                        </React.Fragment>
+                      ))}
+                    </Card.Footer>
+                  </Nav.Link>
+                </Card>
+              </Col>
+            )
+          })}
+        </Row>
       </section>
     </MainLayout>
   );
@@ -154,8 +153,8 @@ query AllCarsDetails {
             fit: COVER
             formats: WEBP
             placeholder: BLURRED
-            width: 386
-            height: 217
+            width: 586
+            height: 317
           )
           }
         }

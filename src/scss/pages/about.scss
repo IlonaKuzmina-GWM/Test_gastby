@@ -1,12 +1,8 @@
-.about__top-banner-wrap {
-  height: 750px;
-}
-
-.about-hero-section {
+.about__hero--section {
   position: relative;
   background: linear-gradient(180deg, $gold_primary, 60%, $white);
 
-  .banner__text-wrap {
+  .banner__text--wrapper {
     color: $dark;
     z-index: 1;
     width: 80%;
@@ -33,15 +29,7 @@
     }
   }
 
-  .white-gradient-top {
-    position: absolute;
-    width: 100%;
-    height: 150px;
-    top: 0;
-    background: linear-gradient(-180deg, $white 0%, rgba(255, 255, 255, 0) 83.65%);
-  }
-
-  .white-gradient-bottom {
+  .white__gradient--bottom {
     position: absolute;
     width: 100%;
     height: 100px;
@@ -50,8 +38,8 @@
   }
 }
 
-.about-content-section {
-  .title-top-line {
+.about__content--section {
+  .title__top--line {
     box-sizing: border-box;
     margin: 0px;
     min-width: 0px;
@@ -60,8 +48,42 @@
     background: $gold_primary;
   }
 
-  h2 {
-    font-size: 32px;
-    line-height: 38px;
+  .about__content--title {
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+}
+
+/*-------------------------------------------------*/
+/* =  769px
+  /*-------------------------------------------------*/
+
+@media only screen and (max-width: 769px) {
+  .about__hero--section {
+    .banner__text--wrapper {
+      width: 100%;
+      padding: 150px 15px 70px 15px;
+
+      .banner__title {
+        font-size: 2rem;
+        line-height: 2rem;
+      }
+
+      .banner__title::before {
+        bottom: -10px;
+        height: 6px;
+      }
+    }
+
+    .white__gradient--bottom {
+      height: 50px;
+    }
+  }
+
+  .about__content--section {
+    .about__content--title {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+    }
   }
 }
