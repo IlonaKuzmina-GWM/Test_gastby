@@ -24,9 +24,9 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
   const getUniqueTags = (posts: AllWpPosts) => {
     const uniqueTags = new Set<string>();
 
-    posts.allWpPost.edges.forEach((post: WpPost) => {
-      if (post.node.tags && post.node.tags.nodes.length > 0) {
-        post.node.tags.nodes.forEach((tag: { name: string }) => {
+    posts.allWpPost.nodes.forEach((post: WpPost) => {
+      if (post.tags && post.tags.nodes.length > 0) {
+        post.tags.nodes.forEach((tag: { name: string }) => {
           uniqueTags.add(tag.name);
 
         })
@@ -70,33 +70,33 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
 
       <section className="blog__post--section container">
         <Row xs={1} md={2} lg={3} className="g-4 mt-4" >
-          {posts.allWpPost.edges.filter((post: WpPost) => {
+          {posts.allWpPost.nodes.filter((post: WpPost) => {
             if (!filterPostsByTag) {
               return true;
             }
-            return post.node.tags.nodes.some(tag => tag.name === filterPostsByTag);
+            return post.tags.nodes.some(tag => tag.name === filterPostsByTag);
           }).map((post: WpPost) => {
             return (
               <Col key="">
                 <Card className="blog__post--card">
-                  <Nav.Link href={"/" + post.node.slug} >
+                  <Nav.Link href={"/" + post.slug} >
                     <GatsbyImage
-                      image={post.node.featuredImage.node.gatsbyImage}
-                      alt={post.node.title}
+                      image={post.featuredImage.node.gatsbyImage}
+                      alt={post.title}
                       loading="lazy"
                       className="card-img-top"
                     />
                     <Card.Body>
-                      <Card.Title>{post.node.title}</Card.Title>
+                      <Card.Title>{post.title}</Card.Title>
                       <Card.Text>
-                        <div dangerouslySetInnerHTML={{ __html: post.node.excerpt.slice(0, 100) + "..." }} />
+                        <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
                         <div className="read__more--wrapper">
                           <span className="read__more--btn" >Lasīt vairāk...</span>
                         </div>
                       </Card.Text>
                     </Card.Body>
                     <Card.Footer>
-                      {post.node.tags.nodes.map((tag, index) => (
+                      {post.tags.nodes.map((tag, index) => (
                         <React.Fragment key={index}>
                           <small className="tag">{tag.name}</small>
                         </React.Fragment>
@@ -121,16 +121,7 @@ export const query = graphql`
 query AllCarsDetails {
     allWpPost {
     totalCount
-    edges {
-      next {
-        title
-        slug
-      }
-      previous {
-        slug
-        title
-      }
-      node {
+    nodes {
         title
         slug
         author {
@@ -157,7 +148,6 @@ query AllCarsDetails {
             height: 317
           )
           }
-        }
       }
     }
   }

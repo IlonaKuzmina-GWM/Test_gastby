@@ -13,31 +13,29 @@ type PrevNext = {
 }
 
 export type WpPost = {
-    node: {
-        featuredImage: FeaturedImage;
-        content: string;
-        slug: string;
-        title: string;
-        tags: {
-            nodes: [
-                { name: string; }
-            ]
-        };
-        date: string;
-        author: {
-            node: {
-                name: string;
-            }
-        };
-        excerpt: string;
+    featuredImage: FeaturedImage;
+    content: string;
+    slug: string;
+    title: string;
+    tags: {
+        nodes: [
+            { name: string; }
+        ]
     };
+    date: string;
+    author: {
+        node: {
+            name: string;
+        }
+    };
+    excerpt: string;
     next: PrevNext;
     previous: PrevNext;
 }
 
 export type AllWpPosts = {
     allWpPost: {
-        edges: WpPost[];
+        nodes: WpPost[];
         totalCount: number;
     }
 }

@@ -3,38 +3,8 @@ import { GatsbyNode } from "gatsby";
 const path = require("path");
 
 exports.createPages = async ({ graphql, actions }: any) => {
-  const { data } = await graphql(`
-    query allWpData {
-      allWpPost {
-        totalCount
-        edges {
-          next {
-            title
-            slug
-          }
-          previous {
-            slug
-            title
-          }
-          node {
-            title
-            slug
-            author {
-              node {
-                name
-              }
-            }
-            content
-            date(formatString: "DD.MM.Y")
-            excerpt
-            featuredImage {
-              node {
-                gatsbyImage(fit: COVER, formats: WEBP, placeholder: BLURRED)
-              }
-            }
-          }
-        }
-      }
+  const dataCar = await graphql(`
+    query allWpDataCar {
       allWpCar {
         nodes {
           content
@@ -76,8 +46,38 @@ exports.createPages = async ({ graphql, actions }: any) => {
     }
   `);
 
-  if (data.errors) {
-    throw data.errors;
+  const dataPost = await graphql(`
+    query allWpDataPost {
+      allWpPost {
+        nodes {
+          author {
+            node {
+              name
+            }
+          }
+          content
+          date(formatString: "DD.MM.Y")
+          excerpt
+          featuredImage {
+            node {
+              gatsbyImage(fit: COVER, formats: WEBP, placeholder: BLURRED, width: 500, height: 350)
+            }
+          }
+          slug
+          title
+          tags {
+            nodes {
+              name
+            }
+          }
+        }
+        totalCount
+      }
+    }
+  `);
+
+  if (dataPost.errors || dataCar.errors) {
+    throw new Error("GraphQL query failed.");
   }
 
   // if (!data) {
@@ -90,21 +90,21 @@ exports.createPages = async ({ graphql, actions }: any) => {
   const singleCarTempalte = path.resolve(`src/templates/single-car-page.tsx`);
   const singlePostTempalte = path.resolve(`src/templates/single-post-page.tsx`);
 
-   data.allWpCar.nodes.forEach((node: { slug: string }) => {
-      actions.createPage({
-        path: `/${node.slug}`,
-        component: singleCarTempalte,
-        context: node,
-      });
+  dataCar.data.allWpCar.nodes.forEach((node: { slug: string }) => {
+    actions.createPage({
+      path: `/${node.slug}`,
+      component: singleCarTempalte,
+      context: node,
     });
+  });
 
-  // data.allWpPost.edges.forEach((node: { slug: string }) => {
-  //   actions.createPage({
-  //     path: `/${node.slug}`,
-  //     component: singlePostTempalte,
-  //     context: node,
-  //   });
-  // });
+  dataPost.data.allWpPost.nodes.forEach((node: { slug: string }) => {
+    actions.createPage({
+      path: `/${node.slug}`,
+      component: singlePostTempalte,
+      context: node,
+    });
+  });
 
   const { createRedirect } = actions;
 
@@ -119,18 +119,3 @@ exports.createPages = async ({ graphql, actions }: any) => {
     },
   });
 };
-
-// export const createPagesStatefully: GatsbyNode["createPagesStatefully"] = async ({ actions }) => {
-//   const { createRedirect } = actions;
-
-//   // Set cache headers for font files
-//   createRedirect({
-//     fromPath: "static/fonts/*.woff2",
-//     toPath: "/fonts/:splat",
-//     statusCode: 200,
-//     force: true,
-//     headers: {
-//       "Cache-Control": "public, max-age=31536000",
-//     },
-//   });
-// };
