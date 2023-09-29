@@ -14,26 +14,40 @@ export default function useAllWpCarData() {
             }
           }
           carInfo {
-            carPrice
-            atrasanasVieta
             atrumkarba
+            atrasanasVieta
             autoStavoklis
+            carPrice
+            virsbuvesTips
+            sedvietuSkaits
+            piedzina
+            nobraukums
+            motoraTilpums
+            modelis
+            marka
+            krasa
+            jauda
+            gads
             dzinejs
             durvjuSkaits
-            gads
-            krasa
-            marka
-            piedzina
-            virsbuvesTips
             dileris
-            versija
+            degvielasPaterins
+            coIzmesuDaudzums
           }
           carEquipment {
+            aizsardziba
+            aprikojums
+            audioVideoAprikojums
+            cits
             drosiba
-            elektronika
-            fieldGroupName
+            eksterjers
+            gaismas
             hiFi
-            papildaprikojums
+            interjers
+            salons
+            sedekli
+            spoguli
+            sture
           }
         }
       }

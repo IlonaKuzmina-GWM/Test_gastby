@@ -95,6 +95,13 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             "Durvju skaits": "durvjuSkaits",
             "Cena": "carPrice",
             "Dīleris": "dileris",
+            "Sēdvietu skaits": "sedvietuSkaits",
+            "Nobraukums": "nobraukums",
+            "Motora tilpums": "motoraTilpums",
+            "Modelis": "modelis",
+            "Jauda": "jauda",
+            "Degvielas patēriņš": "degvielasPaterins",
+            "CO izmeši": "coIzmesuDaudzums",
         };
 
         setCheckedValues((prevCheckedValues) => {
@@ -226,7 +233,8 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                                     gatsbyImageData={car.featuredImage.node.gatsbyImage}
                                     slug={car.slug}
                                     title={car.title}
-                                    price={car.carInfo.carPrice} />
+                                    carInfo={car.carInfo}
+                                />
                             </Col>
                         ))
                         }
@@ -261,32 +269,48 @@ query AllCarsDetails {
             fit: COVER
             formats: WEBP
             placeholder: BLURRED
-            width: 302
-            height: 172
+            width: 802
+            height: 500
           )
         }
       }
       carInfo {
-        carPrice
-        atrasanasVieta
         atrumkarba
+        atrasanasVieta
         autoStavoklis
+        carPrice
         virsbuvesTips
+        sedvietuSkaits
         piedzina
+        nobraukums
+        motoraTilpums
+        modelis
         marka
         krasa
+        jauda
         gads
+        fieldGroupName
         dzinejs
         durvjuSkaits
-        versija
         dileris
+        degvielasPaterins
+        coIzmesuDaudzums
       }
       carEquipment {
-        drosiba
-        elektronika
-        hiFi
-        papildaprikojums
-      }
+            aizsardziba
+            aprikojums
+            audioVideoAprikojums
+            cits
+            drosiba
+            eksterjers
+            gaismas
+            hiFi
+            interjers
+            salons
+            sedekli
+            spoguli
+            sture
+          }
     }
   }
 }`

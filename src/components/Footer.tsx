@@ -30,11 +30,11 @@ const Footer = ({ }) => {
         <div className="footer container">
             <div className="wrapper first-line">
                 <div className="column column-one wrapper">
-                    <h3>Saņem ’karstākos’ piedāvājumus <br /> e-pastā</h3>
+                    <h3>Uzzini par aktuālākajiem piedāvājumiem pirmais</h3>
                     <div>
                         <form className="first-line-form" action="">
                             <input type="email" name="" id="" placeholder="Tavs e-pasts" />
-                            <Button name={"Abonēt"} size={"small"} type={"primary"} />
+                            <Button name={"Pieteikties"} size={"small"} type={"primary"} />
                         </form>
 
                     </div>
@@ -52,8 +52,6 @@ const Footer = ({ }) => {
                     <h3>Kontakti</h3>
                     <p>Tel.nr: <a href="tel:1234567">1234567</a></p>
                     <p>E-pasts: <a href="mailto:info@pirktauto.lv">info@pirktauto.lv</a></p>
-                    <p>Adrese: Birznieka Upīša 569, Rīga</p>
-                    <p>Kaut kas vēl te</p>
                 </div>
 
             </div>

@@ -14,6 +14,12 @@ export default function HTML(props) {
         <meta name="MobileOptimized" content="320" />
         {/* Use maximum-scale and user-scalable at your own risk. It disables pinch/zoom. Think about usability/accessibility before including. */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"/>
+
+        <link rel="preload" href="/fonts/Poppins-Regular.woff2" as="font" type="font/woff2" crossorigin></link>
+        <link rel="preload" href="/fonts/Poppins-Bold.woff2" as="font" type="font/woff2" crossorigin></link>
+        <link rel="preload" href="/fonts/Poppins-Light.woff2" as="font" type="font/woff2" crossorigin></link>
+        <link rel="preload" href="/fonts/Poppins-Medium.woff2" as="font" type="font/woff2" crossorigin></link>
+        <link rel="preload" href="/fonts/Poppins-SemiBold.woff2" as="font" type="font/woff2" crossorigin></link>
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>

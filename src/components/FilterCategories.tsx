@@ -55,18 +55,25 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         [key: string]: string;
     };
     const replacements: Replacements = {
-        "atrasanasVieta": "Atrašanās vieta",
         "atrumkarba": "Ātrumkārba",
+        "atrasanasVieta": "Atrašanās vieta",
         "autoStavoklis": "Auto stāvoklis",
         "virsbuvesTips": "Virsbūves tips",
+        "sedvietuSkaits": "Sēdvietu skaits",
         "piedzina": "Piedziņa",
+        "nobraukums": "Nobraukums",
+        "motoraTilpums": "Motora tilpums",
+        "modelis": "Modelis",
         "marka": "Marka",
         "krasa": "Krāsa",
+        "jauda": "Jauda",
         "gads": "Gads",
         "dzinejs": "Dzinējs",
         "durvjuSkaits": "Durvju skaits",
         "carPrice": "Cena",
         "dileris": "Dīleris",
+        "degvielasPaterins": "Degvielas patēriņš",
+        "coIzmesuDaudzums": "CO izmeši",
     };
 
     type CarInfo = {
@@ -160,20 +167,20 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                 <Accordion.Body>
                                     {uniqueCarInfoValues[key].map((valueName: string | number, valueIndex: number) => (
                                         <Form key={valueIndex}>
-                                            <Form.Group className="" controlId={valueName.toString()}>
+                                            <Form.Group className="" controlId={valueName}>
                                                 {key === "Krāsa"
                                                     ? (
                                                         <div className='form-check'>
                                                             <input
                                                                 type="checkbox"
-                                                                id={valueName.toString()}
+                                                                id={valueName}
                                                                 value={valueName}
-                                                                name={valueName.toString()}
+                                                                name={valueName}
                                                                 className='form-check-input color-checkbox'
                                                                 onChange={(e) => { filteredCategoryHandler(key, valueName.toString()) }}
                                                             />
                                                             <label
-                                                                htmlFor={valueName.toString()}
+                                                                htmlFor={valueName}
                                                                 className='form-check-label'>
                                                                 <span
                                                                     style={{
@@ -190,15 +197,16 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                                     ) : (
                                                         <Form.Check
                                                             type="checkbox"
-                                                            id={valueName.toString()}
+                                                            id={valueName}
                                                             label={valueName}
                                                             value={valueName}
-                                                            name={valueName.toString()}
+                                                            name={valueName}
                                                             onChange={(e) => {
                                                                 filteredCategoryHandler(key, valueName.toString())
                                                             }}
                                                         />
-                                                    )}
+                                                    )
+                                                    }
                                             </Form.Group>
                                         </Form>
                                     ))}

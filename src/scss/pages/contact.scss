@@ -4,7 +4,7 @@
 
 .contact__hero--section {
   position: relative;
-  background: linear-gradient(180deg, $gold_primary, 60%, $white);
+  background: linear-gradient(180deg, $blue_primary, 60%, $white);
 
   .banner__text--wrapper {
     color: $dark;
@@ -27,7 +27,7 @@
       left: 0;
       width: 0;
       height: 10px;
-      background-color: $gold_primary;
+      background-color: $blue_primary;
       transition: width 0.3s ease;
       width: 40%;
     }

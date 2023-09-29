@@ -1,6 +1,6 @@
 .blog__hero--section {
   position: relative;
-  background: linear-gradient(180deg, $gold_primary, 60%, $white);
+  background: linear-gradient(180deg, $blue_primary, 60%, $white);
 
   .banner__text-wrap {
     color: $dark;
@@ -23,7 +23,7 @@
       left: 0;
       width: 0;
       height: 10px;
-      background-color: $gold_primary;
+      background-color: $blue_primary;
       transition: width 0.3s ease;
       width: 40%;
     }
@@ -47,7 +47,7 @@
 
   .tag-item {
     font-size: 18px;
-    border: solid 2px $gold_primary;
+    border: solid 2px $blue_primary;
     background-color: $white;
     padding: 10px 15px;
     cursor: pointer;
@@ -55,13 +55,13 @@
     margin-right: 20px;
 
     &:hover {
-      background-color: $gold_primary;
+      background-color: $blue_primary;
       transition: all 0.5s ease;
     }
   }
 
   .active {
-    background-color: $gold_primary;
+    background-color: $blue_primary;
     font-weight: 500;
   }
 }
@@ -81,7 +81,7 @@
     height: 100%;
 
     &:hover .read__more--btn {
-      color: $gold_primary;
+      color: $blue_primary;
       transition: all 0.5s ease;
     }
 
@@ -102,7 +102,7 @@
         border-radius: 15px 5px 15px 5px;
         font-size: 16px;
         border: none;
-        background-color: $gold_primary;
+        background-color: $blue_primary;
         padding: 5px 10px;
       }
     }

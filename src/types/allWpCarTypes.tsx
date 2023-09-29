@@ -9,7 +9,7 @@ export type CarCategory = {
 type FeaturedImage = {
   node: {
     gatsbyImage: IGatsbyImageData;
-    sourceUrl:string;
+    sourceUrl: string;
   };
 }
 
@@ -19,27 +19,47 @@ export type CarGalleryImage = {
 }
 
 export type CarInfo = {
-  atrasanasVieta: string;
-  atrumkarba: string;
-  autoStavoklis: string;
-  virsbuvesTips: string;
-  piedzina: string;
-  marka: string;
-  krasa: string;
-  gads: string;
-  dzinejs: string;
-  durvjuSkaits: string;
+  [key: string]: string[] | number | string | CarGalleryImage[];
+
+  atrasanasVieta: string[];
+  atrumkarba: string[];
+  autoStavoklis: string[];
   carPrice: number;
-  dileris: string;
-  versija: string;
+  virsbuvesTips: string[];
+  sedvietuSkaits: number;
+  piedzina: string[];
+  nobraukums: number;
+  motoraTilpums: number;
+  modelis: string;
+  marka: string[];
+  krasa: string;
+  jauda: string;
+  gads: string;
+  dzinejs: string[];
+  durvjuSkaits: string[];
+  dileris: string[];
+  degvielasPaterins: string;
+  coIzmesuDaudzums: string;
   carGallery: CarGalleryImage[];
 }
 
 export type CarEquipment = {
+  [key: string]: string[];
+
+  aizsardziba: string[];
+  aprikojums: string[];
+  audioVideoAprikojums: string[];
+  cits: string[];
   drosiba: string[];
-  elektronika: string[];
+  eksterjers: string[];
+  fieldGroupName: string[];
+  gaismas: string[];
   hiFi: string[];
-  papildaprikojums: string[];
+  interjers: string[];
+  salons: string[];
+  sedekli: string[];
+  spoguli: string[];
+  sture: string[];
 }
 
 export type Car = {

@@ -45,8 +45,9 @@
   }
 
   .accordion-button:not(.collapsed) {
-    color: $white;
-    background-color: rgb(220, 180, 122, 0.7);
+    // color: $white;
+    // background-color: rgb(220, 180, 122, 0.7);
+    background-color: transparent;
   }
 
   .accordion-button:not(.collapsed)::after {
@@ -61,8 +62,8 @@
   }
 
   .form-check-input:checked {
-    background-color: $gold_primary;
-    border-color: $gold_primary;
+    background-color: $blue_primary;
+    border-color: $blue_primary;
   }
 
   .form-check-label {

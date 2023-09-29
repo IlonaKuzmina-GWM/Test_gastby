@@ -18,28 +18,43 @@ exports.createPages = async ({ graphql, actions }: any) => {
             }
           }
           carInfo {
-            carPrice
             carGallery {
               gatsbyImage(formats: WEBP, placeholder: BLURRED, width: 976, height: 549)
             }
-            atrasanasVieta
             atrumkarba
+            atrasanasVieta
             autoStavoklis
+            carPrice
             virsbuvesTips
+            sedvietuSkaits
             piedzina
+            nobraukums
+            motoraTilpums
+            modelis
             marka
             krasa
+            jauda
             gads
             dzinejs
             durvjuSkaits
-            versija
             dileris
+            degvielasPaterins
+            coIzmesuDaudzums
           }
           carEquipment {
+            aizsardziba
+            aprikojums
+            audioVideoAprikojums
+            cits
             drosiba
-            elektronika
+            eksterjers
+            gaismas
             hiFi
-            papildaprikojums
+            interjers
+            salons
+            sedekli
+            spoguli
+            sture
           }
         }
       }

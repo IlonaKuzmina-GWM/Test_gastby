@@ -5,12 +5,13 @@ import * as React from "react";
 import { useState } from 'react';
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from 'swiper/modules';
 import Button from "../components/Button";
 import MainLayout from "../layouts/MainLayout";
-import { Car, CarInfo, MyQueryResult } from "../types/allWpCarTypes";
+import { Car, CarEquipment, CarInfo, MyQueryResult } from "../types/allWpCarTypes";
 
-import HomeAutoCard from '../components/HomeAutoCard';
 import HeroSection from '../components/HeroSection';
+import ShopAutoCard from '../components/ShopAutoCard';
 
 type SearchFunction = (
   query: string,
@@ -44,24 +45,32 @@ const searchCars: SearchFunction = (query, cars) => {
       'gads',
       'dzinejs',
       'durvjuSkaits',
-      'versija',
+      'modelis',
       'dileris',
+      'degvielasPaterins',
+      'coIzmesuDaudzums',
+      'jauda',
+      'sedvietuSkaits',
+      'nobraukums',
+      'motoraTilpums',
     ];
-
-    type CarEquipmentType = {
-      drosiba: string[] | string,
-      elektronika: string[] | string,
-      hiFi: string[] | string,
-      papildaprikojums: string[] | string,
-    };
 
     const searchableEquipmentProperties = [
       'drosiba',
-      'elektronika',
       'hiFi',
-      'papildaprikojums',
+      'aizsardziba',
+      'aprikojums',
+      'audioVideoAprikojums',
+      'cits',
+      'eksterjers',
+      'gaismas',
+      'interjers',
+      'salons',
+      'sedekli',
+      'spoguli',
+      'sture',
     ];
-    
+
 
     if (searchableCarInfoProperties.some((property) => {
       const propertyValue = carInfo[property as keyof CarInfo];
@@ -75,11 +84,11 @@ const searchCars: SearchFunction = (query, cars) => {
     }
 
     if (searchableEquipmentProperties.some((property) => {
-      const propertyValue = carEquipment[property as keyof CarEquipmentType];
+      const propertyValue = carEquipment[property as keyof CarEquipment];
       if (Array.isArray(propertyValue)) {
         return propertyValue.some(value => value.toLowerCase().includes(normalizedQuery));
       } else {
-        return propertyValue.toLowerCase().includes(normalizedQuery);
+        return propertyValue.toString().toLowerCase().includes(normalizedQuery);
       }
     })) {
       return true;
@@ -150,8 +159,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             />
 
             <div className="item-content">
-              <h3>Laiks ir nauda</h3>
-              <p>Laika nav.. naudas arī nav..</p>
+              <h3>Jauni auto</h3>
+              <p>Aktuālie auto piedāvājumi no salona</p>
             </div>
           </div>
           <div className="item">
@@ -166,8 +175,8 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             />
 
             <div className="item-content">
-              <h3>Izvēlies izdevīgāko</h3>
-              <p>Atrodi sev izdevīgāko auto</p>
+              <h3>Mazlietoti auto</h3>
+              <p>Tikai pie dīlera pieejami auto </p>
             </div>
           </div>
           <div className="item">
@@ -182,59 +191,60 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             />
 
             <div className="item-content">
-              <h3>Vēl kaut kas</h3>
-              <p>Lorem Ipsums</p>
+              <h3>Ietaupi laiku</h3>
+              <p>Atlasi pēc sev vēlamajām ekstrām </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="latest-auto-section">
+      <section className="auto-swiper-section">
         <div className="container-lg latest-auto-title">
-          <h2>Jaunākie auto
-            piedāvājumi</h2>
+          <h2>Nezini ko izvēlēties?</h2>
+          <p>Apskati visus pieejamos auto vai izmanto filtru un atlasi tikai sev interesējošos auto.</p>
           <div className="arrow-wrapper">
-            <Link to="/shop"><p>Skatīt visus auto</p></Link>
-            <StaticImage className="arrow" src={"../images/arrow-right.png"} alt={"Arrow"} width={25}></StaticImage>
+            <Link to="/shop">
+              <p>Skatīt visus auto</p>
+              <StaticImage className="arrow" src={"../images/bi_arrow-right-short.svg"} alt={"Arrow"} width={50} />
+            </Link>
           </div>
         </div>
 
         <div className="auto-card-container">
-          <Swiper
-            spaceBetween={30}
-            slidesPerView={"auto"}
-            className='pb-5'
-          >
-            {data.allWpCar.nodes.slice(0, 8).map((car: Car) => {
-              const carInfo = car.carInfo;
-
-              const filteredLabels = Object.keys(carInfo)
-                .filter((key) => {
-                  return (
-                    key === 'atrasanasVieta' ||
-                    key === 'autoStavoklis' ||
-                    key === 'gads'
-                  );
-                })
-                .reduce((acc: any, key: any) => {
-                  acc[key] = carInfo[key as keyof CarInfo];
-                  return acc;
-                }, {});
-
-              return (
-                <SwiperSlide key={car.id}>
-                  <HomeAutoCard
-                    gatsbyImageData={car.featuredImage.node.gatsbyImage}
+          <div className="swiper-container">
+            <Swiper
+              spaceBetween={30}
+              slidesPerView={1}
+              className='pb-5'
+              navigation={true}
+              modules={[Pagination, Navigation]}
+              breakpoints={{
+                640: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 5,
+                  spaceBetween: 20,
+                },
+              }}
+            >
+              <div className="overlay left" />
+              {data.allWpCar.nodes.slice(0, 8).map((car: Car, index) =>
+                <SwiperSlide
+                  className={''}
+                  key={index}>
+                  <ShopAutoCard
                     title={car.title}
-                    price={carInfo.carPrice}
+                    gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                    carInfo={car.carInfo}
                     slug={car.slug}
-                    labels={filteredLabels}
-                    imagesLink={car.featuredImage.node.sourceUrl}
                   />
                 </SwiperSlide>
-              );
-            })}
-          </Swiper>
+              )}
+              <div className="overlay right" />
+            </Swiper>
+          </div>
 
         </div>
 
@@ -242,8 +252,9 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
       </section>
 
       <section className="one-more-section container-lg">
-        <h2 className="section-title">Interior Plant Reference</h2>
-        <p className="section-text">make your home so comfortable with refreshing plants</p>
+        <h2 className="section-title">Izvēlies savu nākošo auto</h2>
+        <p className="section-text">Jauns, mazlietots, elektrisks vai pilnpiedziņas?</p>
+        <p className="section-text">Atrodi aktuālo piedāvājumu pie mums.</p>
 
         <div className="row justify-content-between px-3 mt-5 first-items-container">
           <div className="d-flex item col-md-7 mb-5 item-link" onClick={() => handleNavigateToShopFilteredCarNewOrUsed("jauns")}>
@@ -328,25 +339,42 @@ query AllCarsDetails {
         }
       }
       carInfo {
-        carPrice
-        atrasanasVieta
         atrumkarba
+        atrasanasVieta
         autoStavoklis
+        carPrice
         virsbuvesTips
+        sedvietuSkaits
         piedzina
+        nobraukums
+        motoraTilpums
+        modelis
         marka
         krasa
+        jauda
         gads
+        fieldGroupName
         dzinejs
         durvjuSkaits
-        versija
         dileris
+        degvielasPaterins
+        coIzmesuDaudzums
       }
       carEquipment {
+        aizsardziba
+        aprikojums
+        audioVideoAprikojums
+        cits
         drosiba
-        elektronika
+        eksterjers
+        fieldGroupName
+        gaismas
         hiFi
-        papildaprikojums
+        interjers
+        salons
+        sedekli
+        spoguli
+        sture
       }
     }
   }

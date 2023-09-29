@@ -1,12 +1,12 @@
 .main-btn {
   display: inline-block;
-  border: solid 1px $gold_primary;
+  border: solid 1px $blue_primary;
   border-radius: 60px;
   box-shadow: -1px 3px 3px 0 rgba(80, 80, 80, 0.2);
   flex: 0 0 auto;
   cursor: pointer;
   transition: all 0.7s ease;
-  width:max-content;
+  width: max-content;
   text-transform: capitalize;
   font-weight: 700;
 }
@@ -23,7 +23,7 @@
 
 .primary {
   color: $white;
-  background: $gold_primary;
+  background: $blue_primary;
   border: none;
 
   &:hover {
@@ -33,13 +33,13 @@
 }
 
 .outline {
-  color: $gold_primary;
+  color: $blue_primary;
   background: transparent;
-  border: 1px solid $gold_primary;
+  border: 1px solid $blue_primary;
 
   &:hover {
     box-shadow: -1px 6px 10px 0 rgba(120, 60, 20, 0.2);
-    background: $gold_primary;
+    background: $blue_primary;
     color: $white;
   }
 }

@@ -26,12 +26,12 @@
     }
 
     li::marker {
-      color: $gold_primary;
+      color: $blue_primary;
     }
 
     .accordion-button:not(.collapsed) {
       color: $white;
-      background-color: $gold_primary;
+      background-color: $blue_primary;
     }
 
     .popup-image_wrapper {

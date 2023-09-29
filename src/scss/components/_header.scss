@@ -10,66 +10,88 @@
     position: relative;
   }
 
-  .link::before,
-  .link.current::before {
-    content: "";
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    width: 0;
-    height: 4px;
-    background-color: $gold_primary;
-    transition: width 0.3s ease;
-  }
+  // .link::before,
+  // .link.current::before {
+  //   content: "";
+  //   position: absolute;
+  //   bottom: 10px;
+  //   left: 0;
+  //   width: 0;
+  //   height: 4px;
+  //   background-color: $blue_primary;
+  //   transition: width 0.3s ease;
+  // }
 
-  .link:hover::before,
-  .link.current::before {
-    width: 100%;
-  }
+  // .link:hover::before,
+  // .link.current::before {
+  //   width: 100%;
+  // }
 
   .header__logo {
     max-width: 160px;
     vertical-align: middle;
   }
-}
 
-.header_toggle-btn {
-  border: $dark solid 1px;
+  .current {
+    color: $hover;
+  }
 }
 
 .header.scrolled {
-  background-color: #dcb47a80;
-  backdrop-filter: blur(10px);
-  color: $white;
+  background-color: #ddf0ff;
+  // backdrop-filter: blur(10px);
+  color: $text_secondary;
 
   a {
-    color: $white;
+    color: $text_secondary;
   }
 
   .current {
-    color: $dark;
+    color: $blue_primary;
   }
 }
 
 @media only screen and (max-width: 991px) {
+  .header_toggle-btn {
+    border: $dark solid 1px;
+    border: none;
+
+    .navbar-toggler-icon {
+      background-image: url("../images/nav_bar.svg") !important;
+    }
+  }
+
+  .offcanvas {
+    background-color: $green;
+    width: 100% !important;
+  }
+
+  .offcanvas-header .btn-close {
+    // background-image: url("../images/close-btn.svg") !important;
+    // height: 40px;
+    // width: 40px;
+  }
+
   .offcanvas .link {
     text-decoration: none;
-    color: $dark;
+    color: $white;
     position: relative;
     margin: 10px 5px;
     padding-left: 5px !important;
+    font-size: 35px;
+    font-weight: 700;
   }
 
-  .offcanvas .link::before {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 0;
-    height: 4px;
-    background-color: $gold_primary;
-    transition: width 0.3s ease;
-  }
+  // .offcanvas .link::before {
+  //   content: "";
+  //   position: absolute;
+  //   bottom: -3px;
+  //   left: 0;
+  //   width: 0;
+  //   height: 4px;
+  //   background-color: $blue_primary;
+  //   transition: width 0.3s ease;
+  // }
 
   .offcanvas .link:hover::before,
   .offcanvas .link.current::before {
@@ -84,8 +106,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .header .navbar-brand{
+  .header .navbar-brand {
     padding: 15px 0;
   }
-  
 }

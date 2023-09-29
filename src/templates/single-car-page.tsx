@@ -128,10 +128,10 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                         <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} />
                                         <p> {singleCarInformation.carEquipment.drosiba[0]}</p>
                                     </div>
-                                    <div className="icon-wrapper_item">
+                                    {/* <div className="icon-wrapper_item">
                                         <img src={CarFront} alt="CarFront" width={"40px"} />
                                         <p> {singleCarInformation.carEquipment.papildaprikojums[0]}</p>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Col>
                         </Row>
@@ -187,7 +187,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                     <CheckoutBox
                         title={singleCarInformation.title}
                         slug={singleCarInformation.slug}
-                        carType={singleCarInformation.carInfo.versija}
+                        carType={singleCarInformation.carInfo.modelis}
                         price={singleCarInformation.carInfo.carPrice}
                         brokerName={singleCarInformation.carInfo.dileris}
                         carCondition={singleCarInformation.carInfo.autoStavoklis}

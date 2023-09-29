@@ -2,19 +2,20 @@ import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import React, { FC } from "react";
 import { Card, Nav } from "react-bootstrap";
 import Button from "./Button";
+import { CarInfo } from "../types/allWpCarTypes";
 
 type ShopAutoCardProps = {
     title: string;
-    price: number;
-    slug?: string;
+    slug: string;
     handleClick?: () => void;
     gatsbyImageData: IGatsbyImageData;
+    carInfo?: CarInfo;
 }
 
-const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, price, handleClick, gatsbyImageData, slug }) => {
+const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, handleClick, gatsbyImageData, slug, carInfo }) => {
 
     return (
-        <Card border="light" className="shop-auto-card px-0 m-2 mb-3 mx-1">
+        <Card className="shop-auto-card px-0 m-2 mb-3 mx-1">
             <Nav.Link href={"/" + slug} className="d-flex flex-column">
                 <GatsbyImage
                     image={gatsbyImageData}
@@ -22,12 +23,15 @@ const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, price, handleClick, gatsby
                     loading="lazy"
                     className="shop-card-image" />
 
-                <Card.Body className="px-4 d-flex flex-column">
-                    <Card.Text className="mb-0">€ {price}</Card.Text>
-                    <Card.Title>{title}</Card.Title>
-                    <div className="justify-content-end d-flex btn-wrapper">
-                        <Button name={"Skatīt"} size={""} type={"primary"}></Button>
-                    </div>
+                <Card.Body className="d-flex flex-column">
+                    <Card.Text className="small-title mb-0">
+                        {carInfo?.autoStavoklis}
+                    </Card.Text>
+                    <Card.Title>{carInfo?.gads} {title}</Card.Title>
+                    <Card.Footer>
+                        <div>{carInfo?.nobraukums} km</div>
+                        <div>€ {carInfo?.carPrice}</div>
+                    </Card.Footer>
                 </Card.Body>
             </Nav.Link>
         </Card>
