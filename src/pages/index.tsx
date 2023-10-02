@@ -307,7 +307,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
         <div className="container-lg wrapper">
           <h2>Ready for a <span className="gold-text">Site visit ?</span></h2>
           <p>Lorem ipsum dolo elit Lorem ipsum dolo</p>
-          <Button name={"View Now"} size={"medium"} type={"primary"} />
+          <Button name={"View Now"} size={"small"} type={"primary"} />
         </div>
       </section>
     </MainLayout>
@@ -353,7 +353,6 @@ query AllCarsDetails {
         krasa
         jauda
         gads
-        fieldGroupName
         dzinejs
         durvjuSkaits
         dileris
@@ -367,7 +366,6 @@ query AllCarsDetails {
         cits
         drosiba
         eksterjers
-        fieldGroupName
         gaismas
         hiFi
         interjers

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { CarEquipment } from '../types/allWpCarTypes';
 import { Accordion } from 'react-bootstrap';
 import { StaticImage } from 'gatsby-plugin-image';
@@ -24,6 +24,8 @@ const CarSpecificationPopUp: FC<carSpecificationPopUpProps> = ({ carEquipment, o
         }
     };
 
+    const filteredKeys = useMemo(() => Object.keys(carEquipment).filter((header) => carEquipment[header].length > 0), [carEquipment]);
+
     return (
         <div className="popup-overlay" onClick={handleOverlayClick}>
             <div className="popup-content">
@@ -38,12 +40,12 @@ const CarSpecificationPopUp: FC<carSpecificationPopUpProps> = ({ carEquipment, o
                 </div>
 
                 <Accordion defaultActiveKey={['0']} alwaysOpen>
-                    {Object.entries(carEquipment).map(([header, items], index) => (
-                        <Accordion.Item eventKey={index.toString()}>
+                    {filteredKeys.map((header, index) => (
+                        <Accordion.Item eventKey={index.toString()} key={index}>
                             <Accordion.Header>{header.toUpperCase()}</Accordion.Header>
                             <Accordion.Body>
                                 <ul>
-                                    {items.map((item, itemIndex) => (
+                                    {carEquipment[header].map((item, itemIndex) => (
                                         <li key={itemIndex}>{item}</li>
                                     ))}
                                 </ul>

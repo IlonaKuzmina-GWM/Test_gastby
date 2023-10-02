@@ -1,6 +1,6 @@
 import { HeadFC } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, Suspense, lazy, useEffect, useState } from "react";
 import { Carousel, Col, Container, Nav, Row } from "react-bootstrap";
 import Button from "../components/Button";
 import CheckoutBox from "../components/CheckoutBox";
@@ -10,14 +10,16 @@ import AndroidAuto from "../images/icons/AndroidAuto.svg";
 import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
 import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
-import { Car, Replacements } from "../types/allWpCarTypes";
-import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
+import { Car } from "../types/allWpCarTypes";
+// import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
 
 import useAllWpCarData from "../queries/useAllWpCarData";
 
 type SingleCarProps = {
     pageContext: Car;
 };
+
+const LazyCarSpecificationPopUp = lazy(() => import("../components/CarSpecificationPopUp"));
 
 const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     const recommendedForYou = useAllWpCarData();
@@ -67,24 +69,26 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         setCarSpecificationPopUp(closeSpecPopup)
     };
 
-    type CarInfoProperty = keyof Replacements;
-
     const renderMainCarCategory = (title: string, carSpecification: string) => {
         const filteredCarSpecification = singleCarInformation.carInfo;
 
         const shouldRender = carSpecification in filteredCarSpecification
-            ? filteredCarSpecification[carSpecification as CarInfoProperty]
+            ? filteredCarSpecification[carSpecification]
             : null;
 
+        if (!shouldRender || (Array.isArray(shouldRender) && shouldRender.length === 0)) {
+            return null;
+        }
+
         const categoriHeading = (title: string) => title === "" ? null : <h5>{title}</h5>;
+
+        const renderedValue = Array.isArray(shouldRender) ? shouldRender.join(", ") : shouldRender.toString();
 
         return (
             <div className="d-flex">
                 {categoriHeading(title)}&nbsp;
                 <span className="mb-3">
-                    {Array.isArray(shouldRender)
-                        ? shouldRender.join(', ')
-                        : shouldRender}
+                    {renderedValue}
                 </span>
             </div>
         )
@@ -140,11 +144,18 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             <Col className="border-top border-dark-subtle">
                                 <h3 className="mb-3">{singleCarInformation.title} specifikācija</h3>
                                 <Row md={2}>
-                                    {renderMainCarCategory("Durvju skaits: ", "durvjuSkaits")}
-                                    {renderMainCarCategory('Ātrumkārba: ', "atrumkarba")}
-                                    {renderMainCarCategory('Dzinējs: ', "dzinejs")}
-                                    {renderMainCarCategory('Gads: ', "gads")}
+                                    {renderMainCarCategory("Gads: ", "gads")}
                                     {renderMainCarCategory('Virsbūves tips: ', "virsbuvesTips")}
+                                    {renderMainCarCategory("Durvju skaits: ", "durvjuSkaits")}
+                                    {renderMainCarCategory("Sēdvietu skaits: ", "sedvietuSkaits")}
+                                    {renderMainCarCategory("Nobraukums: ", "nobraukums")}
+                                    {renderMainCarCategory('Ātrumkārba: ', "atrumkarba")}
+                                    {renderMainCarCategory("Piedziņa: ", "piedzina")}
+                                    {renderMainCarCategory("CO izmeši: ", "coIzmesuDaudzums")}
+                                    {renderMainCarCategory("Degvielas tips: ", "dzinejs")}
+                                    {renderMainCarCategory("Motora tilpums: ", "motoraTilpums")}
+                                    {renderMainCarCategory("Jauda (kw, hp): ", "jauda")}
+                                    {renderMainCarCategory("Degvielas patēriņš: ", "degvielasPaterins")}
                                 </Row>
 
                                 <Row>
@@ -177,7 +188,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                             gatsbyImageData={car.featuredImage.node.gatsbyImage}
                                             slug={car.slug}
                                             title={car.title}
-                                            price={car.carInfo.carPrice} />
+                                            carInfo={car.carInfo} />
                                     </Col>
                                 ))}
                             </Row>
@@ -203,10 +214,16 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                 )}
 
                 {carSpecificationPopUp && (
-                    <CarSpecificationPopUp
-                        carEquipment={carEquipment}
-                        onCloseHandler={closeSpecPopup}
-                    />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <LazyCarSpecificationPopUp
+                            carEquipment={carEquipment}
+                            onCloseHandler={closeSpecPopup}
+                        />
+                    </Suspense>
+                    // <CarSpecificationPopUp
+                    //     carEquipment={carEquipment}
+                    //     onCloseHandler={closeSpecPopup}
+                    // />
                 )}
             </Container>
         </MainLayout>

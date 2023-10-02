@@ -16,8 +16,8 @@ type CheckoutBoxProps = {
     title: string;
     carType: string;
     price: number;
-    brokerName: string;
-    carCondition: string;
+    brokerName: string[];
+    carCondition: string[];
     isElementorLocationFooterVisible: boolean;
     slug: string;
 }

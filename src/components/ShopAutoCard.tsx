@@ -29,7 +29,7 @@ const ShopAutoCard: FC<ShopAutoCardProps> = ({ title, handleClick, gatsbyImageDa
                     </Card.Text>
                     <Card.Title>{carInfo?.gads} {title}</Card.Title>
                     <Card.Footer>
-                        <div>{carInfo?.nobraukums} km</div>
+                        <div>{carInfo?.nobraukums && <div>{carInfo?.nobraukums} km</div>}</div>
                         <div>€ {carInfo?.carPrice}</div>
                     </Card.Footer>
                 </Card.Body>
