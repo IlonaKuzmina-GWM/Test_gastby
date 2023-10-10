@@ -187,9 +187,18 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         //compare carInfo key and value  with checkedValues anad give back all cars with all values within one checkedValues
 
         const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key))
-        const valuesMatches = Object.keys(checkedValues).every(key =>
-            JSON.stringify(checkedValues[key]) === JSON.stringify(carInfo[key as keyof CarInfo])
-        );
+
+        const valuesMatches = Object.entries(checkedValues).every(([key, values]) => {
+            let carValues = carInfo[key];
+
+            if (!Array.isArray(values) || !Array.isArray(carValues)) {
+                return values.some((value) => [String(carValues)].includes(value));
+            } else if (Array.isArray(carValues) && carValues.every(item => item instanceof Object)) {
+                return true;
+            } else {
+                return values.some((value) => String(carValues).includes(value));
+            }
+        });
 
         return keysMatches && valuesMatches && carPrice >= minPrice && carPrice <= maxPrice
     });
@@ -231,8 +240,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     }
 
     let carsToRender = filteredAndSortedCars(sortingBy);
-
-
 
     return (
         <MainLayout>

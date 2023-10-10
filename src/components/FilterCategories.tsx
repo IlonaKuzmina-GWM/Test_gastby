@@ -159,28 +159,21 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                             </Form>
                         </Col>
                     </Row>
-
                     <Accordion>
                         {Object.keys(uniqueCarInfoValues).map((key, index) => (
                             <Accordion.Item key={index} eventKey={index.toString()}>
                                 <Accordion.Header className='accordion-title'>{key}</Accordion.Header>
                                 <Accordion.Body>
-                                    {uniqueCarInfoValues[key].map((valueName: string | number, valueIndex: number) => (
+                                    {uniqueCarInfoValues[key].map((valueName: string | number | string[], valueIndex: number) => (
                                         <Form key={valueIndex}>
-                                            <Form.Group className="" controlId={valueName}>
-                                                {key === "Krāsa"
-                                                    ? (
-                                                        <div className='form-check'>
-                                                            <input
-                                                                type="checkbox"
-                                                                id={valueName}
-                                                                value={valueName}
-                                                                name={valueName}
-                                                                className='form-check-input color-checkbox'
-                                                                onChange={(e) => { filteredCategoryHandler(key, valueName.toString()) }}
-                                                            />
+                                            {valueName &&
+                                                <Form.Group className="" controlId={String(valueName)}>
+                                                    <Form.Check
+                                                        type="checkbox"
+                                                        id={String(valueName)}
+                                                        label={key === "Krāsa" ?
                                                             <label
-                                                                htmlFor={valueName}
+                                                                htmlFor={String(valueName)}
                                                                 className='form-check-label'>
                                                                 <span
                                                                     style={{
@@ -192,22 +185,14 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                                                         marginTop: "3px",
                                                                         borderRadius: "8px"
                                                                     }} />
-                                                            </label>
-                                                        </div>
-                                                    ) : (
-                                                        <Form.Check
-                                                            type="checkbox"
-                                                            id={valueName}
-                                                            label={valueName}
-                                                            value={valueName}
-                                                            name={valueName}
-                                                            onChange={(e) => {
-                                                                filteredCategoryHandler(key, valueName.toString())
-                                                            }}
-                                                        />
-                                                    )
-                                                    }
-                                            </Form.Group>
+                                                            </label> : String(valueName)}
+                                                        value={valueName}
+                                                        name={String(valueName)}
+                                                        onChange={() => {
+                                                            filteredCategoryHandler(key, String(valueName));
+                                                        }}
+                                                    />
+                                                </Form.Group>}
                                         </Form>
                                     ))}
                                 </Accordion.Body>

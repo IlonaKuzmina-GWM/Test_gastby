@@ -14,13 +14,11 @@ type SinglePostProps = {
 const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
 
     const singlePostInformation = pageContext;
-    console.log(singlePostInformation);
-
 
     return (
         <MainLayout>
             <Container className="single-post-container">
-            <Row>
+                <Row>
                     <Col>
                         <h1>{singlePostInformation.title}</h1>
                     </Col>
