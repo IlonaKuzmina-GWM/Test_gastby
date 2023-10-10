@@ -6,6 +6,7 @@ import ShopAutoCard from "../components/ShopAutoCard";
 import MainLayout from "../layouts/MainLayout";
 import { AllWpCar, Car, MyQueryResult, CarInfo } from "../types/allWpCarTypes";
 import slugify from 'slugify';
+import SortingList from "../components/SortingList";
 
 
 type ShopProps = {
@@ -35,6 +36,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [searchResults, setSearchResults] = useState<Car[]>(location.state?.searchResults || []);
     const [showFilters, setShowFilters] = useState(false);
     const [countedSelectedValues, setCountedSelectedValues] = useState(0);
+    const [sortingBy, setSortingBy] = useState<string>('');
 
     useEffect(() => {
         // setAllCars(data.allWpCar.nodes);
@@ -45,6 +47,10 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         // updateUrlWithSlugs();
         countValues(checkedValues);
     }, [checkedValues]);
+
+    useEffect(() => {
+        filteredAndSortedCars(sortingBy);
+    }, [sortingBy]);
 
     const findDefaultMinAndMaxPrice = () => {
         const prices = allCars.map((car: Car) => car.carInfo.carPrice);
@@ -191,6 +197,8 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const countValues = (checkedValues: any) => {
         let totalCount = 0;
 
+        console.log(checkedValues)
+
         for (const key in checkedValues) {
             if (checkedValues.hasOwnProperty(key)) {
                 totalCount += checkedValues[key].length;
@@ -199,7 +207,32 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setCountedSelectedValues(totalCount);
     };
 
-    let carsToRender = filteredCars;
+
+    const handleSortChange = (sortingBy: string) => {
+        setSortingBy(sortingBy);
+    }
+
+    const filteredAndSortedCars = (sortingBy: string) => {
+
+        if (sortingBy === "descending price") {
+            return [...filteredCars].sort((a, b) => b.carInfo.carPrice - a.carInfo.carPrice);
+        } else if (sortingBy === "ascending price") {
+            return [...filteredCars].sort((a, b) => a.carInfo.carPrice - b.carInfo.carPrice);
+        } else if (sortingBy === "descending mileage") {
+            return [...filteredCars].sort((a, b) => a.carInfo.nobraukums - b.carInfo.nobraukums);
+        } else if (sortingBy === "ascending mileage") {
+            return [...filteredCars].sort((a, b) => b.carInfo.nobraukums - a.carInfo.nobraukums);
+        } else if (sortingBy === "descending year") {
+            return [...filteredCars].sort((a, b) => parseInt(a.carInfo.gads) - parseInt(b.carInfo.gads));
+        } else if (sortingBy === "ascending year") {
+            return [...filteredCars].sort((a, b) => parseInt(b.carInfo.gads) - parseInt(a.carInfo.gads));
+        }
+        return filteredCars;
+    }
+
+    let carsToRender = filteredAndSortedCars(sortingBy);
+
+
 
     return (
         <MainLayout>
@@ -222,8 +255,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                 </div>
 
                 <Container className="auto-cards-container">
-                    <Row className="d-flex align-items-center mt-2 border-bottom">
-                        <p className="small-info-text">"{carsToRender && carsToRender.length}" šitik daudz auto mums ir :D</p>
+                    <Row className="d-flex align-items-center justify-contnent-between mt-2 border-bottom">
+                        <Col xs={7}> <p className="small-info-text">"{carsToRender && carsToRender.length}" rezultāti</p></Col>
+                        <Col xs={5}><SortingList onClickHandler={handleSortChange} /></Col>
                     </Row>
 
                     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
@@ -242,7 +276,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
                     <Row xs={12} className="g-4 mt-5">
                         {carsToRender && carsToRender.length === 0 && <div className="d-flex justify-content-center align-items-center">
-                            <h3 className="text-center">Diemžēl pēc izvēlētiem kriterijiem nekas nav atrasts</h3>
+                            <h3 className="text-center">Diemžēl pēc izvēlētiem kritērijiem nekas nav atrasts</h3>
                         </div>}
                     </Row>
                 </Container>
