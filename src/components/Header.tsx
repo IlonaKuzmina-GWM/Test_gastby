@@ -34,12 +34,12 @@ const Header = () => {
                     <Navbar.Offcanvas
                         id={`offcanvasNavbar-expand-lg`}
                         aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
-                        placement="end"
+                        placement="start"
                     >
-                        <Offcanvas.Header closeButton>
-                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+                        <Offcanvas.Header closeButton closeVariant="white">
+                            {/* <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
                                 <StaticImage className="header_logo" src="../images/Pirktauto_logo_horizontal_black.png" alt="logo" width={200} height={25} placeholder="blurred" />
-                            </Offcanvas.Title>
+                            </Offcanvas.Title> */}
                         </Offcanvas.Header>
 
                         <Offcanvas.Body>

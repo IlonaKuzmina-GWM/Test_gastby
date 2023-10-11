@@ -7,6 +7,7 @@ export default function useAllWpCarData() {
         nodes {
           slug
           title
+          date
           id
           featuredImage {
             node {

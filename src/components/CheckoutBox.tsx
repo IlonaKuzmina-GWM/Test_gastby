@@ -20,9 +20,10 @@ type CheckoutBoxProps = {
     carCondition: string[];
     isElementorLocationFooterVisible: boolean;
     slug: string;
+    mileage?: number | undefined;
 }
 
-const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible }) => {
+const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible, mileage }) => {
     const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
     const [shareBlockShown, setShareBlockShown] = useState(false);
     const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
@@ -39,6 +40,8 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
             return;
         }
     }, []);
+
+    // console.log(mileage)
 
     return (
         <Col md={0} lg={4} xl={4} className="">
@@ -58,6 +61,15 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
 
                 {!checkoutIconsUseed && (
                     <>
+                        {mileage && (<Row>
+                            <Col xs={8}>
+                                <p>Nobraukums</p>
+                            </Col>
+                            <Col xs={4}>
+                                {mileage} km
+                            </Col>
+                        </Row>)}
+
                         <Row>
                             <Col xs={8}>
                                 <p>Stāvoklis</p>
@@ -73,7 +85,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                                 <Link to={`/shop`} className="nav-link">
                                     <div className="d-flex justify-content-center align-items-center mt-2">
                                         <img className="mb-3" src={PinsBroker} width={15} height={15} alt="pin" />
-                                       <span className="mb-3">{brokerName}</span>
+                                        <span className="mb-3">{brokerName}</span>
                                     </div>
                                 </Link>
                             </Col>
@@ -161,7 +173,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                 )}
 
             </Container>
-        </Col>
+        </Col >
     );
 }
 

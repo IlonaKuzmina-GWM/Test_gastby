@@ -1,12 +1,11 @@
-import { HeadFC, graphql, navigate } from "gatsby";
+import { HeadFC, graphql } from "gatsby";
 import React, { FC, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
-import MainLayout from "../layouts/MainLayout";
-import { AllWpCar, Car, MyQueryResult, CarInfo } from "../types/allWpCarTypes";
-import slugify from 'slugify';
 import SortingList from "../components/SortingList";
+import MainLayout from "../layouts/MainLayout";
+import { Car, MyQueryResult } from "../types/allWpCarTypes";
 
 
 type ShopProps = {
@@ -153,33 +152,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     // };
 
 
-
-
-    // const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
-    //     const carInfo = car.carInfo;
-    //     const carPrice = carInfo.carPrice;
-
-    //     const keyMatches = Object.keys(checkedValues).every((key) => {
-    //         const selectedValues = checkedValues[key];
-
-    //         if (!selectedValues || selectedValues.length === 0) {
-    //             return true;
-    //         }
-
-    //         const carValues = carInfo[key];
-
-    //         if (!Array.isArray(selectedValues) || !Array.isArray(carValues)) {
-    //             return false;
-    //         }
-
-    //         return selectedValues.every((selectedValue) => carValues.includes(selectedValue));
-    //     });
-
-    //     // return keyMatches && carPrice >= minPrice && carPrice <= maxPrice;
-    //     return keyMatches;
-    // });
-
-
     const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
         const carInfo = car.carInfo;
         const carPrice = carInfo.carPrice;
@@ -222,21 +194,24 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     }
 
     const filteredAndSortedCars = (sortingBy: string) => {
+        const sortedCars = [...filteredCars];
 
-        if (sortingBy === "descending price") {
-            return [...filteredCars].sort((a, b) => b.carInfo.carPrice - a.carInfo.carPrice);
-        } else if (sortingBy === "ascending price") {
-            return [...filteredCars].sort((a, b) => a.carInfo.carPrice - b.carInfo.carPrice);
-        } else if (sortingBy === "descending mileage") {
-            return [...filteredCars].sort((a, b) => a.carInfo.nobraukums - b.carInfo.nobraukums);
-        } else if (sortingBy === "ascending mileage") {
-            return [...filteredCars].sort((a, b) => b.carInfo.nobraukums - a.carInfo.nobraukums);
-        } else if (sortingBy === "descending year") {
-            return [...filteredCars].sort((a, b) => parseInt(a.carInfo.gads) - parseInt(b.carInfo.gads));
-        } else if (sortingBy === "ascending year") {
-            return [...filteredCars].sort((a, b) => parseInt(b.carInfo.gads) - parseInt(a.carInfo.gads));
+        switch (sortingBy) {
+            case "descending price":
+                return sortedCars.sort((a, b) => b.carInfo.carPrice - a.carInfo.carPrice);
+            case "ascending price":
+                return sortedCars.sort((a, b) => a.carInfo.carPrice - b.carInfo.carPrice);
+            case "descending mileage":
+                return sortedCars.sort((a, b) => a.carInfo.nobraukums - b.carInfo.nobraukums);
+            case "ascending mileage":
+                return sortedCars.sort((a, b) => b.carInfo.nobraukums - a.carInfo.nobraukums);
+            case "descending year":
+                return sortedCars.sort((a, b) => parseInt(a.carInfo.gads) - parseInt(b.carInfo.gads));
+            case "ascending year":
+                return sortedCars.sort((a, b) => parseInt(b.carInfo.gads) - parseInt(a.carInfo.gads));
+            default:
+                return filteredCars;
         }
-        return filteredCars;
     }
 
     let carsToRender = filteredAndSortedCars(sortingBy);

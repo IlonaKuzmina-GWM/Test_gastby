@@ -2,6 +2,7 @@ import React from "react";
 import MainLayout from "../layouts/MainLayout";
 import { HeadFC } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
+import SiteVisiteSection from "../components/SiteVisiteSection";
 
 const AboutUs = () => {
     return (
@@ -14,7 +15,7 @@ const AboutUs = () => {
                 <div className="white-gradient-bottom" />
             </section>
 
-            <section className="about__content--section container">
+            <section className="about__content--section container mb-5">
                 <div>
                     <div className="title__top--line" />
                     <h2 className="about__content--title">Strādājam godīgi un atklāti</h2>
@@ -53,6 +54,8 @@ const AboutUs = () => {
                     </div>
                 </div>
             </section>
+
+            <SiteVisiteSection />
         </MainLayout>
     );
 };

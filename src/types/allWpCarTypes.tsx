@@ -69,6 +69,7 @@ export type Car = {
   };
   slug: string;
   title: string;
+  date: string;
   featuredImage: FeaturedImage;
   carInfo: CarInfo;
   id: string;

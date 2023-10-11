@@ -3,28 +3,24 @@ import React from "react";
 import Button from "./Button";
 
 import useAllWpCarData from "../queries/useAllWpCarData";
+import { CarInfo } from "../types/allWpCarTypes";
 
 const Footer = ({ }) => {
     const dealers = useAllWpCarData();
 
-    const uniqueDealersNames = dealers.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
-        const carInfo = car.carInfo;
+    const uniqueDealersNames: string[] = dealers.reduce((result: string[], car: { carInfo: CarInfo; }) => {
+        const carInfo = car.carInfo.dileris;
 
-        Object.keys(carInfo).forEach((key) => {
-            if (!result[key]) {
-                result[key] = [];
-            }
-
-            const valuesArray = result[key];
-            const value = carInfo[key];
-
-            if (!valuesArray.some((existingValue: any) => JSON.stringify(existingValue) === JSON.stringify(value))) {
-                valuesArray.push(value);
-            }
-        });
-
+        if (Array.isArray(carInfo)) {
+            result = result.concat(carInfo);
+        } else {
+            result.push(carInfo);
+        }
         return result;
-    }, {});
+    }, []);
+
+    const uniqueDealers: string[] = [...new Set(uniqueDealersNames)];
+
 
     return (
         <div className="footer container">
@@ -43,9 +39,9 @@ const Footer = ({ }) => {
 
                 <div className="column colum-three wrapper">
                     <h3>Dīleri</h3>
-                    {uniqueDealersNames.dileris.map((dileris: string, index: number) => (
-                        <Link to="/" className="" key={index}>{dileris}</Link>
-                    ))}
+                    {uniqueDealers && uniqueDealers.map((dealerName: string, index: number) =>
+                        <Link to="/" className="" key={index}>{dealerName}</Link>
+                    )}
                 </div>
 
                 <div className="column colum-for wrapper">

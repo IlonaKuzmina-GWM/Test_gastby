@@ -6,6 +6,7 @@ import { Card, Col, Nav, Row } from "react-bootstrap";
 import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
 import HeroSection from "../components/HeroSection";
 import SEO from "../components/SEO";
+import SiteVisiteSection from "../components/SiteVisiteSection";
 
 type BlogPageProps = {
   data: AllWpPosts;
@@ -68,7 +69,7 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
 
       </section>
 
-      <section className="blog__post--section container">
+      <section className="blog__post--section container mb-5">
         <Row xs={1} md={2} lg={3} className="g-4 mt-4" >
           {posts.allWpPost.nodes.filter((post: WpPost) => {
             if (!filterPostsByTag) {
@@ -109,6 +110,8 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
           })}
         </Row>
       </section>
+
+      <SiteVisiteSection/>
     </MainLayout>
   );
 };

@@ -8,7 +8,6 @@ import ImageGalleryPopUp from "../components/ImageGalleryPopUp";
 import ShopAutoCard from "../components/ShopAutoCard";
 import AndroidAuto from "../images/icons/AndroidAuto.svg";
 import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
-import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
 import { Car } from "../types/allWpCarTypes";
 // import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
@@ -31,6 +30,8 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     const [showPopup, setShowPopUp] = useState(false);
     const [carSpecificationPopUp, setCarSpecificationPopUp] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+    console.log(pageContext)
 
     useEffect(() => {
         const setCheckoutBoxVisibility = () => {
@@ -97,14 +98,9 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     return (
         <MainLayout>
             <Container className="single-car-container">
-                <Row>
-                    <Col>
-                        <h1>{singleCarInformation.title}</h1>
-                    </Col>
-                </Row>
 
-                <Row className="justify-content-space-evenly">
-                    <Col md={12} lg={7} xl={8}>
+                <div className="test-container">
+                    <div className="car-content">
                         <Row className="mb-4">
                             <Carousel>
                                 {singleCarGallery.map((image: any, index: number) => (
@@ -193,17 +189,122 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 ))}
                             </Row>
                         </Row>
+                    </div>
+
+                    <div className="small-car-content">
+                        <CheckoutBox
+                            title={singleCarInformation.title}
+                            mileage={singleCarInformation.carInfo.nobraukums}
+                            slug={singleCarInformation.slug}
+                            carType={singleCarInformation.carInfo.modelis}
+                            price={singleCarInformation.carInfo.carPrice}
+                            brokerName={singleCarInformation.carInfo.dileris}
+                            carCondition={singleCarInformation.carInfo.autoStavoklis}
+                            isElementorLocationFooterVisible={isElementorLocationFooterVisible} /></div>
+                </div>
+
+                {/* <Row className="justify-content-space-evenly">
+                    <Col md={12} lg={7} xl={8}>
+                        <Row className="mb-4">
+                            <Carousel>
+                                {singleCarGallery.map((image: any, index: number) => (
+                                    <Carousel.Item key={index} onClick={() => openPopUp(index)}>
+                                        <GatsbyImage className="item" image={image.gatsbyImage} alt={"Auto"} />
+                                        <Carousel.Caption className="carousel-caption">
+                                            <span className="photo-counter">
+                                                {index + 1}/{countImagesInGallery}
+                                            </span>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                ))}
+                            </Carousel>
+                        </Row>
+
+                        <Row className=" mb-5">
+                            <Col className="border-top border-dark-subtle">
+                                <h3 className="mb-3"> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
+                                <div className="icon-wrapper">
+                                    <div className="icon-wrapper_item">
+                                        <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} />
+                                        <p>{singleCarInformation.carEquipment.hiFi[0]}</p>
+                                    </div>
+                                    <div className="icon-wrapper_item">
+                                        <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} />
+                                        <p> {singleCarInformation.carEquipment.drosiba[0]}</p>
+                                    </div>
+                                    <div className="icon-wrapper_item">
+                                        <img src={CarFront} alt="CarFront" width={"40px"} />
+                                        <p> {singleCarInformation.carEquipment.papildaprikojums[0]}</p>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+
+                        <Row className="mb-5">
+                            <Col className="border-top border-dark-subtle">
+                                <h3 className="mb-3">{singleCarInformation.title} specifikācija</h3>
+                                <Row md={2}>
+                                    {renderMainCarCategory("Gads: ", "gads")}
+                                    {renderMainCarCategory('Virsbūves tips: ', "virsbuvesTips")}
+                                    {renderMainCarCategory("Durvju skaits: ", "durvjuSkaits")}
+                                    {renderMainCarCategory("Sēdvietu skaits: ", "sedvietuSkaits")}
+                                    {renderMainCarCategory("Nobraukums: ", "nobraukums")}
+                                    {renderMainCarCategory('Ātrumkārba: ', "atrumkarba")}
+                                    {renderMainCarCategory("Piedziņa: ", "piedzina")}
+                                    {renderMainCarCategory("CO izmeši: ", "coIzmesuDaudzums")}
+                                    {renderMainCarCategory("Degvielas tips: ", "dzinejs")}
+                                    {renderMainCarCategory("Motora tilpums: ", "motoraTilpums")}
+                                    {renderMainCarCategory("Jauda (kw, hp): ", "jauda")}
+                                    {renderMainCarCategory("Degvielas patēriņš: ", "degvielasPaterins")}
+                                </Row>
+
+                                <Row>
+                                    <Nav.Link href="#allFeatures">
+                                        <Button
+                                            name={"Skatīt aprīkojumu"}
+                                            size={"small"}
+                                            type={"outline"}
+                                            onClickHandler={() => setCarSpecificationPopUp(true)} />
+                                    </Nav.Link>
+                                </Row>
+                            </Col>
+                        </Row>
+
+                        <Row className="mb-5">
+                            <Col className="border-top border-dark-subtle">
+                                <h3 className="mb-3">Apraksts</h3>
+                                <div className="auto__description" dangerouslySetInnerHTML={{ __html: singleCarInformation.content }} />
+                            </Col>
+                        </Row>
+
+                        <Row className="mb-4">
+                            <Col className="border-top border-dark-subtle">
+                                <h3 className="mb-3">Rekomendējam tieši tev</h3>
+                            </Col>
+                            <Row md={3}>
+                                {recommendedForYou.slice(0, 3).map((car: Car, index: number) => (
+                                    <Col className="mb-3" key={index}>
+                                        <ShopAutoCard
+                                            gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                                            slug={car.slug}
+                                            title={car.title}
+                                            carInfo={car.carInfo} />
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Row>
                     </Col>
 
                     <CheckoutBox
                         title={singleCarInformation.title}
+                        mileage={singleCarInformation.carInfo.nobraukums}
                         slug={singleCarInformation.slug}
                         carType={singleCarInformation.carInfo.modelis}
                         price={singleCarInformation.carInfo.carPrice}
                         brokerName={singleCarInformation.carInfo.dileris}
                         carCondition={singleCarInformation.carInfo.autoStavoklis}
                         isElementorLocationFooterVisible={isElementorLocationFooterVisible} />
-                </Row>
+                </Row> */}
 
                 {showPopup && (
                     <ImageGalleryPopUp
