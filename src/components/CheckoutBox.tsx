@@ -41,10 +41,8 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
         }
     }, []);
 
-    // console.log(mileage)
-
     return (
-        <Col md={0} lg={4} xl={4} className="">
+        <div className="wrapper-checkout">
             <Container className="checkout-container" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
                 <button
                     className="colapse-button mb-3"
@@ -172,8 +170,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                     </div>
                 )}
 
-            </Container>
-        </Col >
+            </Container></div>
     );
 }
 

@@ -25,7 +25,7 @@ const config: GatsbyConfig = {
       options: {
         name: `PirktAuto`,
         short_name: `PirktAuto`,
-        theme_color: `#DCB47A`,
+        theme_color: `#297373`,
         display: `standalone`,
         icon: `src/images/icon.png`,
       },

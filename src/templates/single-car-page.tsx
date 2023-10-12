@@ -8,7 +8,9 @@ import ImageGalleryPopUp from "../components/ImageGalleryPopUp";
 import ShopAutoCard from "../components/ShopAutoCard";
 import AndroidAuto from "../images/icons/AndroidAuto.svg";
 import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
+import CarFront from "../images/icons/CarFront.svg";
 import MainLayout from "../layouts/MainLayout";
+import CaretBottom from "../images/icons/caret-bottom.svg";
 import { Car } from "../types/allWpCarTypes";
 // import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
 
@@ -30,6 +32,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     const [showPopup, setShowPopUp] = useState(false);
     const [carSpecificationPopUp, setCarSpecificationPopUp] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    const [singleCarData, setSibgleCarData] = useState();
 
     console.log(pageContext)
 
@@ -61,6 +64,10 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         };
     }, []);
 
+    // const singleCar = (recommendedForYou: any) => {
+    //      const recommendedCar = recommendedForYou.find((car: any) => car.slug === singleCarInformation.slug);
+    // }
+
     const openPopUp = (index: number) => {
         setSelectedImageIndex(index);
         setShowPopUp(true);
@@ -86,22 +93,21 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         const renderedValue = Array.isArray(shouldRender) ? shouldRender.join(", ") : shouldRender.toString();
 
         return (
-            <div className="d-flex">
-                {categoriHeading(title)}&nbsp;
-                <span className="mb-3">
-                    {renderedValue}
-                </span>
+            <div className="specification-item">
+                {categoriHeading(title)}
+                <p>{renderedValue}</p>
             </div>
         )
     }
 
+
+
     return (
         <MainLayout>
-            <Container className="single-car-container">
-
-                <div className="test-container">
-                    <div className="car-content">
-                        <Row className="mb-4">
+            <Container className="single-car__container">
+                <div className="single-car__wrapper">
+                    <div className="left-side__content">
+                        <Row className="car-gallery-row">
                             <Carousel>
                                 {singleCarGallery.map((image: any, index: number) => (
                                     <Carousel.Item key={index} onClick={() => openPopUp(index)}>
@@ -116,30 +122,39 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             </Carousel>
                         </Row>
 
-                        <Row className=" mb-5">
-                            <Col className="border-top border-dark-subtle">
+                        <Row className="way-special-row">
+                            <Col className="">
                                 <h3 className="mb-3"> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
                                 <div className="icon-wrapper">
-                                    <div className="icon-wrapper_item">
-                                        <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} />
-                                        <p>{singleCarInformation.carEquipment.hiFi[0]}</p>
-                                    </div>
-                                    <div className="icon-wrapper_item">
-                                        <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} />
-                                        <p> {singleCarInformation.carEquipment.drosiba[0]}</p>
-                                    </div>
-                                    {/* <div className="icon-wrapper_item">
-                                        <img src={CarFront} alt="CarFront" width={"40px"} />
-                                        <p> {singleCarInformation.carEquipment.papildaprikojums[0]}</p>
-                                    </div> */}
+
+                                    {singleCarInformation.carEquipment.hiFi && singleCarInformation.carEquipment.hiFi.length > 0 && (
+                                        <div className="icon-wrapper_item">
+                                            <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} />
+                                            <p>{singleCarInformation.carEquipment.hiFi[0]}</p>
+                                        </div>
+                                    )}
+
+                                    {singleCarInformation.carEquipment.drosiba && singleCarInformation.carEquipment.drosiba.length > 0 && (
+                                        <div className="icon-wrapper_item">
+                                            <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} />
+                                            <p> {singleCarInformation.carEquipment.drosiba[0]}</p>
+                                        </div>
+                                    )}
+
+                                    {singleCarInformation.carEquipment.interjers && singleCarInformation.carEquipment.interjers.length > 0 && (
+                                        <div className="icon-wrapper_item">
+                                            <img src={CarFront} alt="CarFront" width={"40px"} />
+                                            <p> {singleCarInformation.carEquipment.interjers[0]}</p>
+                                        </div>
+                                    )}
                                 </div>
                             </Col>
                         </Row>
 
-                        <Row className="mb-5">
-                            <Col className="border-top border-dark-subtle">
+                        <Row className="specification-row">
+                            <Col className="border-dark-subtle">
                                 <h3 className="mb-3">{singleCarInformation.title} specifikācija</h3>
-                                <Row md={2}>
+                                <Row md={2} className="specification-container">
                                     {renderMainCarCategory("Gads: ", "gads")}
                                     {renderMainCarCategory('Virsbūves tips: ', "virsbuvesTips")}
                                     {renderMainCarCategory("Durvju skaits: ", "durvjuSkaits")}
@@ -160,38 +175,54 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                             name={"Skatīt aprīkojumu"}
                                             size={"small"}
                                             type={"outline"}
-                                            onClickHandler={() => setCarSpecificationPopUp(true)} />
+                                            onClickHandler={() => setCarSpecificationPopUp(true)}>
+                                            <img className="casret-icon" src={CaretBottom} alt="Caret" width={"15px"} height={"15px"} />
+                                        </Button>
                                     </Nav.Link>
                                 </Row>
                             </Col>
                         </Row>
 
-                        <Row className="mb-5">
-                            <Col className="border-top border-dark-subtle">
+                        <Row className="auto-description-row">
+                            <Col className=" border-dark-subtle">
                                 <h3 className="mb-3">Apraksts</h3>
                                 <div className="auto__description" dangerouslySetInnerHTML={{ __html: singleCarInformation.content }} />
                             </Col>
                         </Row>
 
-                        <Row className="mb-4">
-                            <Col className="border-top border-dark-subtle">
+                        <Row className="recommended-for-you-row">
+                            <Col className="border-dark-subtle">
                                 <h3 className="mb-3">Rekomendējam tieši tev</h3>
                             </Col>
-                            <Row md={3}>
-                                {recommendedForYou.slice(0, 3).map((car: Car, index: number) => (
-                                    <Col className="mb-3" key={index}>
-                                        <ShopAutoCard
-                                            gatsbyImageData={car.featuredImage.node.gatsbyImage}
-                                            slug={car.slug}
-                                            title={car.title}
-                                            carInfo={car.carInfo} />
-                                    </Col>
-                                ))}
-                            </Row>
+                            <div className="recommended-auto-cards-container">
+                                {recommendedForYou
+                                    .filter((car: Car) => car.carInfo.autoStavoklis[0] === singleCarInformation.carInfo.autoStavoklis[0] && car.id !== singleCarInformation.id)
+                                    .slice(0, 3)
+                                    .map((car: Car, index: number) => (
+                                        <div key={index}>
+                                            <ShopAutoCard
+                                                gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                                                slug={car.slug}
+                                                title={car.title}
+                                                carInfo={car.carInfo} />
+                                        </div>
+                                    ))}
+                            </div>
                         </Row>
                     </div>
 
-                    <div className="small-car-content">
+                    <div className="right-side__content">
+                        {/* <CheckoutBox
+                            title={recommendedCar.title}
+                            mileage={recommendedCar.carInfo.nobraukums}
+                            slug={recommendedCar.slug}
+                            carType={recommendedCar.carInfo.modelis}
+                            price={recommendedCar.carInfo.carPrice}
+                            brokerName={recommendedCar.carInfo.dileris}
+                            carCondition={recommendedCar.carInfo.autoStavoklis}
+                            isElementorLocationFooterVisible={isElementorLocationFooterVisible}
+                        /> */}
+
                         <CheckoutBox
                             title={singleCarInformation.title}
                             mileage={singleCarInformation.carInfo.nobraukums}
@@ -200,111 +231,10 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             price={singleCarInformation.carInfo.carPrice}
                             brokerName={singleCarInformation.carInfo.dileris}
                             carCondition={singleCarInformation.carInfo.autoStavoklis}
-                            isElementorLocationFooterVisible={isElementorLocationFooterVisible} /></div>
+                            isElementorLocationFooterVisible={isElementorLocationFooterVisible} />
+
+                    </div>
                 </div>
-
-                {/* <Row className="justify-content-space-evenly">
-                    <Col md={12} lg={7} xl={8}>
-                        <Row className="mb-4">
-                            <Carousel>
-                                {singleCarGallery.map((image: any, index: number) => (
-                                    <Carousel.Item key={index} onClick={() => openPopUp(index)}>
-                                        <GatsbyImage className="item" image={image.gatsbyImage} alt={"Auto"} />
-                                        <Carousel.Caption className="carousel-caption">
-                                            <span className="photo-counter">
-                                                {index + 1}/{countImagesInGallery}
-                                            </span>
-                                        </Carousel.Caption>
-                                    </Carousel.Item>
-                                ))}
-                            </Carousel>
-                        </Row>
-
-                        <Row className=" mb-5">
-                            <Col className="border-top border-dark-subtle">
-                                <h3 className="mb-3"> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
-                                <div className="icon-wrapper">
-                                    <div className="icon-wrapper_item">
-                                        <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} />
-                                        <p>{singleCarInformation.carEquipment.hiFi[0]}</p>
-                                    </div>
-                                    <div className="icon-wrapper_item">
-                                        <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} />
-                                        <p> {singleCarInformation.carEquipment.drosiba[0]}</p>
-                                    </div>
-                                    <div className="icon-wrapper_item">
-                                        <img src={CarFront} alt="CarFront" width={"40px"} />
-                                        <p> {singleCarInformation.carEquipment.papildaprikojums[0]}</p>
-                                    </div>
-                                </div>
-                            </Col>
-                        </Row>
-
-                        <Row className="mb-5">
-                            <Col className="border-top border-dark-subtle">
-                                <h3 className="mb-3">{singleCarInformation.title} specifikācija</h3>
-                                <Row md={2}>
-                                    {renderMainCarCategory("Gads: ", "gads")}
-                                    {renderMainCarCategory('Virsbūves tips: ', "virsbuvesTips")}
-                                    {renderMainCarCategory("Durvju skaits: ", "durvjuSkaits")}
-                                    {renderMainCarCategory("Sēdvietu skaits: ", "sedvietuSkaits")}
-                                    {renderMainCarCategory("Nobraukums: ", "nobraukums")}
-                                    {renderMainCarCategory('Ātrumkārba: ', "atrumkarba")}
-                                    {renderMainCarCategory("Piedziņa: ", "piedzina")}
-                                    {renderMainCarCategory("CO izmeši: ", "coIzmesuDaudzums")}
-                                    {renderMainCarCategory("Degvielas tips: ", "dzinejs")}
-                                    {renderMainCarCategory("Motora tilpums: ", "motoraTilpums")}
-                                    {renderMainCarCategory("Jauda (kw, hp): ", "jauda")}
-                                    {renderMainCarCategory("Degvielas patēriņš: ", "degvielasPaterins")}
-                                </Row>
-
-                                <Row>
-                                    <Nav.Link href="#allFeatures">
-                                        <Button
-                                            name={"Skatīt aprīkojumu"}
-                                            size={"small"}
-                                            type={"outline"}
-                                            onClickHandler={() => setCarSpecificationPopUp(true)} />
-                                    </Nav.Link>
-                                </Row>
-                            </Col>
-                        </Row>
-
-                        <Row className="mb-5">
-                            <Col className="border-top border-dark-subtle">
-                                <h3 className="mb-3">Apraksts</h3>
-                                <div className="auto__description" dangerouslySetInnerHTML={{ __html: singleCarInformation.content }} />
-                            </Col>
-                        </Row>
-
-                        <Row className="mb-4">
-                            <Col className="border-top border-dark-subtle">
-                                <h3 className="mb-3">Rekomendējam tieši tev</h3>
-                            </Col>
-                            <Row md={3}>
-                                {recommendedForYou.slice(0, 3).map((car: Car, index: number) => (
-                                    <Col className="mb-3" key={index}>
-                                        <ShopAutoCard
-                                            gatsbyImageData={car.featuredImage.node.gatsbyImage}
-                                            slug={car.slug}
-                                            title={car.title}
-                                            carInfo={car.carInfo} />
-                                    </Col>
-                                ))}
-                            </Row>
-                        </Row>
-                    </Col>
-
-                    <CheckoutBox
-                        title={singleCarInformation.title}
-                        mileage={singleCarInformation.carInfo.nobraukums}
-                        slug={singleCarInformation.slug}
-                        carType={singleCarInformation.carInfo.modelis}
-                        price={singleCarInformation.carInfo.carPrice}
-                        brokerName={singleCarInformation.carInfo.dileris}
-                        carCondition={singleCarInformation.carInfo.autoStavoklis}
-                        isElementorLocationFooterVisible={isElementorLocationFooterVisible} />
-                </Row> */}
 
                 {showPopup && (
                     <ImageGalleryPopUp
@@ -321,10 +251,6 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             onCloseHandler={closeSpecPopup}
                         />
                     </Suspense>
-                    // <CarSpecificationPopUp
-                    //     carEquipment={carEquipment}
-                    //     onCloseHandler={closeSpecPopup}
-                    // />
                 )}
             </Container>
         </MainLayout>

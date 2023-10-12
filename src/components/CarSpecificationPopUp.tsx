@@ -34,8 +34,8 @@ const CarSpecificationPopUp: FC<carSpecificationPopUpProps> = ({ carEquipment, o
                         className='popup-close-button'
                         src={"../images/cancel.svg"}
                         alt={"Cancel"}
-                        width={30}
-                        height={30}
+                        width={50}
+                        height={50}
                     />
                 </div>
 
