@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import useAllWpCarData from "../queries/useAllWpCarData";
 import { Car } from "../types/allWpCarTypes";
 import ShopAutoCard from "./ShopAutoCard";
+import ArrowRight from "../images/arrow-right.png";
 
 type AutoSwiperSectionProps = {
     onClickHandler?: () => void;
@@ -47,7 +48,8 @@ const AutoSwiperSection: FC<AutoSwiperSectionProps> = ({ onClickHandler }) => {
                         }}
                     >
 
-                        <button className="swiper-button-prev custom"><img src="../images/arrow-right.png" width={"30px"} alt="arrow" /></button>
+                        <button className="swiper-button-prev custom">
+                            <img src={ArrowRight} width={"28px"} height={"23px"} alt="arrow" /></button>
                         <div className="overlay left" />
 
                         {newestAutoData
@@ -66,7 +68,8 @@ const AutoSwiperSection: FC<AutoSwiperSectionProps> = ({ onClickHandler }) => {
                                 </SwiperSlide>
                             )}
 
-                        <button className="swiper-button-next custom"><img src="../images/arrow-right.png" width={"30px"} alt="arrow" /></button>
+                        <button className="swiper-button-next custom">
+                            <img src={ArrowRight} width={"28px"} height={"23px"} alt="arrow" /></button>
                         <div className="overlay right" />
                     </Swiper>
                 </div>

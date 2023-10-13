@@ -11,8 +11,6 @@ import Questions from "../images/icons/question-circle.svg";
 import Share from "../images/icons/share-alt-square-solid.svg";
 import Button from "./Button";
 
-
-
 type CheckoutBoxProps = {
     title: string;
     carType: string;
@@ -97,7 +95,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                         <Row className="row-wrapper">
                             <Dropdown.Divider />
                             <Row md={3} className="checkout-icons-container">
-                                <div className="d-flex flex-column align-items-center icon-item">
+                                <div className="d-flex flex-column align-items-center icon-item" >
                                     <img className="" src={PDF} width={25} height={25} alt="pin" />
                                     <p className="text-center">PDF</p>
                                 </div>

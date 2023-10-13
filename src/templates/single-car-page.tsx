@@ -130,21 +130,21 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
                                     {singleCarInformation.carEquipment.hiFi && singleCarInformation.carEquipment.hiFi.length > 0 && (
                                         <div className="icon-wrapper_item">
-                                            <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} />
+                                            <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} height={"40px"}/>
                                             <p>{singleCarInformation.carEquipment.hiFi[0]}</p>
                                         </div>
                                     )}
 
                                     {singleCarInformation.carEquipment.drosiba && singleCarInformation.carEquipment.drosiba.length > 0 && (
                                         <div className="icon-wrapper_item">
-                                            <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} />
+                                            <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} height={"40px"}/>
                                             <p> {singleCarInformation.carEquipment.drosiba[0]}</p>
                                         </div>
                                     )}
 
                                     {singleCarInformation.carEquipment.interjers && singleCarInformation.carEquipment.interjers.length > 0 && (
                                         <div className="icon-wrapper_item">
-                                            <img src={CarFront} alt="CarFront" width={"40px"} />
+                                            <img src={CarFront} alt="CarFront" width={"40px"} height={"40px"}/>
                                             <p> {singleCarInformation.carEquipment.interjers[0]}</p>
                                         </div>
                                     )}
