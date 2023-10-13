@@ -25,8 +25,14 @@
     display: none;
   }
 
+  .row-wrapper {
+    margin-top: 24px;
+  }
+
   h5 {
-    font-weight: 700;
+    font-size: 22px;
+    line-height: 29px;
+    font-weight: 600;
     margin-bottom: -5px;
   }
 
@@ -45,6 +51,32 @@
 
   .checkout-icons-container .icon-item {
     cursor: pointer;
+    margin-bottom: 10px;
+
+    .text-center {
+      margin-bottom: 0;
+      margin-top: 3px;
+      font-size: 14px;
+    }
+  }
+
+  .condision-row,
+  .mileage-row {
+margin-bottom: 10px;
+
+    .title {
+      color: $text_secondary;
+    }
+
+    .content {
+      text-align: end;
+    }
+
+    p {
+      margin-bottom: 0;
+      font-weight: 500;
+      font-size: 16px;
+    }
   }
 
   .questions-block-container .link {
@@ -60,13 +92,25 @@
       display: flex;
       padding: 16px;
       cursor: pointer;
-      background-color: $blue_primary;
+      background-color: $light_blue;
       border-radius: 15px;
       color: $dark;
+      transition: all 0.3s;
+      box-shadow: -1px 3px 3px 0 rgba(80, 80, 80, 0.2);
 
       &:hover {
-        color: $white;
+        background: $hover;
+        box-shadow: $hover_box_shadow;
       }
+    }
+  }
+
+  .dealer {
+    margin: 24px auto 0;
+    border-bottom: solid 1px rgb(224, 224, 224);
+
+    img {
+      margin-right: 8px;
     }
   }
 

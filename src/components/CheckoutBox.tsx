@@ -6,8 +6,9 @@ import ArrowLeft from "../images/icons/ArrowLeft.svg";
 import Envelope from "../images/icons/Envelope.svg";
 import Phone from "../images/icons/Phone.svg";
 import PinsBroker from "../images/icons/PinsBroker.svg";
-import Questions from "../images/icons/Questions.svg";
-import Share from "../images/icons/Share.svg";
+import PDF from "../images/icons/file-pdf-solid.svg";
+import Questions from "../images/icons/question-circle.svg";
+import Share from "../images/icons/share-alt-square-solid.svg";
 import Button from "./Button";
 
 
@@ -45,7 +46,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
         <div className="wrapper-checkout">
             <Container className="checkout-container" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
                 <button
-                    className="colapse-button mb-3"
+                    className="colapse-button"
                     onClick={toggleCheckoutIcons}></button>
                 <Row>
                     <Col xs={8} className="mb-2">
@@ -59,52 +60,56 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
 
                 {!checkoutIconsUseed && (
                     <>
-                        {mileage && (<Row>
-                            <Col xs={8}>
-                                <p>Nobraukums</p>
-                            </Col>
-                            <Col xs={4}>
-                                {mileage} km
-                            </Col>
-                        </Row>)}
+                        <div className="row-wrapper">
+                            {mileage && (
+                                <Row className="mileage-row">
+                                    <Col xs={8}>
+                                        <p className="title">Nobraukums</p>
+                                    </Col>
+                                    <Col xs={4}>
+                                        <p className="content"> {mileage} km</p>
+                                    </Col>
+                                </Row>)}
 
-                        <Row>
-                            <Col xs={8}>
-                                <p>Stāvoklis</p>
-                            </Col>
-                            <Col xs={4}>
-                                {carCondition}
-                            </Col>
-                        </Row>
+                            <Row className="condision-row">
+                                <Col xs={8}>
+                                    <p className="title">Stāvoklis</p>
+                                </Col>
+                                <Col xs={4}>
+                                    <p className="content"> {carCondition}</p>
+                                </Col>
+                            </Row>
+                        </div>
 
-                        <Row>
-                            <Col className="btn-wrapper mt-4">
+
+                        <Row className="row-wrapper">
+                            <Col className="btn-wrapper ">
                                 <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
-                                <Link to={`/shop`} className="nav-link">
-                                    <div className="d-flex justify-content-center align-items-center mt-2">
-                                        <img className="mb-3" src={PinsBroker} width={15} height={15} alt="pin" />
-                                        <span className="mb-3">{brokerName}</span>
+                                <Link to={`/shop`} className="nav-link dealer">
+                                    <div className="d-flex justify-content-center align-items-center">
+                                        <img className="" src={PinsBroker} width={15} height={15} alt="pin" />
+                                        <span className="">{brokerName}</span>
                                     </div>
                                 </Link>
                             </Col>
                         </Row>
 
-                        <Row className="">
+                        <Row className="row-wrapper">
                             <Dropdown.Divider />
-                            <Row md={3} className="mt-4 checkout-icons-container">
+                            <Row md={3} className="checkout-icons-container">
                                 <div className="d-flex flex-column align-items-center icon-item">
-                                    <img className="" src={Questions} width={25} height={25} alt="pin" />
-                                    <p className="mt-2 text-center">PDF??</p>
+                                    <img className="" src={PDF} width={25} height={25} alt="pin" />
+                                    <p className="text-center">PDF</p>
                                 </div>
 
                                 <div className="d-flex flex-column align-items-center icon-item" onClick={() => { setCheckoutIconsUseed(true); setShareBlockShown(true); }}>
                                     <img className="" src={Share} width={25} height={25} alt="pin" />
-                                    <p className="mt-2 text-center">Dalīties</p>
+                                    <p className="text-center">Dalīties</p>
                                 </div>
 
                                 <div className="d-flex flex-column align-items-center icon-item" onClick={() => { setQuestionsBlockShown(true); setCheckoutIconsUseed(true); }}>
                                     <img className="" src={Questions} width={25} height={25} alt="pin" />
-                                    <p className="mt-2 text-center">Jautājumi</p>
+                                    <p className="text-center">Jautājumi</p>
                                 </div>
                             </Row>
                         </Row>

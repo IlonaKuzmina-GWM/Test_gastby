@@ -6,15 +6,16 @@ import Button from "../components/Button";
 import CheckoutBox from "../components/CheckoutBox";
 import ImageGalleryPopUp from "../components/ImageGalleryPopUp";
 import ShopAutoCard from "../components/ShopAutoCard";
-import AndroidAuto from "../images/icons/AndroidAuto.svg";
-import BluetoothDrive from "../images/icons/BluetoothDrive.svg";
-import CarFront from "../images/icons/CarFront.svg";
+import AndroidAuto from "../images/audio.svg";
+import BluetoothDrive from "../images/Features.svg";
+import CarFront from "../images/Equipped.svg";
 import MainLayout from "../layouts/MainLayout";
 import CaretBottom from "../images/icons/caret-bottom.svg";
 import { Car } from "../types/allWpCarTypes";
 // import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
 
 import useAllWpCarData from "../queries/useAllWpCarData";
+import { KeyObject } from "crypto";
 
 type SingleCarProps = {
     pageContext: Car;
@@ -212,17 +213,6 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                     </div>
 
                     <div className="right-side__content">
-                        {/* <CheckoutBox
-                            title={recommendedCar.title}
-                            mileage={recommendedCar.carInfo.nobraukums}
-                            slug={recommendedCar.slug}
-                            carType={recommendedCar.carInfo.modelis}
-                            price={recommendedCar.carInfo.carPrice}
-                            brokerName={recommendedCar.carInfo.dileris}
-                            carCondition={recommendedCar.carInfo.autoStavoklis}
-                            isElementorLocationFooterVisible={isElementorLocationFooterVisible}
-                        /> */}
-
                         <CheckoutBox
                             title={singleCarInformation.title}
                             mileage={singleCarInformation.carInfo.nobraukums}

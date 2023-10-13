@@ -5,7 +5,7 @@
   box-shadow: -1px 3px 3px 0 rgba(80, 80, 80, 0.2);
   flex: 0 0 auto;
   cursor: pointer;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   width: max-content;
   text-transform: capitalize;
   font-weight: 700;
@@ -27,8 +27,8 @@
   border: none;
 
   &:hover {
-    -webkit-box-shadow: 0px 12px 30px 0 $green; 
-    box-shadow: 0px 12px 30px 0 rgb(9, 231, 255, .21);
+    -webkit-box-shadow: $hover_box_shadow;
+    box-shadow: $hover_box_shadow;
     opacity: 0.9;
     background-color: $hover;
   }
@@ -40,8 +40,8 @@
   border: 1px solid $blue_primary;
 
   &:hover {
-    -webkit-box-shadow: 0px 12px 30px 0 $green; 
-    box-shadow: 0px 12px 30px 0 rgb(9, 231, 255, .21);
+    -webkit-box-shadow: $hover_box_shadow;
+    box-shadow: $hover_box_shadow;
     background: $blue_primary;
     color: $white;
   }

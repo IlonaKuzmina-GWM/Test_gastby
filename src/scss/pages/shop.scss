@@ -68,7 +68,7 @@
       border: 1px solid $blue_primary;
 
       &:hover {
-        box-shadow: -1px 6px 10px 0 rgba(120, 60, 20, 0.2);
+        box-shadow:  $hover_box_shadow;
         opacity: 0.9;
       }
     }
