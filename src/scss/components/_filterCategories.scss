@@ -17,6 +17,8 @@
   }
 
   .filter-results {
+    padding-bottom: 16px;
+
     span {
       font-size: 14px;
       white-space: nowrap;
@@ -44,21 +46,18 @@
     }
   }
 
-  .accordion-button:not(.collapsed) {
-    // color: $white;
-    // background-color: rgb(220, 180, 122, 0.7);
-    background-color: transparent;
-  }
-
-  .accordion-button:not(.collapsed)::after {
-    background-image: url("../images/accordion-after.png");
-    background-size: 17px 10px;
-    width: 17px;
-    height: 10px;
-  }
-
   .form-check {
     position: relative;
+  }
+
+  .price__block--title {
+    font-size: 16px;
+    padding-left: 8px;
+  }
+
+  .form-check-input {
+    width: 16px;
+    height: 16px;
   }
 
   .form-check-input:checked {
@@ -70,12 +69,68 @@
     width: 100%;
   }
 
+  .price-range-row {
+    margin-bottom: 24px;
+  }
+
+  .main__range--wrapper {
+    input {
+      border-radius: 4px;
+    }
+  }
+
   .close-filters-btn {
     display: none;
   }
 
   .color-checkbox span {
     margin-top: 5px;
+  }
+
+  .accordion-item {
+    border-left: unset;
+    border-right: unset;
+    border-radius: unset;
+  }
+
+  .accordion-title {
+    font-weight: 500;
+    color: $text_secondary;
+  }
+
+  .accordion-item:first-child {
+    border-top: unset;
+  }
+
+  .accordion-button:not(.collapsed):hover {
+    background: linear-gradient(120deg, #fdfbfb 0%, #eff2f4 100%);
+  }
+
+  .accordion-collapse.show .accordion-body:hover {
+    background: linear-gradient(120deg, #fdfbfb 0%, #eff2f4 100%);
+  }
+
+  .accordion-body {
+    padding-left: 10px;
+  }
+
+  .form-item-wrapper {
+    padding: 8px 12px;
+
+    .form-check {
+      margin-bottom: 0;
+      padding-left: 25px;
+      min-height: 16px;
+    }
+
+    .form-check label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .form-item-wrapper:hover {
+    background: linear-gradient(120deg, rgb(235, 237, 238) 100%, rgb(253, 251, 251) 0%);
   }
 }
 

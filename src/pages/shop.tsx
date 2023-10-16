@@ -220,8 +220,8 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         <MainLayout>
             <div className="shop-page-container">
                 <div className="filters-container flex-shrink-0 p-3 ">
-                    <div className="filter-title-line d-flex align-items-center mb-3 link-dark text-decoration-none border-bottom">
-                        <span className="fs-5 fw-semibold">Filtrs</span>
+                    <div className="filter-title-line d-flex align-items-center mb-3 link-dark text-decoration-none">
+                        {/* <span className="fs-5 fw-semibold">Filtrs</span> */}
                         <button className="show-filters-btn" onClick={toggleFilters}>Show Filter</button>
                     </div>
 
@@ -237,24 +237,22 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                 </div>
 
                 <Container className="auto-cards-container">
-                    <Row className="d-flex align-items-center justify-contnent-between mt-2 border-bottom">
-                        <Col xs={7}> <p className="small-info-text">"{carsToRender && carsToRender.length}" rezultāti</p></Col>
-                        <Col xs={5}><SortingList onClickHandler={handleSortChange} /></Col>
-                    </Row>
+                    <div className="shop-first-info-row">
+                        <div><p className="small-info-text">"{carsToRender && carsToRender.length}" rezultāti</p></div>
+                        <SortingList onClickHandler={handleSortChange} />
+                    </div>
 
-                    <Row xs={1} md={2} lg={3} xl={4} className="g-4">
+                    <div className="shop-auto-cards-wrapper">
                         {carsToRender && carsToRender.map((car: Car) => (
-                            <Col key={car.id} className="px-1">
-                                <ShopAutoCard
-                                    gatsbyImageData={car.featuredImage.node.gatsbyImage}
-                                    slug={car.slug}
-                                    title={car.title}
-                                    carInfo={car.carInfo}
-                                />
-                            </Col>
+                            <ShopAutoCard
+                                gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                                slug={car.slug}
+                                title={car.title}
+                                carInfo={car.carInfo}
+                            />
                         ))
                         }
-                    </Row>
+                    </div>
 
                     <Row xs={12} className="g-4 mt-5">
                         {carsToRender && carsToRender.length === 0 && <div className="d-flex justify-content-center align-items-center">

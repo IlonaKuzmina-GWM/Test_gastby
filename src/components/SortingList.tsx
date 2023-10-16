@@ -8,9 +8,12 @@ const SortingList: FC<SortingListProps> = ({ onClickHandler }) => {
     const [sortingType, setSortingType] = useState("");
 
     return (
-        <div>
+        <div className="sorting-list">
             <label htmlFor="sortDropDown">Sortēt: </label>
-            <select name="sortDropDown" id="sortDropDown" value={sortingType} onChange={(e) => { setSortingType(e.target.value); onClickHandler(e.target.value); }}>
+            <select name="sortDropDown"
+                id="sortDropDown"
+                value={sortingType}
+                onChange={(e) => { setSortingType(e.target.value); onClickHandler(e.target.value); }}>
                 <option value="">--</option>
                 <option value="descending price">Cena (no augstākās)</option>
                 <option value="ascending price">Cena (no zemākās)</option>

@@ -182,31 +182,6 @@
       .shop-auto-card {
         border: 1px solid $blue_primary;
       }
-
-      .card-body {
-        gap: 10px;
-      }
-
-      .card-title {
-        font-size: 16px;
-        font-weight: 500;
-        margin-bottom: 0;
-      }
-
-      .small-title {
-        font-size: 12px;
-        font-weight: 300;
-        text-transform: uppercase;
-      }
-
-      .mileage-container {
-        font-size: 13px;
-        font-weight: 600;
-      }
-
-      .price-container {
-        font-weight: 500;
-      }
     }
   }
 
@@ -224,7 +199,7 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 991px) {
   .single-car__container {
     padding: 0;
 
@@ -242,38 +217,46 @@
   }
 }
 
-@media screen and (min-width: 640px) {
+// @media screen and (min-width: 640px) {
+//   .single-car__container {
+//     padding: 0 15px;
+
+//     .single-car__wrapper {
+//       // margin: 0;
+//       grid-template-columns: unset;
+//       -webkit-column-gap: unset;
+//       column-gap: unset;
+//     }
+
+//     .left-side__content {
+//       margin-top: 76px;
+//       padding-top: 48px;
+//     }
+//   }
+// }
+
+// @media screen and (min-width: 1024px) {
+//   .single-car__container {
+//     .single-car__wrapper {
+//       margin: 0 54px;
+//     }
+//   }
+// }
+
+// @media screen and (min-width: 1441px) {
+//   .single-car__container {
+//     .single-car__wrapper {
+//       margin: 0 auto;
+//     }
+//   }
+// }
+
+@media screen and (max-width: 991px) {
   .single-car__container {
-    padding: 0 15px;
-
-    .single-car__wrapper {
-      // margin: 0;
-      grid-template-columns: unset;
-      -webkit-column-gap: unset;
-      column-gap: unset;
-    }
-
     .left-side__content {
+      max-width: unset;
+
       margin-top: 76px;
-      padding-top: 48px;
-    }
-  }
-}
-
-
-
-@media screen and (min-width: 1024px) {
-  .single-car__container {
-    .single-car__wrapper {
-      margin: 0 54px;
-    }
-  }
-}
-
-@media screen and (min-width: 1441px) {
-  .single-car__container {
-    .single-car__wrapper {
-      margin: 0 auto;
     }
   }
 }
@@ -281,19 +264,25 @@
 @media screen and (max-width: 768px) {
   .single-car__container {
     .left-side__content {
-      .recommended-auto-cards-container {
-        display: flex;
-        flex-direction: column;
-        padding: 0 15px !important;
-      }
-      .icon-wrapper {
-        flex-direction: column;
-        row-gap: 20px;
-        padding: 10px;
-      }
-      .specification-container {
-        display: flex;
-        flex-direction: column;
+      .recommended-for-you-row {
+        .recommended-auto-cards-container {
+          display: flex;
+          flex-direction: column;
+          padding: 0 15px;
+        }
+
+        .shop-auto-card {
+          margin: 0;
+        }
+        .icon-wrapper {
+          flex-direction: column;
+          row-gap: 20px;
+          padding: 10px;
+        }
+        .specification-container {
+          display: flex;
+          flex-direction: column;
+        }
       }
     }
 

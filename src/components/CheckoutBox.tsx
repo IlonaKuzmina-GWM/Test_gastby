@@ -26,9 +26,11 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
     const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
     const [shareBlockShown, setShareBlockShown] = useState(false);
     const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
+    const [smallScreen, setSmallScreen] = useState(false);
 
     const toggleCheckoutIcons = () => {
         setCheckoutIconsUseed(!checkoutIconsUseed);
+        setSmallScreen(!smallScreen);
     };
 
     useEffect(() => {
@@ -36,6 +38,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
 
         if (windowWidth <= 768) {
             setCheckoutIconsUseed(true);
+            setSmallScreen(true);
             return;
         }
     }, []);
@@ -45,8 +48,8 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
             <Container className="checkout-container" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
                 <button
                     className="colapse-button"
-                    onClick={toggleCheckoutIcons}></button>
-                <Row>
+                    onClick={toggleCheckoutIcons} />
+                <Row className="checkout-car-title-row">
                     <Col xs={8} className="mb-2">
                         <h5>{title}</h5>
                         <span className="version-type-wrapper">{carType}</span>
@@ -55,6 +58,15 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                         <h5>€ {price}</h5>
                     </Col>
                 </Row>
+
+                {smallScreen && (
+                    <Row className="row-wrapper">
+                        <Col className="btn-wrapper ">
+                            <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
+
+                        </Col>
+                    </Row>
+                )}
 
                 {!checkoutIconsUseed && (
                     <>

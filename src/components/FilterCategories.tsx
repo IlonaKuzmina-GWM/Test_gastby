@@ -5,6 +5,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Button from './Button';
 
 import useAllWpCarData from "../queries/useAllWpCarData";
+import { disconnect } from 'process';
 
 type FilterCategoriesProps = {
     eventkey: number;
@@ -121,17 +122,17 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                     <StaticImage className='close-filters-btn' src={"../images/cancel.svg"} alt={"Cancel"} width={30} height={30} />
                 </div>
 
-                <Row className='filter-results mb-3 px-3 justify-content-between align-items-center'>
+                <Row className='filter-results mb-3 px-3 justify-content-between align-items-center border-bottom'>
                     <Col className='px-0 clear_results'>
                         <span>{filteredParamaterCounter === 1 ? 'izvēlēts' : 'izvēlēti'} "{filteredParamaterCounter}" {filteredParamaterCounter === 1 ? 'parametrs' : 'parametri'}</span>
                     </Col>
 
                     <Col className='px-0  row filter_results_btn-wrapper'>
                         <div className='clear-btn'>
-                            <Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
+                            {filteredParamaterCounter > 0 && (<Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
                                 clearFilteredValues();
                                 uncheckAllCheckboxes();
-                            }}></Button>
+                            }}></Button>)}
                         </div>
 
                         <div className='show-all-btn'>
@@ -141,7 +142,8 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                 </Row>
 
                 <div className='accordion-wrapper'>
-                    <Row className='center-xs'>
+                   
+                    <Row className='center-xs price-range-row'>
                         <Col className='' xs={12}>
                             <h4 className="price__block--title">Cena</h4>
                             <Form className='d-flex justify-content-between main__range--wrapper'>
@@ -159,13 +161,14 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                             </Form>
                         </Col>
                     </Row>
+
                     <Accordion>
                         {Object.keys(uniqueCarInfoValues).map((key, index) => (
                             <Accordion.Item key={index} eventKey={index.toString()}>
                                 <Accordion.Header className='accordion-title'>{key}</Accordion.Header>
                                 <Accordion.Body>
                                     {uniqueCarInfoValues[key].map((valueName: string | number | string[], valueIndex: number) => (
-                                        <Form key={valueIndex}>
+                                        <Form key={valueIndex} className='form-item-wrapper'>
                                             {valueName &&
                                                 <Form.Group className="" controlId={String(valueName)}>
                                                     <Form.Check

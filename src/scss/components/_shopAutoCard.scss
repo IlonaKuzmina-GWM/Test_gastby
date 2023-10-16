@@ -9,9 +9,13 @@
   &:hover {
     border: 2px solid $hover !important;
     border-color: rgba(38, 105, 209, 1);
-    -webkit-box-shadow: $hover_box_shadow; 
-    box-shadow:  $hover_box_shadow;
+    -webkit-box-shadow: $hover_box_shadow;
+    box-shadow: $hover_box_shadow;
     transition-duration: 0.15s;
+  }
+
+  .card-body {
+    gap: 10px;
   }
 
   .shop-card-image {
@@ -23,13 +27,28 @@
     height: 100%;
   }
 
+  .card-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+
   .small-title {
     color: $blue_primary;
     text-transform: capitalize;
-    font-size: 14px;
     text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 300;
   }
 
+  .mileage-container {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .price-container {
+    font-weight: 500;
+  }
   .card-footer {
     padding: 0;
     background-color: transparent;

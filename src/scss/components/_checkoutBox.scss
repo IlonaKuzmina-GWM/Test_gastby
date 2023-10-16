@@ -140,7 +140,7 @@
     min-width: unset;
     margin: 0 auto;
     width: 100%;
-    padding: 20px 15px;
+    padding: 20px 15px 30px;
     box-shadow: 0 -12px 30px rgba(58, 58, 58, 0.2) !important;
 
     .colapse-button {
@@ -154,6 +154,10 @@
       border-radius: 25px;
     }
 
+    .checkout-car-title-row {
+      margin-top: 24px;
+    }
+
     .checkout-icons-container .icon-item {
       cursor: pointer;
     }
@@ -163,9 +167,9 @@
       justify-content: center;
     }
 
-      .share-icons-container {
-        justify-content: space-around;
-      }
+    .share-icons-container {
+      justify-content: space-around;
+    }
   }
 }
 
@@ -179,7 +183,7 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1270px) {
   .checkout-container {
     right: 32px;
     max-width: 360px;

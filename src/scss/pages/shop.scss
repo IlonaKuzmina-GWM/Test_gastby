@@ -11,34 +11,85 @@
 
   .filters-container {
     width: 40%;
-    max-width: 350px;
+    max-width: 305px;
   }
 
   .auto-cards-container {
+    .shop-first-info-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0 16px;
+    }
+
     .small-info-text {
       font-size: 14px;
       color: $text_secondary;
       margin-bottom: 0;
-      margin-top: 1rem;
+    }
+
+    .sorting-list {
+      // width: min-content;
+      select {
+        border: none;
+      }
+
+      label {
+        font-size: 14px;
+        color: $text_secondary;
+      }
+
+      option{
+        font-size: 15px;
+      }
+    }
+  }
+
+  .shop-auto-cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .shop-page-container {
+    .shop-auto-cards-wrapper {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (max-width: 1060px) {
   .shop-page-container {
-    grid-template-columns: repeat(3, 1fr);
+    .shop-auto-cards-wrapper {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 
-@media only screen and (max-width: 1024px) {
-  .shop-page-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+// @media screen and (min-width: 1024px) {
+//   .shop-page-container {
+//     grid-template-columns: repeat(3, 1fr);
+//   }
+// }
+
+// @media only screen and (max-width: 1024px) {
+//   .shop-page-container {
+//     grid-template-columns: repeat(2, 1fr);
+//   }
+// }
 
 @media only screen and (max-width: 768px) {
   .shop-page-container {
     flex-direction: column;
+
+    .auto-cards-container {
+      .shop-first-info-row {
+        padding-top: 0;
+      }
+    }
 
     .filters-container {
       width: 100%;
@@ -68,15 +119,25 @@
       border: 1px solid $blue_primary;
 
       &:hover {
-        box-shadow:  $hover_box_shadow;
+        box-shadow: $hover_box_shadow;
         opacity: 0.9;
       }
     }
   }
 }
 
-@media only screen and (max-width: 481px) {
+@media only screen and (max-width: 500px) {
   .shop-page-container {
-    grid-template-columns: 1fr;
+    .shop-auto-cards-wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .auto-cards-container {
+      .shop-first-info-row {
+        flex-direction: column;
+        align-items: start;
+        gap:5px;
+      }
+    }
   }
 }
