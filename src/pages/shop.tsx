@@ -178,8 +178,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const countValues = (checkedValues: any) => {
         let totalCount = 0;
 
-        console.log(checkedValues)
-
         for (const key in checkedValues) {
             if (checkedValues.hasOwnProperty(key)) {
                 totalCount += checkedValues[key].length;

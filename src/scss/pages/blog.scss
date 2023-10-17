@@ -39,6 +39,8 @@
 }
 
 .blog__tags--section {
+  margin-bottom: 44px;
+
   .tag-title {
     font-size: 32px;
     line-height: 38px;
@@ -47,26 +49,39 @@
 
   .tag-item {
     font-size: 18px;
-    border: solid 2px $blue_primary;
-    background-color: $white;
-    padding: 10px 15px;
+    border: solid 1px $blue_primary;
+    background-color: $blue_primary;
+    padding: 12px 24px;
     cursor: pointer;
-    border-radius: 15px 5px 15px 5px;
+    border-radius: 60px;
     margin-right: 20px;
+    font-weight: 700;
+    color: $white;
+    font-size: 16px;
+    box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
 
     &:hover {
-      background-color: $blue_primary;
+      border: solid 1px $hover;
+      background-color: $hover;
       transition: all 0.5s ease;
+      box-shadow: $hover_box_shadow;
     }
   }
 
   .active {
-    background-color: $blue_primary;
-    font-weight: 500;
+    border: solid 1px $hover;
+    background-color: $hover;
+    box-shadow: $hover_box_shadow;
   }
 }
 
 .blog__post--section {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 24px;
+  margin-bottom: 80px;
+
   .blog__post--card {
     border-radius: 25.8353px;
     box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
@@ -80,9 +95,26 @@
     flex-direction: column;
     height: 100%;
 
+    &:hover {
+      box-shadow: $hover_box_shadow;
+    }
+
     &:hover .read__more--btn {
       color: $blue_primary;
       transition: all 0.5s ease;
+    }
+
+    &:hover .gatsby-image-wrapper img {
+      transform: scale(1.1);
+    }
+
+    .gatsbyimage-wrapper {
+      overflow: hidden;
+    }
+
+    .gatsby-image-wrapper img {
+      transition: transform 900ms;
+      object-fit: cover;
     }
 
     .read__more--wrapper {
@@ -95,17 +127,26 @@
       display: flex;
       gap: 15px;
       margin-top: auto;
-      padding: 25px;
+      padding: 0 16px 16px;
       border: none;
 
       .tag {
-        border-radius: 15px 5px 15px 5px;
+        text-transform: uppercase;
+        color: $blue_primary;
+        margin-bottom: 0;
         font-size: 16px;
-        border: none;
-        background-color: $blue_primary;
-        padding: 5px 10px;
       }
     }
+  }
+}
+
+/*-------------------------------------------------*/
+/* =  1024px
+  /*-------------------------------------------------*/
+
+@media only screen and (max-width: 1024px) {
+  .blog__post--section {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -153,5 +194,9 @@
       margin-right: 15px;
       margin-bottom: 15px;
     }
+  }
+
+  .blog__post--section {
+    grid-template-columns: 1fr;
   }
 }

@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useMemo } from 'react';
-import { CarEquipment } from '../types/allWpCarTypes';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { Accordion } from 'react-bootstrap';
 import { StaticImage } from 'gatsby-plugin-image';
+import { CarEquipment } from '../types/allWpCarTypes';
 
 
 type carSpecificationPopUpProps = {
-    carEquipment: CarEquipment,
+    carEquipment: any,
     onCloseHandler: (popupStatus: boolean) => void;
 }
 
@@ -45,7 +45,7 @@ const CarSpecificationPopUp: FC<carSpecificationPopUpProps> = ({ carEquipment, o
                             <Accordion.Header>{header.toUpperCase()}</Accordion.Header>
                             <Accordion.Body>
                                 <ul>
-                                    {carEquipment[header].map((item, itemIndex) => (
+                                    {carEquipment[header].map((item: string, itemIndex: number) => (
                                         <li key={itemIndex}>{item}</li>
                                     ))}
                                 </ul>

@@ -16,6 +16,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    overflow: hidden;
 
     .item-image {
       width: 100%;
@@ -24,8 +25,10 @@
       border-radius: 30px;
       display: block;
       background-position: center center;
-      opacity: 0.5;
-      transition: all 0.3s;
+      opacity: .9;
+
+      transition: transform 900ms;
+      object-fit: cover;
     }
 
     a {
@@ -51,6 +54,7 @@
     opacity: 1;
     -webkit-box-shadow:  $hover_box_shadow;
     box-shadow:  $hover_box_shadow;
+    transform: scale(1.1);
   }
 
   .item-link {
@@ -71,6 +75,11 @@
         line-height: 52px;
       }
     }
+
+    
+  .item .item-image {
+    opacity: 1;
+  }
   }
 }
 

@@ -14,6 +14,10 @@
     transition-duration: 0.15s;
   }
 
+  &:hover .shop-card-image img {
+    transform: scale(1.1);
+  }
+
   .card-body {
     gap: 10px;
   }
@@ -21,6 +25,12 @@
   .shop-card-image {
     border-radius: 10px 10px 0 0;
     border: 1px solid transparent;
+    overflow: hidden;
+  }
+
+  .shop-card-image img {
+    transition: transform 900ms;
+    object-fit: cover;
   }
 
   .nav-link {

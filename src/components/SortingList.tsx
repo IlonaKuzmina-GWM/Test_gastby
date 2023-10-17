@@ -10,7 +10,9 @@ const SortingList: FC<SortingListProps> = ({ onClickHandler }) => {
     return (
         <div className="sorting-list">
             <label htmlFor="sortDropDown">Sortēt: </label>
-            <select name="sortDropDown"
+            <select
+                className="form-select form-select-sm"
+                name="sortDropDown"
                 id="sortDropDown"
                 value={sortingType}
                 onChange={(e) => { setSortingType(e.target.value); onClickHandler(e.target.value); }}>

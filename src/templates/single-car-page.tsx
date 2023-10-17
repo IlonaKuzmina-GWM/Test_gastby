@@ -11,11 +11,9 @@ import BluetoothDrive from "../images/Features.svg";
 import CarFront from "../images/Equipped.svg";
 import MainLayout from "../layouts/MainLayout";
 import CaretBottom from "../images/icons/caret-bottom.svg";
-import { Car } from "../types/allWpCarTypes";
-// import CarSpecificationPopUp from "../components/CarSpecificationPopUp";
+import { Car, CarEquipment } from "../types/allWpCarTypes";
 
 import useAllWpCarData from "../queries/useAllWpCarData";
-import { KeyObject } from "crypto";
 
 type SingleCarProps = {
     pageContext: Car;
@@ -34,10 +32,16 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     const [carSpecificationPopUp, setCarSpecificationPopUp] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [singleCarData, setSibgleCarData] = useState();
+    const [transformedCarEquipmentKeys, setTransformedCarEquipmentKeys] = useState({})
 
-    console.log(pageContext)
-
+    
     useEffect(() => {
+
+        
+        carEquipmentKeysReplacement(carEquipment);
+
+        setTransformedCarEquipmentKeys(carEquipmentKeysReplacement(carEquipment));
+
         const setCheckoutBoxVisibility = () => {
             const availabilityCheckBox = document.querySelector(".checkout-container");
             const elementorLocationFooter = document.querySelector(".footer") as HTMLElement;;
@@ -64,10 +68,6 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
             window.removeEventListener('resize', setCheckoutBoxVisibility);
         };
     }, []);
-
-    // const singleCar = (recommendedForYou: any) => {
-    //      const recommendedCar = recommendedForYou.find((car: any) => car.slug === singleCarInformation.slug);
-    // }
 
     const openPopUp = (index: number) => {
         setSelectedImageIndex(index);
@@ -102,6 +102,45 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     }
 
 
+    const carEquipmentKeysReplacement = (carEquipment: CarEquipment) => {
+
+        type CarInfoProperty = keyof Replacements;
+
+        type Replacements = {
+            [key: string]: string;
+        };
+
+        const replacements: Replacements = {
+            "aizsardziba": "aizsardzība",
+            "aprikojums": "aprīkojums",
+            "audioVideoAprikojums": "audio/video aprīkojums",
+            "cits": "cits",
+            "drosiba": "drošība",
+            "eksterjers": "eksterjers",
+            "gaismas": "gaismas",
+            "hiFi": "hiFi",
+            "interjers": "interjers",
+            "salons": "salons",
+            "sedekli": "sēdekļi",
+            "spoguli": "spoguļi",
+            "sture": "stūre",
+        };
+
+        type CarEquipment = {
+            [key: string]: string | string[];
+        };
+
+        const { aizsardziba, aprikojums, ...restCarEquipment } = carEquipment;
+
+        const transformedCarEquipment: CarEquipment = {};
+
+        for (const [key, value] of Object.entries(restCarEquipment)) {
+            const transformedKey = replacements[key as CarInfoProperty] || key;
+            transformedCarEquipment[transformedKey] = value;
+        }
+        return transformedCarEquipment;
+    }
+
 
     return (
         <MainLayout>
@@ -130,21 +169,21 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
                                     {singleCarInformation.carEquipment.hiFi && singleCarInformation.carEquipment.hiFi.length > 0 && (
                                         <div className="icon-wrapper_item">
-                                            <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} height={"40px"}/>
+                                            <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} height={"40px"} />
                                             <p>{singleCarInformation.carEquipment.hiFi[0]}</p>
                                         </div>
                                     )}
 
                                     {singleCarInformation.carEquipment.drosiba && singleCarInformation.carEquipment.drosiba.length > 0 && (
                                         <div className="icon-wrapper_item">
-                                            <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} height={"40px"}/>
+                                            <img src={BluetoothDrive} alt="BluetoothDrive" width={"40px"} height={"40px"} />
                                             <p> {singleCarInformation.carEquipment.drosiba[0]}</p>
                                         </div>
                                     )}
 
                                     {singleCarInformation.carEquipment.interjers && singleCarInformation.carEquipment.interjers.length > 0 && (
                                         <div className="icon-wrapper_item">
-                                            <img src={CarFront} alt="CarFront" width={"40px"} height={"40px"}/>
+                                            <img src={CarFront} alt="CarFront" width={"40px"} height={"40px"} />
                                             <p> {singleCarInformation.carEquipment.interjers[0]}</p>
                                         </div>
                                     )}
@@ -237,7 +276,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                 {carSpecificationPopUp && (
                     <Suspense fallback={<div>Loading...</div>}>
                         <LazyCarSpecificationPopUp
-                            carEquipment={carEquipment}
+                            carEquipment={transformedCarEquipmentKeys}
                             onCloseHandler={closeSpecPopup}
                         />
                     </Suspense>

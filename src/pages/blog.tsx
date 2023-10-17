@@ -51,67 +51,61 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
         <div className="white__gradient--bottom"></div>
       </section>
 
-      <section className="blog__tags--section container mb-4">
+      <section className="blog__tags--section container">
         <h2 className="tag-title">Rakstu kategorijas:</h2>
-        <div className="tags__wrapper">
-          <span
-            className={`tag-item ${!filterPostsByTag ? 'active' : ''}`}
-            onClick={() => { setFilterPostsByTag('') }}>Visas
+
+        <span
+          className={`tag-item ${!filterPostsByTag ? 'active' : ''}`}
+          onClick={() => { setFilterPostsByTag('') }}>Visas
+        </span>
+        {allTags && allTags.map((tag, index) => {
+          return <span
+            className={`tag-item ${tag === filterPostsByTag ? 'active' : ''}`}
+            onClick={() => { setFilterPostsByTag(tag); handleTagClick(tag) }}>
+            {tag}
           </span>
-          {allTags && allTags.map((tag, index) => {
-            return <span
-              className={`tag-item ${tag === filterPostsByTag ? 'active' : ''}`}
-              onClick={() => { setFilterPostsByTag(tag); handleTagClick(tag) }}>
-              {tag}
-            </span>
-          })}
-        </div>
-
+        })}
       </section>
 
-      <section className="blog__post--section container mb-5">
-        <Row xs={1} md={2} lg={3} className="g-4 mt-4" >
-          {posts.allWpPost.nodes.filter((post: WpPost) => {
-            if (!filterPostsByTag) {
-              return true;
-            }
-            return post.tags.nodes.some(tag => tag.name === filterPostsByTag);
-          }).map((post: WpPost) => {
-            return (
-              <Col key="">
-                <Card className="blog__post--card">
-                  <Nav.Link href={"/" + post.slug} >
-                    <GatsbyImage
-                      image={post.featuredImage.node.gatsbyImage}
-                      alt={post.title}
-                      loading="lazy"
-                      className="card-img-top"
-                    />
-                    <Card.Body>
-                      <Card.Title>{post.title}</Card.Title>
-                      <Card.Text>
-                        <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
-                        <div className="read__more--wrapper">
-                          <span className="read__more--btn" >Lasīt vairāk...</span>
-                        </div>
-                      </Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                      {post.tags.nodes.map((tag, index) => (
-                        <React.Fragment key={index}>
-                          <small className="tag">{tag.name}</small>
-                        </React.Fragment>
-                      ))}
-                    </Card.Footer>
-                  </Nav.Link>
-                </Card>
-              </Col>
-            )
-          })}
-        </Row>
+      <section className="blog__post--section container">
+        {posts.allWpPost.nodes.filter((post: WpPost) => {
+          if (!filterPostsByTag) {
+            return true;
+          }
+          return post.tags.nodes.some(tag => tag.name === filterPostsByTag);
+        }).map((post: WpPost) => {
+          return (
+            <Card className="blog__post--card">
+              <Nav.Link href={"/" + post.slug} >
+                <GatsbyImage
+                  image={post.featuredImage.node.gatsbyImage}
+                  alt={post.title}
+                  loading="lazy"
+                  className="card-img-top"
+                />
+                <Card.Body>
+                  <Card.Title>{post.title}</Card.Title>
+                  <Card.Text>
+                    <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
+                    <div className="read__more--wrapper">
+                      <span className="read__more--btn" >Lasīt vairāk...</span>
+                    </div>
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  {post.tags.nodes.map((tag, index) => (
+                    <React.Fragment key={index}>
+                      <p className="tag">{tag.name}</p>
+                    </React.Fragment>
+                  ))}
+                </Card.Footer>
+              </Nav.Link>
+            </Card>
+          )
+        })}
       </section>
 
-      <SiteVisiteSection/>
+      <SiteVisiteSection />
     </MainLayout>
   );
 };
