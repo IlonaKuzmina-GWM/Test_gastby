@@ -112,10 +112,12 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                         <Row className="row-wrapper">
                             <Dropdown.Divider />
                             <Row md={3} className="checkout-icons-container">
-                                {/* <img className="" src={PDF} width={25} height={25} alt="pin" />
-                                    <p className="text-center">PDF</p> */}
+                                <div className="d-flex flex-column align-items-center icon-item" >
+                                    <img className="" src={PDF} width={25} height={25} alt="pin" />
+                                    <p className="text-center">PDF</p>
+                                </div>
 
-                                <PDFDownloadLink document={<PdfDownloadSingleCarPage carTitle={title} />} fileName={`${title}.pdf`}>
+                                {/* <PDFDownloadLink document={<PdfDownloadSingleCarPage carTitle={title} />} fileName={`${title}.pdf`}>
                                     {({ blob, url, loading, error }) =>
                                         loading
                                             ? 'Loading document...'
@@ -124,7 +126,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                                                 <p className="text-center">PDF</p>
                                             </div>
                                     }
-                                </PDFDownloadLink>
+                                </PDFDownloadLink> */}
 
 
                                 <div className="d-flex flex-column align-items-center icon-item" onClick={() => { setCheckoutIconsUseed(true); setShareBlockShown(true); }}>
