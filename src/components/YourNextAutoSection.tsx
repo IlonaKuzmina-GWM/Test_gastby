@@ -22,7 +22,6 @@ const YourNextAutoSection: FC<YourNextAutoSectionProps> = ({ onClickHandler }) =
                         formats={['auto', 'webp', 'avif']}
                         placeholder="blurred"
                     />
-
                     <p>Jauni auto</p>
                 </div>
 
@@ -39,8 +38,8 @@ const YourNextAutoSection: FC<YourNextAutoSectionProps> = ({ onClickHandler }) =
                 </div>
             </div>
 
-            <div className="row justify-content-between px-3 second-items-container" onClick={() => onClickHandler("elektriskais")}>
-                <div className="d-flex item col-md-4 mb-5">
+            <div className="row justify-content-between px-3 second-items-container">
+                <div className="d-flex item col-md-4 mb-5" onClick={() => onClickHandler("elektriskais")}>
                     <StaticImage
                         style={{ position: "absolute" }}
                         src={"../images/3.jpg"}

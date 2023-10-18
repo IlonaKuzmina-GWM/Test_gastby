@@ -34,10 +34,10 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     const [singleCarData, setSibgleCarData] = useState();
     const [transformedCarEquipmentKeys, setTransformedCarEquipmentKeys] = useState({})
 
-    
+
     useEffect(() => {
 
-        
+
         carEquipmentKeysReplacement(carEquipment);
 
         setTransformedCarEquipmentKeys(carEquipmentKeysReplacement(carEquipment));
@@ -147,6 +147,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
             <Container className="single-car__container">
                 <div className="single-car__wrapper">
                     <div className="left-side__content">
+
                         <Row className="car-gallery-row">
                             <Carousel>
                                 {singleCarGallery.map((image: any, index: number) => (
@@ -230,10 +231,11 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             </Col>
                         </Row>
 
-                        <Row className="recommended-for-you-row">
-                            <Col className="border-dark-subtle">
+                        <div className="recommended-for-you-row">
+                            <div>
                                 <h3 className="mb-3">Rekomendējam tieši tev</h3>
-                            </Col>
+                            </div>
+
                             <div className="recommended-auto-cards-container">
                                 {recommendedForYou
                                     .filter((car: Car) => car.carInfo.autoStavoklis[0] === singleCarInformation.carInfo.autoStavoklis[0] && car.id !== singleCarInformation.id)
@@ -248,7 +250,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                         </div>
                                     ))}
                             </div>
-                        </Row>
+                        </div>
                     </div>
 
                     <div className="right-side__content">
@@ -260,8 +262,8 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             price={singleCarInformation.carInfo.carPrice}
                             brokerName={singleCarInformation.carInfo.dileris}
                             carCondition={singleCarInformation.carInfo.autoStavoklis}
-                            isElementorLocationFooterVisible={isElementorLocationFooterVisible} />
-
+                            isElementorLocationFooterVisible={isElementorLocationFooterVisible} 
+                            titleImage={singleCarInformation.featuredImage.node.sourceUrl} />
                     </div>
                 </div>
 

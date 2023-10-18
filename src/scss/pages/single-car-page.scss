@@ -188,7 +188,7 @@
   .right-side__content {
     box-sizing: border-box;
     margin: 0 auto;
-    min-width: 0;
+    // min-width: 0;
     min-width: 360px;
     width: 100%;
     max-width: -webkit-max-content;
@@ -264,6 +264,17 @@
 @media screen and (max-width: 768px) {
   .single-car__container {
     .left-side__content {
+      .icon-wrapper {
+        flex-direction: column;
+        row-gap: 20px;
+        padding: 10px;
+      }
+
+      .specification-container {
+        display: flex;
+        flex-direction: column;
+      }
+
       .recommended-for-you-row {
         .recommended-auto-cards-container {
           display: flex;
@@ -274,20 +285,15 @@
         .shop-auto-card {
           margin: 0;
         }
-        .icon-wrapper {
-          flex-direction: column;
-          row-gap: 20px;
-          padding: 10px;
-        }
-        .specification-container {
-          display: flex;
-          flex-direction: column;
-        }
       }
     }
 
     .right-side__content {
-      min-width: none;
+      min-width: 300px !important;
+
+      h5 {
+        font-size: 18px;
+      }
     }
   }
 }

@@ -204,9 +204,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             case "ascending mileage":
                 return sortedCars.sort((a, b) => b.carInfo.nobraukums - a.carInfo.nobraukums);
             case "descending year":
-                return sortedCars.sort((a, b) => parseInt(a.carInfo.gads) - parseInt(b.carInfo.gads));
-            case "ascending year":
                 return sortedCars.sort((a, b) => parseInt(b.carInfo.gads) - parseInt(a.carInfo.gads));
+            case "ascending year":
+                return sortedCars.sort((a, b) => parseInt(a.carInfo.gads) - parseInt(b.carInfo.gads));
             default:
                 return filteredCars;
         }
