@@ -16,6 +16,7 @@ const config: GatsbyConfig = {
     // PARALLEL_QUERY_RUNNING: true,
   },
   plugins: [
+    `gatsby-plugin-preload-fonts`,
     "gatsby-plugin-sass",
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
