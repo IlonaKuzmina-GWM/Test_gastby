@@ -118,16 +118,16 @@ exports.createPages = async ({ graphql, actions }: any) => {
     });
   });
 
-  const { createRedirect } = actions;
+  // const { createRedirect } = actions;
 
   // Set cache headers for font files
-  createRedirect({
-    fromPath: "static/fonts/*.woff2",
-    toPath: "/fonts/:splat",
-    statusCode: 200,
-    force: true,
-    headers: {
-      "Cache-Control": "public, max-age=31536000",
-    },
-  });
+  // createRedirect({
+  //   fromPath: "static/fonts/*.woff2",
+  //   toPath: "/fonts/:splat",
+  //   statusCode: 200,
+  //   force: true,
+  //   headers: {
+  //     "Cache-Control": "public, max-age=31536000",
+  //   },
+  // });
 };
