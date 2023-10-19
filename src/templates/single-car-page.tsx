@@ -166,10 +166,10 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                 <h3 className="mb-3"> Kāpēc izvēlēties tieši {singleCarInformation.title} </h3>
                                 <div className="icon-wrapper">
 
-                                    {singleCarInformation.carEquipment.hiFi && singleCarInformation.carEquipment.hiFi.length > 0 && (
+                                    {singleCarInformation.carEquipment.audioVideoAprikojums && singleCarInformation.carEquipment.audioVideoAprikojums.length > 0 && (
                                         <div className="icon-wrapper_item">
                                             <img src={AndroidAuto} alt="AndroidAuto" width={"40px"} height={"40px"} />
-                                            <p>{singleCarInformation.carEquipment.hiFi[0]}</p>
+                                            <p>{singleCarInformation.carEquipment.audioVideoAprikojums[0]}</p>
                                         </div>
                                     )}
 
@@ -180,12 +180,18 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                                         </div>
                                     )}
 
-                                    {singleCarInformation.carEquipment.interjers && singleCarInformation.carEquipment.interjers.length > 0 && (
+                                    {singleCarInformation.carEquipment.aprikojums && singleCarInformation.carEquipment.aprikojums.length > 0 && (
                                         <div className="icon-wrapper_item">
                                             <img src={CarFront} alt="CarFront" width={"40px"} height={"40px"} />
-                                            <p> {singleCarInformation.carEquipment.interjers[0]}</p>
+                                            <p> {singleCarInformation.carEquipment.aprikojums[0]}</p>
                                         </div>
                                     )}
+                      
+                                        {/* <div className="icon-wrapper_item">
+                                            <img src={CarFront} alt="CarFront" width={"40px"} height={"40px"} />
+                                            <p>Labi aprīkots</p>
+                                        </div> */}
+                      
                                 </div>
                             </Col>
                         </Row>
