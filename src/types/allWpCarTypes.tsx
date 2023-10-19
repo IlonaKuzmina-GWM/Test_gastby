@@ -13,14 +13,22 @@ type FeaturedImage = {
   };
 }
 
+export type PDFFile = {
+  filename: string;
+  mediaItemUrl: string;
+}
+
 export type CarGalleryImage = {
   [x: string]: any;
   gatsbyImage: IGatsbyImageData
 }
 
-export type CarInfo = {
-  [key: string]: string[] | number | string | CarGalleryImage[];
 
+
+export type CarInfo = {
+  [key: string]: string[] | number | string | CarGalleryImage[] | PDFFile;
+
+  pdfFile: PDFFile;
   atrasanasVieta: string[];
   atrumkarba: string[];
   autoStavoklis: string[];

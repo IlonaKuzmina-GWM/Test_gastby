@@ -287,6 +287,10 @@ query AllCarsDetails {
         }
       }
       carInfo {
+        pdfFile {
+          filename
+          mediaItemUrl
+        }
         atrumkarba
         atrasanasVieta
         autoStavoklis

@@ -21,6 +21,10 @@ exports.createPages = async ({ graphql, actions }: any) => {
             carGallery {
               gatsbyImage(formats: WEBP, placeholder: BLURRED, width: 976, height: 549)
             }
+            pdfFile {
+              filename
+              mediaItemUrl
+            }
             atrumkarba
             atrasanasVieta
             autoStavoklis
@@ -94,13 +98,6 @@ exports.createPages = async ({ graphql, actions }: any) => {
   if (dataPost.errors || dataCar.errors) {
     throw new Error("GraphQL query failed.");
   }
-
-  // if (!data) {
-  //   return;
-  // }
-
-  // const { allWpCar } = data;
-  // const { allWpPost } = data;
 
   const singleCarTempalte = path.resolve(`src/templates/single-car-page.tsx`);
   const singlePostTempalte = path.resolve(`src/templates/single-post-page.tsx`);

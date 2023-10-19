@@ -37,7 +37,6 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
     useEffect(() => {
 
-
         carEquipmentKeysReplacement(carEquipment);
 
         setTransformedCarEquipmentKeys(carEquipmentKeysReplacement(carEquipment));
@@ -140,7 +139,6 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
         }
         return transformedCarEquipment;
     }
-
 
     return (
         <MainLayout>
@@ -263,7 +261,8 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             brokerName={singleCarInformation.carInfo.dileris}
                             carCondition={singleCarInformation.carInfo.autoStavoklis}
                             isElementorLocationFooterVisible={isElementorLocationFooterVisible} 
-                            titleImage={singleCarInformation.featuredImage.node.sourceUrl} />
+                            PDFFile={singleCarInformation.carInfo.pdfFile}
+                            />
                     </div>
                 </div>
 

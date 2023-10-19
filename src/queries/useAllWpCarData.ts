@@ -15,6 +15,10 @@ export default function useAllWpCarData() {
             }
           }
           carInfo {
+            pdfFile {
+              filename
+              mediaItemUrl
+            }
             atrumkarba
             atrasanasVieta
             autoStavoklis

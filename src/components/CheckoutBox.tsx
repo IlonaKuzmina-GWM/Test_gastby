@@ -10,9 +10,7 @@ import PDF from "../images/icons/file-pdf-solid.svg";
 import Questions from "../images/icons/question-circle.svg";
 import Share from "../images/icons/share-alt-square-solid.svg";
 import Button from "./Button";
-
-import ReactPDF, { BlobProvider, PDFDownloadLink } from '@React-pdf/renderer';
-import PdfDownloadSingleCarPage from './PdfDownloadSingleCarPage';
+import { PDFFile } from "../types/allWpCarTypes";
 
 type CheckoutBoxProps = {
     title: string;
@@ -23,10 +21,10 @@ type CheckoutBoxProps = {
     isElementorLocationFooterVisible: boolean;
     slug: string;
     mileage?: number | undefined;
-    titleImage?: string;
+    PDFFile?: PDFFile;
 }
 
-const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible, mileage, titleImage }) => {
+const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible, mileage, PDFFile }) => {
     const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
     const [shareBlockShown, setShareBlockShown] = useState(false);
     const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
@@ -47,6 +45,8 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
         }
     }, []);
 
+
+    console.log(PDFFile?.mediaItemUrl)
 
     return (
         <div className="wrapper-checkout">
@@ -111,22 +111,13 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
 
                         <Row className="row-wrapper">
                             <Dropdown.Divider />
-                            <Row md={3} className="checkout-icons-container">
-                                <div className="d-flex flex-column align-items-center icon-item" >
-                                    <img className="" src={PDF} width={25} height={25} alt="pin" />
-                                    <p className="text-center">PDF</p>
-                                </div>
-
-                                {/* <PDFDownloadLink document={<PdfDownloadSingleCarPage carTitle={title} />} fileName={`${title}.pdf`}>
-                                    {({ blob, url, loading, error }) =>
-                                        loading
-                                            ? 'Loading document...'
-                                            : <div className="d-flex flex-column align-items-center icon-item" >
-                                                <img className="" src={PDF} width={25} height={25} alt="pin" />
-                                                <p className="text-center">PDF</p>
-                                            </div>
-                                    }
-                                </PDFDownloadLink> */}
+                            <Row md={3} className="checkout-icons-container d-flex">
+                                {PDFFile && (<div className="d-flex flex-column align-items-center icon-item" >
+                                    <a href={PDFFile.mediaItemUrl} download={PDFFile.filename} target="_blank">
+                                        <img className="" src={PDF} width={25} height={25} alt="pin" />
+                                        <p className="text-center">PDF</p>
+                                    </a>
+                                </div>)}
 
 
                                 <div className="d-flex flex-column align-items-center icon-item" onClick={() => { setCheckoutIconsUseed(true); setShareBlockShown(true); }}>
