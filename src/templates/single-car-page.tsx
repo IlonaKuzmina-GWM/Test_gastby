@@ -237,7 +237,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
 
                         <div className="recommended-for-you-row">
                             <div>
-                                <h3 className="mb-3">Rekomendējam tieši tev</h3>
+                                <h3 className="mb-3">Rekomendējam tieši Tev</h3>
                             </div>
 
                             <div className="recommended-auto-cards-container">
