@@ -5,7 +5,7 @@ import * as React from "react";
 import { useState } from 'react';
 import "swiper/css/pagination";
 import MainLayout from "../layouts/MainLayout";
-import { Car, CarEquipment, CarInfo, MyQueryResult } from "../types/allWpCarTypes";
+import { Car, CarEquipment, CarInfo, MyQueryResult, PDFFile } from "../types/allWpCarTypes";
 
 import AutoSwiperSection from '../components/AutoSwiperSection';
 import HeroSection from '../components/HeroSection';
@@ -18,21 +18,110 @@ type SearchFunction = (
   cars: Car[]
 ) => Car[];
 
+// const searchCars: SearchFunction = (query, cars) => {
+//   let normalizedQuery = query.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/\s+/);
+//   const stopWords = ["un", "bet", "nav", "km",];
+//   normalizedQuery = normalizedQuery.filter(term => !stopWords.includes(term));
+
+//   return cars.filter((car: Car) => {
+//     const carInfo = car.carInfo;
+//     const carEquipment = car.carEquipment;
+//     const price = String(carInfo.carPrice);
+
+//     if (normalizedQuery.some(query => car.title.toLowerCase().includes(query)) || normalizedQuery.some(query => price.includes(query))) {
+//       return true;
+//     }
+
+//     const searchableCarInfoProperties = [
+//       'atrasanasVieta',
+//       'atrumkarba',
+//       'autoStavoklis',
+//       'virsbuvesTips',
+//       'piedzina',
+//       'marka',
+//       'krasa',
+//       'gads',
+//       'dzinejs',
+//       'durvjuSkaits',
+//       'modelis',
+//       'dileris',
+//       'degvielasPaterins',
+//       'coIzmesuDaudzums',
+//       'jauda',
+//       'sedvietuSkaits',
+//       'nobraukums',
+//       'motoraTilpums',
+//     ];
+
+//     const searchableEquipmentProperties = [
+//       'drosiba',
+//       'hiFi',
+//       'aizsardziba',
+//       'aprikojums',
+//       'audioVideoAprikojums',
+//       'cits',
+//       'eksterjers',
+//       'gaismas',
+//       'interjers',
+//       'salons',
+//       'sedekli',
+//       'spoguli',
+//       'sture',
+//     ];
+
+
+//     if (searchableCarInfoProperties.some((property) => {
+//       const propertyValue = carInfo[property as keyof CarInfo];
+
+//       if (Array.isArray(propertyValue)) {
+//         return propertyValue.some(value =>
+//           normalizedQuery.some(query => value.toLowerCase().includes(query))
+//         );
+//       } else {
+//         return normalizedQuery.some(query => String(propertyValue).toLowerCase().includes(query));
+//       }
+//     })) {
+//       return true;
+//     }
+
+//     if (searchableEquipmentProperties.some((property) => {
+//       const propertyValue = carEquipment[property as keyof CarEquipment];
+
+//       if (Array.isArray(propertyValue)) {
+//         return propertyValue.some(value =>
+//           normalizedQuery.some(query => value.toLowerCase().includes(query))
+//         );
+//       } else {
+//         return normalizedQuery.some(query => String(propertyValue).toLowerCase().includes(query));
+//       }
+//     })) {
+//       return true;
+//     }
+
+
+//     return false;
+//   });
+// };
+
 const searchCars: SearchFunction = (query, cars) => {
-  const normalizedQuery = query.toLowerCase().trim();
+  // const normalizedQuery = query.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/\s+/);
+  const normalizedQuery = query.toLowerCase().trim().split(/\s+/);
+  const querySet = new Set(normalizedQuery);
+
+  const stopWords = new Set(["un", "bet", "nav", "km"]);
+
+  const shouldInclude = (value: any) => {
+    value = String(value).toLowerCase();
+    return normalizedQuery.some(term => value.includes(term));
+  };
+
+  const shouldIncludeArray = (values: any[]) => {
+    return values.some(value => querySet.has(value.toLowerCase()));
+  };
 
   return cars.filter((car: Car) => {
     const carInfo = car.carInfo;
     const carEquipment = car.carEquipment;
-    const price = String(carInfo.carPrice);
-
-    if (car.title.toLowerCase().includes(normalizedQuery)) {
-      return true;
-    }
-
-    if (price.includes(normalizedQuery)) {
-      return true;
-    }
 
     const searchableCarInfoProperties = [
       'atrasanasVieta',
@@ -71,25 +160,20 @@ const searchCars: SearchFunction = (query, cars) => {
       'sture',
     ];
 
+    if (shouldInclude(car.title) || shouldInclude(car.carInfo.carPrice)) {
+      return true;
+    }
 
     if (searchableCarInfoProperties.some((property) => {
       const propertyValue = carInfo[property as keyof CarInfo];
-      if (Array.isArray(propertyValue)) {
-        return propertyValue.some(value => value.toLowerCase().includes(normalizedQuery));
-      } else {
-        return String(propertyValue).toLowerCase().includes(normalizedQuery);
-      }
+      return Array.isArray(propertyValue) ? shouldIncludeArray(propertyValue) : shouldInclude(propertyValue);
     })) {
       return true;
     }
 
     if (searchableEquipmentProperties.some((property) => {
       const propertyValue = carEquipment[property as keyof CarEquipment];
-      if (Array.isArray(propertyValue)) {
-        return propertyValue.some(value => value.toLowerCase().includes(normalizedQuery));
-      } else {
-        return String(propertyValue).toLowerCase().includes(normalizedQuery);
-      }
+      return Array.isArray(propertyValue) ? shouldIncludeArray(propertyValue) : shouldInclude(propertyValue);
     })) {
       return true;
     }
@@ -98,18 +182,14 @@ const searchCars: SearchFunction = (query, cars) => {
   });
 };
 
+
 type HomeProps = {
   data: MyQueryResult;
 };
 
 const IndexPage: React.FC<HomeProps> = ({ data }) => {
-  type LocationState = {
-    searchResults?: Car[];
-  };
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<Car[]>([]);
-
-  const location = useLocation();
+  const [, setSearchResults] = useState<Car[]>([]);
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
