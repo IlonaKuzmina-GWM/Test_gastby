@@ -26,13 +26,7 @@ type ReverseReplacements = {
 
 const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const allCars = data.allWpCar.nodes;
-    // const [allCars, setAllCars] = useState<Car[]>([]);
-    // const [filteredValues, setFilteredValues] = useState<string[]>([])
-
-
-    const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
-
-
+    // const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
     const [checkedValues, setCheckedValues] = useState<{ [key: string]: string[] }>({});
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
@@ -41,24 +35,17 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [countedSelectedValues, setCountedSelectedValues] = useState(0);
     const [sortingBy, setSortingBy] = useState<string>('');
     const locationurl = useLocation();
-    const [currentUrl, setCurentUrl] = useState<string>("");
+    // const [currentUrl, setCurentUrl] = useState<string>("");
 
     useEffect(() => {
-        // setAllCars(data.allWpCar.nodes);
         findDefaultMinAndMaxPrice();
-        // setCurentUrl(locationurl.href);
         parseSlugsFromUrl();
     }, []);
 
     useEffect(() => {
         updateUrlWithSlugs();
         countValues(checkedValues);
-        // console.log("cheked",checkedValues)
     }, [checkedValues]);
-
-    // useEffect(() => {
-    //     filteredAndSortedCars(sortingBy);
-    // }, [sortingBy]);
 
     const findDefaultMinAndMaxPrice = () => {
         const prices = allCars.map((car: Car) => car.carInfo.carPrice);
@@ -104,7 +91,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         }
 
         setCheckedValues(checkedKeyValues);
-        console.log("cheked2",checkedValues)
     };
 
     // const updateUrlWithSlugs = () => {
@@ -184,50 +170,26 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         });
     };
 
-    const filteredCars = allCars.filter((car: Car) => {
+    const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
         const carInfo = car.carInfo;
         const carPrice = carInfo.carPrice;
-    
+
         const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key));
-    
+
         const valuesMatches = Object.entries(checkedValues).every(([key, values]) => {
-          let carValues = carInfo[key];
-    
-          if (!Array.isArray(values) || !Array.isArray(carValues)) {
-            return values.some((value) => [String(carValues)].includes(value));
-          } else if (Array.isArray(carValues) && carValues.every((item) => item instanceof Object)) {
-            return true;
-          } else {
-            return values.some((value) => String(carValues).includes(value));
-          }
+            let carValues = carInfo[key];
+
+            if (!Array.isArray(values) || !Array.isArray(carValues)) {
+                return values.some((value) => [String(carValues)].includes(value));
+            } else if (Array.isArray(carValues) && carValues.every((item) => item instanceof Object)) {
+                return true;
+            } else {
+                return values.some((value) => String(carValues).includes(value));
+            }
         });
-    
+
         return keysMatches && valuesMatches && carPrice >= minPrice && carPrice <= maxPrice;
-      });
-    // const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
-    //     // console.log("currrentURL", currentUrl)
-    //     // console.log("chekedvalues", checkedValues)
-    //     const carInfo = car.carInfo;
-    //     const carPrice = carInfo.carPrice;
-
-    //     //compare carInfo key and value  with checkedValues anad give back all cars with all values within one checkedValues
-
-    //     const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key))
-
-    //     const valuesMatches = Object.entries(checkedValues).every(([key, values]) => {
-    //         let carValues = carInfo[key];
-
-    //         if (!Array.isArray(values) || !Array.isArray(carValues)) {
-    //             return values.some((value) => [String(carValues)].includes(value));
-    //         } else if (Array.isArray(carValues) && carValues.every(item => item instanceof Object)) {
-    //             return true;
-    //         } else {
-    //             return values.some((value) => String(carValues).includes(value));
-    //         }
-    //     });
-
-    //     return keysMatches && valuesMatches && carPrice >= minPrice && carPrice <= maxPrice
-    // });
+    });
 
     const countValues = (checkedValues: any) => {
         let totalCount = 0;
