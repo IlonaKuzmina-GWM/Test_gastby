@@ -1,11 +1,13 @@
-import { HeadFC, graphql } from "gatsby";
+import { HeadFC, graphql, navigate } from "gatsby";
 import React, { FC, useEffect, useState } from "react";
+import { useLocation } from "@reach/router";
 import { Col, Container, Row } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import SortingList from "../components/SortingList";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
+import slugify from "slugify";
 
 
 type ShopProps = {
@@ -26,7 +28,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const allCars = data.allWpCar.nodes;
     // const [allCars, setAllCars] = useState<Car[]>([]);
     // const [filteredValues, setFilteredValues] = useState<string[]>([])
-    // const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
+
+
+    const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
 
 
     const [checkedValues, setCheckedValues] = useState<{ [key: string]: string[] }>({});
@@ -36,20 +40,26 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [showFilters, setShowFilters] = useState(false);
     const [countedSelectedValues, setCountedSelectedValues] = useState(0);
     const [sortingBy, setSortingBy] = useState<string>('');
+    const locationurl = useLocation();
+    const [currentUrl, setCurentUrl] = useState<string>("");
 
     useEffect(() => {
         // setAllCars(data.allWpCar.nodes);
         findDefaultMinAndMaxPrice();
+        setCurentUrl(locationurl.href);
+
     }, []);
 
     useEffect(() => {
-        // updateUrlWithSlugs();
+        updateUrlWithSlugs();
         countValues(checkedValues);
+        setCurentUrl(locationurl.href);
+        // parseSlugeFromUrl(currentUrl);
     }, [checkedValues]);
 
-    useEffect(() => {
-        filteredAndSortedCars(sortingBy);
-    }, [sortingBy]);
+    // useEffect(() => {
+    //     filteredAndSortedCars(sortingBy);
+    // }, [sortingBy]);
 
     const findDefaultMinAndMaxPrice = () => {
         const prices = allCars.map((car: Car) => car.carInfo.carPrice);
@@ -67,7 +77,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         findDefaultMinAndMaxPrice();
 
         // Update the URL with query parameters
-        // navigate(``, { replace: true });
+        navigate(``, { replace: true });
     };
 
     const minPriceRangeChangeHandler = (minPri: number) => {
@@ -85,6 +95,29 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const closeFilters = () => {
         setShowFilters(false);
     };
+
+    const updateUrlWithSlugs = () => {
+        const selectedSlugs: string[] = [];
+
+        Object.entries(checkedValues).forEach(([key, values]) => {
+            if (Array.isArray(values)) {
+                values.forEach((value) => {
+                    const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
+                    selectedSlugs.push(`${key}=${slug}`);
+                });
+            } else {
+                const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
+                selectedSlugs.push(`${key}=${slug}`);
+            }
+        });
+
+        // Construct the query parameters string
+        const queryParams = selectedSlugs.join('&');
+
+        // Update the URL with query parameters
+        navigate(`?${queryParams}`, { replace: true });
+    };
+
 
     const filteredCategoryHandler = (filteredKey: string, filteredValue: string) => {
         const replacements: ReverseReplacements = {
@@ -129,30 +162,37 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         });
     };
 
-    // const updateUrlWithSlugs = () => {
-    //     const selectedSlugs: string[] = [];
 
-    //     Object.entries(filteredCategoriesObject).forEach(([key, values]) => {
-    //         if (Array.isArray(values)) {
-    //             values.forEach((value) => {
-    //                 const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
-    //                 selectedSlugs.push(`${key}=${slug}`);
-    //             });
-    //         } else {
-    //             const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
-    //             selectedSlugs.push(`${key}=${slug}`);
+
+    // const parseSlugeFromUrl = (currUrl: string) => {
+    //     console.log("currenturl2", currUrl)
+
+    //     const slugs = currUrl.split('?')[1];
+    //     if (!slugs) {
+    //         return {}
+    //     }
+
+    //     const pairs = slugs.split('&');
+    //     // const checkedValues = {};
+
+    //     pairs.forEach((pair) => {
+    //         const [keyValue, value] = pair.split('=');
+    //         const [key, valueParsed] = keyValue.split(':');
+
+    //         if (!checkedValues[key]) {
+    //             checkedValues[key] = [];
     //         }
-    //     });
 
-    //     // Construct the query parameters string
-    //     const queryParams = selectedSlugs.join('&');
+    //         checkedValues[key].push(value || valueParsed);
+    //     })
 
-    //     // Update the URL with query parameters
-    //     // navigate(`?${queryParams}`, { replace: true });
-    // };
+    //     return setCheckedValues(checkedValues)
 
+    // }
 
     const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
+        console.log("currrentURL", currentUrl)
+        console.log("chekedvalues", checkedValues)
         const carInfo = car.carInfo;
         const carPrice = carInfo.carPrice;
 
