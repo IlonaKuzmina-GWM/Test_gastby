@@ -60,6 +60,7 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
         </span>
         {allTags && allTags.map((tag, index) => {
           return <span
+            key={index}
             className={`tag-item ${tag === filterPostsByTag ? 'active' : ''}`}
             onClick={() => { setFilterPostsByTag(tag); handleTagClick(tag) }}>
             {tag}
@@ -73,9 +74,9 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
             return true;
           }
           return post.tags.nodes.some(tag => tag.name === filterPostsByTag);
-        }).map((post: WpPost) => {
+        }).map((post: WpPost, index: number) => {
           return (
-            <Card className="blog__post--card">
+            <Card className="blog__post--card" key={index}>
               <Nav.Link href={"/" + post.slug} >
                 <GatsbyImage
                   image={post.featuredImage.node.gatsbyImage}
@@ -85,16 +86,14 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
                 />
                 <Card.Body>
                   <Card.Title>{post.title}</Card.Title>
-                  <Card.Text>
-                    <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
-                    <div className="read__more--wrapper">
-                      <span className="read__more--btn" >Lasīt vairāk...</span>
-                    </div>
-                  </Card.Text>
+                  <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
+                  <div className="read__more--wrapper">
+                    <span className="read__more--btn" >Lasīt vairāk...</span>
+                  </div>
                 </Card.Body>
                 <Card.Footer>
-                  {post.tags.nodes.map((tag, index) => (
-                    <React.Fragment key={index}>
+                  {post.tags.nodes.map((tag, tagIndex) => (
+                    <React.Fragment key={tagIndex}>
                       <p className="tag">{tag.name}</p>
                     </React.Fragment>
                   ))}

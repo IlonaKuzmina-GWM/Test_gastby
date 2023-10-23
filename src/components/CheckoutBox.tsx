@@ -45,9 +45,6 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
         }
     }, []);
 
-
-    console.log(PDFFile?.mediaItemUrl)
-
     return (
         <div className="wrapper-checkout">
             <Container className="checkout-container" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>

@@ -46,15 +46,14 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     useEffect(() => {
         // setAllCars(data.allWpCar.nodes);
         findDefaultMinAndMaxPrice();
-        setCurentUrl(locationurl.href);
-
+        // setCurentUrl(locationurl.href);
+        parseSlugsFromUrl();
     }, []);
 
     useEffect(() => {
         updateUrlWithSlugs();
         countValues(checkedValues);
-        setCurentUrl(locationurl.href);
-        // parseSlugeFromUrl(currentUrl);
+        // console.log("cheked",checkedValues)
     }, [checkedValues]);
 
     // useEffect(() => {
@@ -96,26 +95,49 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setShowFilters(false);
     };
 
+    const parseSlugsFromUrl = () => {
+        const urlSearchParams = new URLSearchParams(locationurl.search);
+        const checkedKeyValues: { [key: string]: string[] } = {};
+
+        for (const [key, value] of urlSearchParams) {
+            checkedKeyValues[key] = value.split(",");
+        }
+
+        setCheckedValues(checkedKeyValues);
+        console.log("cheked2",checkedValues)
+    };
+
+    // const updateUrlWithSlugs = () => {
+    //     const selectedSlugs: string[] = [];
+
+    //     Object.entries(checkedValues).forEach(([key, values]) => {
+    //         if (Array.isArray(values)) {
+    //             values.forEach((value) => {
+    //                 const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
+    //                 selectedSlugs.push(`${key}=${slug}`);
+    //             });
+    //         } else {
+    //             const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
+    //             selectedSlugs.push(`${key}=${slug}`);
+    //         }
+    //     });
+
+    //     // Construct the query parameters string
+    //     const queryParams = selectedSlugs.join('&');
+
+    //     // Update the URL with query parameters
+    //     navigate(`?${queryParams}`, { replace: true });
+    // };
     const updateUrlWithSlugs = () => {
-        const selectedSlugs: string[] = [];
+        const queryParams = new URLSearchParams();
 
-        Object.entries(checkedValues).forEach(([key, values]) => {
-            if (Array.isArray(values)) {
-                values.forEach((value) => {
-                    const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
-                    selectedSlugs.push(`${key}=${slug}`);
-                });
-            } else {
-                const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
-                selectedSlugs.push(`${key}=${slug}`);
+        for (const key in checkedValues) {
+            if (checkedValues.hasOwnProperty(key)) {
+                queryParams.set(key, checkedValues[key].join(","));
             }
-        });
+        }
 
-        // Construct the query parameters string
-        const queryParams = selectedSlugs.join('&');
-
-        // Update the URL with query parameters
-        navigate(`?${queryParams}`, { replace: true });
+        navigate(`?${queryParams.toString()}`, { replace: true });
     };
 
 
@@ -162,58 +184,50 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         });
     };
 
-
-
-    // const parseSlugeFromUrl = (currUrl: string) => {
-    //     console.log("currenturl2", currUrl)
-
-    //     const slugs = currUrl.split('?')[1];
-    //     if (!slugs) {
-    //         return {}
-    //     }
-
-    //     const pairs = slugs.split('&');
-    //     // const checkedValues = {};
-
-    //     pairs.forEach((pair) => {
-    //         const [keyValue, value] = pair.split('=');
-    //         const [key, valueParsed] = keyValue.split(':');
-
-    //         if (!checkedValues[key]) {
-    //             checkedValues[key] = [];
-    //         }
-
-    //         checkedValues[key].push(value || valueParsed);
-    //     })
-
-    //     return setCheckedValues(checkedValues)
-
-    // }
-
-    const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
-        console.log("currrentURL", currentUrl)
-        console.log("chekedvalues", checkedValues)
+    const filteredCars = allCars.filter((car: Car) => {
         const carInfo = car.carInfo;
         const carPrice = carInfo.carPrice;
-
-        //compare carInfo key and value  with checkedValues anad give back all cars with all values within one checkedValues
-
-        const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key))
-
+    
+        const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key));
+    
         const valuesMatches = Object.entries(checkedValues).every(([key, values]) => {
-            let carValues = carInfo[key];
-
-            if (!Array.isArray(values) || !Array.isArray(carValues)) {
-                return values.some((value) => [String(carValues)].includes(value));
-            } else if (Array.isArray(carValues) && carValues.every(item => item instanceof Object)) {
-                return true;
-            } else {
-                return values.some((value) => String(carValues).includes(value));
-            }
+          let carValues = carInfo[key];
+    
+          if (!Array.isArray(values) || !Array.isArray(carValues)) {
+            return values.some((value) => [String(carValues)].includes(value));
+          } else if (Array.isArray(carValues) && carValues.every((item) => item instanceof Object)) {
+            return true;
+          } else {
+            return values.some((value) => String(carValues).includes(value));
+          }
         });
+    
+        return keysMatches && valuesMatches && carPrice >= minPrice && carPrice <= maxPrice;
+      });
+    // const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
+    //     // console.log("currrentURL", currentUrl)
+    //     // console.log("chekedvalues", checkedValues)
+    //     const carInfo = car.carInfo;
+    //     const carPrice = carInfo.carPrice;
 
-        return keysMatches && valuesMatches && carPrice >= minPrice && carPrice <= maxPrice
-    });
+    //     //compare carInfo key and value  with checkedValues anad give back all cars with all values within one checkedValues
+
+    //     const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key))
+
+    //     const valuesMatches = Object.entries(checkedValues).every(([key, values]) => {
+    //         let carValues = carInfo[key];
+
+    //         if (!Array.isArray(values) || !Array.isArray(carValues)) {
+    //             return values.some((value) => [String(carValues)].includes(value));
+    //         } else if (Array.isArray(carValues) && carValues.every(item => item instanceof Object)) {
+    //             return true;
+    //         } else {
+    //             return values.some((value) => String(carValues).includes(value));
+    //         }
+    //     });
+
+    //     return keysMatches && valuesMatches && carPrice >= minPrice && carPrice <= maxPrice
+    // });
 
     const countValues = (checkedValues: any) => {
         let totalCount = 0;
@@ -281,8 +295,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                     </div>
 
                     <div className="shop-auto-cards-wrapper">
-                        {carsToRender && carsToRender.map((car: Car) => (
+                        {carsToRender && carsToRender.map((car: Car, index: number) => (
                             <ShopAutoCard
+                                key={index}
                                 gatsbyImageData={car.featuredImage.node.gatsbyImage}
                                 slug={car.slug}
                                 title={car.title}

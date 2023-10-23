@@ -117,20 +117,23 @@
   .form-item-wrapper {
     padding: 8px 12px;
 
+    &:hover {
+      cursor: pointer;
+      background: linear-gradient(120deg, rgb(235, 237, 238) 100%, rgb(253, 251, 251) 0%);
+    }
+
     .form-check {
       margin-bottom: 0;
       padding-left: 25px;
       min-height: 16px;
+      cursor: pointer;
     }
 
     .form-check label {
       font-size: 14px;
       font-weight: 500;
+      cursor: pointer;
     }
-  }
-
-  .form-item-wrapper:hover {
-    background: linear-gradient(120deg, rgb(235, 237, 238) 100%, rgb(253, 251, 251) 0%);
   }
 }
 

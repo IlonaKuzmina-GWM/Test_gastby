@@ -23,7 +23,7 @@ const TooltipBoot: FC<TooltipBootProps> = ({ text }) => {
                 placement={"top"}
                 overlay={
                     popover}
-                trigger={"hover"}>
+                trigger={['hover', 'focus']}>
                 <Button variant="light"><div className='white-dot'></div></Button>
             </OverlayTrigger>
         </div>);
