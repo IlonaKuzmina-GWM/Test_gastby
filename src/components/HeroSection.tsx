@@ -10,14 +10,14 @@ type HeroSectionProps = {
 const HeroSection: FC<HeroSectionProps> = ({ autoCounter, children }) => {
     return (
         <section className="hero-section">
-            <StaticImage
+            {/* <StaticImage
                 src="../images/hero_image.webp"
                 alt="Hero Background"
                 layout="fullWidth"
                 placeholder="none"
                 className="hero-background"
                 loading="lazy"
-            />
+            /> */}
             <div className="hero-content">
                 <h1 className="hero-title">Jaunu un mazlietotu auto piedāvājums</h1>
                 <p>Atrodi sev aktuālo auto piedāvājumu vienuviet. </p>
