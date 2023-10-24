@@ -10,6 +10,7 @@ type FilterCategoriesProps = {
     eventkey: number;
     filteredParamaterCounter: number;
     showFilters: boolean;
+    filterUsed: boolean;
 
     onCloseFilters: () => void;
     clearFilteredValues: () => void;
@@ -21,7 +22,7 @@ type FilterCategoriesProps = {
 const FilterCategories: FC<FilterCategoriesProps> = ({
     filteredParamaterCounter,
     showFilters,
-
+    filterUsed,
     onCloseFilters,
     clearFilteredValues,
     filteredCategoryHandler,
@@ -144,10 +145,14 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
                     <Col className='px-0  row filter_results_btn-wrapper'>
                         <div className='clear-btn'>
-                            {filteredParamaterCounter > 0 || inputChanged && (<Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
+                            {/* {filteredParamaterCounter > 0 || inputChanged && (<Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
                                 clearFilteredValues();
                                 uncheckAllCheckboxes();
-                            }} />)}
+                            }} />)} */}
+                            {filterUsed && <Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
+                                clearFilteredValues();
+                                uncheckAllCheckboxes();
+                            }} />}
                         </div>
 
                         <div className='show-all-btn'>
@@ -168,7 +173,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                             </div>
 
                             <Form className='main__range--wrapper'>
-                                <Form.Group className='d-flex justify-content-between' controlId="formMinMaxPrice">
+                                <Form.Group className='d-flex justify-content-between'>
                                     <Form.Control
                                         id="minPriceInput"
                                         className='main__price--input'

@@ -117,9 +117,21 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
   const handleNavigateToShopFilteredCar = (type: string) => {
     const results = searchCars(type, data.allWpCar.nodes);
+
+    let newKey = "";
+    if (type === "Elektriskais") {
+      newKey = "dzinejs"
+    } else (
+      newKey = "autoStavoklis"
+    )
+
     setSearchResults(results);
     navigate('/shop', {
-      state: { searchResults: results },
+      state: {
+        searchResults: results,
+        filterUsed: true,
+        newValue: { [newKey]: [type] }
+      },
     });
   };
 

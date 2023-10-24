@@ -13,6 +13,8 @@ type ShopProps = {
     location: {
         state: {
             searchResults: Car[];
+            filterUsed: boolean;
+            newValue: {};
         };
     };
 };
@@ -32,10 +34,15 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [countedSelectedValues, setCountedSelectedValues] = useState(0);
     const [sortingBy, setSortingBy] = useState<string>('');
     const locationurl = useLocation();
+    const [filterUsed, setFilterUsed] = useState(false);
+
 
     useEffect(() => {
         findDefaultMinAndMaxPrice();
         parseSlugsFromUrl();
+        // setFilterUsed(location.state.filterUsed)
+
+        searchResults.length > 0 && setCheckedValues(location.state.newValue)
 
         return () => {
             if (showFilters) {
@@ -43,6 +50,8 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             }
         };
     }, []);
+
+    console.log(checkedValues)
 
     useEffect(() => {
         updateUrlWithSlugs();
@@ -63,6 +72,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setCheckedValues({});
         setSearchResults([]);
         findDefaultMinAndMaxPrice();
+        setFilterUsed(false);
 
         // Update the URL with query parameters
         navigate(``, { replace: true });
@@ -70,10 +80,12 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
     const minPriceRangeChangeHandler = (minPri: number) => {
         setMinPrice(minPri);
+        setFilterUsed(true);
     }
 
     const maxPriceRangeChangeHandler = (maxPri: number) => {
         setMaxPrice(maxPri);
+        setFilterUsed(true);
     }
 
     const toggleFilters = () => {
@@ -144,6 +156,8 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             }
             return newCheckedCategory;
         });
+
+        setFilterUsed(true);
     };
 
     const filteredCars = (searchResults.length > 0 ? searchResults : allCars).filter((car: Car) => {
@@ -168,6 +182,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     });
 
     const countValues = (checkedValues: any) => {
+
         let totalCount = 0;
 
         for (const key in checkedValues) {
@@ -175,6 +190,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                 totalCount += checkedValues[key].length;
             }
         }
+
         setCountedSelectedValues(totalCount);
     };
 
@@ -222,6 +238,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         filteredParamaterCounter={countedSelectedValues}
                         showFilters={showFilters}
                         onCloseFilters={toggleFilters}
+                        filterUsed={filterUsed}
                     />
                 </div>
 
