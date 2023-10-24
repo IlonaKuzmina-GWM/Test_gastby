@@ -1,14 +1,12 @@
 import { HeadFC, graphql, navigate } from "gatsby";
 import React, { FC, useEffect, useState } from "react";
 import { useLocation } from "@reach/router";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import SortingList from "../components/SortingList";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
-import slugify from "slugify";
-
 
 type ShopProps = {
     data: MyQueryResult;
@@ -26,7 +24,6 @@ type ReverseReplacements = {
 
 const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const allCars = data.allWpCar.nodes;
-    // const [filteredCategoriesObject, setFilteredCategoriesObject] = useState<{ [key: string]: string[] }>({});
     const [checkedValues, setCheckedValues] = useState<{ [key: string]: string[] }>({});
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
@@ -35,11 +32,16 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [countedSelectedValues, setCountedSelectedValues] = useState(0);
     const [sortingBy, setSortingBy] = useState<string>('');
     const locationurl = useLocation();
-    // const [currentUrl, setCurentUrl] = useState<string>("");
 
     useEffect(() => {
         findDefaultMinAndMaxPrice();
         parseSlugsFromUrl();
+
+        return () => {
+            if (showFilters) {
+                setShowFilters(false);
+            }
+        };
     }, []);
 
     useEffect(() => {
@@ -56,8 +58,8 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setMaxPrice(maxDefaultPrice);
     };
 
+
     const clearFilteredValues = () => {
-        // setFilteredValues([]);
         setCheckedValues({});
         setSearchResults([]);
         findDefaultMinAndMaxPrice();
@@ -78,10 +80,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setShowFilters(!showFilters);
     };
 
-    const closeFilters = () => {
-        setShowFilters(false);
-    };
-
     const parseSlugsFromUrl = () => {
         const urlSearchParams = new URLSearchParams(locationurl.search);
         const checkedKeyValues: { [key: string]: string[] } = {};
@@ -93,27 +91,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         setCheckedValues(checkedKeyValues);
     };
 
-    // const updateUrlWithSlugs = () => {
-    //     const selectedSlugs: string[] = [];
-
-    //     Object.entries(checkedValues).forEach(([key, values]) => {
-    //         if (Array.isArray(values)) {
-    //             values.forEach((value) => {
-    //                 const slug = slugify(value, { lower: true, remove: /[*+~.()'"!:@]/g });
-    //                 selectedSlugs.push(`${key}=${slug}`);
-    //             });
-    //         } else {
-    //             const slug = slugify(values, { lower: true, remove: /[*+~.()'"!:@]/g });
-    //             selectedSlugs.push(`${key}=${slug}`);
-    //         }
-    //     });
-
-    //     // Construct the query parameters string
-    //     const queryParams = selectedSlugs.join('&');
-
-    //     // Update the URL with query parameters
-    //     navigate(`?${queryParams}`, { replace: true });
-    // };
     const updateUrlWithSlugs = () => {
         const queryParams = new URLSearchParams();
 
@@ -125,7 +102,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
         navigate(`?${queryParams.toString()}`, { replace: true });
     };
-
 
     const filteredCategoryHandler = (filteredKey: string, filteredValue: string) => {
         const replacements: ReverseReplacements = {
@@ -235,7 +211,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             <div className="shop-page-container">
                 <div className="filters-container flex-shrink-0 p-3 ">
                     <div className="filter-title-line d-flex align-items-center mb-3 link-dark text-decoration-none">
-                        {/* <span className="fs-5 fw-semibold">Filtrs</span> */}
                         <button className="show-filters-btn" onClick={toggleFilters}>Show Filter</button>
                     </div>
 
@@ -246,7 +221,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                         maxPriceRangeChangeHandler={maxPriceRangeChangeHandler}
                         filteredParamaterCounter={countedSelectedValues}
                         showFilters={showFilters}
-                        onCloseFilters={closeFilters}
+                        onCloseFilters={toggleFilters}
                     />
                 </div>
 

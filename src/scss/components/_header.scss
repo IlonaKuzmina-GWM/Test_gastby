@@ -10,23 +10,6 @@
     position: relative;
   }
 
-  // .link::before,
-  // .link.current::before {
-  //   content: "";
-  //   position: absolute;
-  //   bottom: 10px;
-  //   left: 0;
-  //   width: 0;
-  //   height: 4px;
-  //   background-color: $blue_primary;
-  //   transition: width 0.3s ease;
-  // }
-
-  // .link:hover::before,
-  // .link.current::before {
-  //   width: 100%;
-  // }
-
   .header__logo {
     max-width: 160px;
     vertical-align: middle;
@@ -39,7 +22,6 @@
 
 .header.scrolled {
   background-color: #ddf0ff;
-  // backdrop-filter: blur(10px);
   color: $text_secondary;
   box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
 
@@ -56,10 +38,6 @@
   .header_toggle-btn {
     border: $dark solid 1px;
     border: none;
-
-    // .navbar-toggler-icon {
-    //   background-image: url("../images/nav_bar.svg") !important;
-    // }
   }
 
   .offcanvas {

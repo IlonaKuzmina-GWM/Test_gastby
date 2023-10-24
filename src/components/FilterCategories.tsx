@@ -1,16 +1,16 @@
 import { StaticImage } from 'gatsby-plugin-image';
 import React, { FC, useState } from 'react';
-import { Col, Form, FormControl, Row } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from './Button';
 
 import useAllWpCarData from "../queries/useAllWpCarData";
-import { disconnect } from 'process';
 
 type FilterCategoriesProps = {
     eventkey: number;
     filteredParamaterCounter: number;
     showFilters: boolean;
+
     onCloseFilters: () => void;
     clearFilteredValues: () => void;
     filteredCategoryHandler: (filteredCategoryKey: string, filteredCategoryValue: string) => void;
@@ -21,6 +21,7 @@ type FilterCategoriesProps = {
 const FilterCategories: FC<FilterCategoriesProps> = ({
     filteredParamaterCounter,
     showFilters,
+
     onCloseFilters,
     clearFilteredValues,
     filteredCategoryHandler,
@@ -31,15 +32,18 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
+    const [inputChanged, setInputChanged] = useState(false);
 
     const handleMinPriceChange = (e: { target: { value: string; }; }) => {
         setMinPrice(parseInt(e.target.value));
         minPriceRangeChangeHandler(parseInt(e.target.value));
+        setInputChanged(true);
     };
 
     const handleMaxPriceChange = (e: { target: { value: string; }; }) => {
         setMaxPrice(parseInt(e.target.value));
         maxPriceRangeChangeHandler(parseInt(e.target.value));
+        setInputChanged(true);
     };
 
     const uncheckAllCheckboxes = () => {
@@ -47,6 +51,17 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         checkboxes.forEach((checkbox) => {
             checkbox.checked = false;
         });
+
+        const minPriceInput = document.getElementById('minPriceInput') as HTMLInputElement | null;
+        if (minPriceInput) {
+            minPriceInput.value = '';
+        }
+
+        const maxPriceInput = document.getElementById('maxPriceInput') as HTMLInputElement | null;
+        if (maxPriceInput) {
+            maxPriceInput.value = '';
+        }
+        setInputChanged(false);
     };
 
     type CarInfoProperty = keyof Replacements;
@@ -90,11 +105,10 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
             const transformedKey = replacements[key as CarInfoProperty] || key;
             transformedCarInfo[transformedKey] = value;
         }
-
         return transformedCarInfo;
     };
 
-    const uniqueCarInfoValues = data.reduce((result: { [x: string]: any; }, car: { carInfo: any; }) => {
+    const uniqueCarInfoValues: { [key: string]: (number[] | string[] | []) } = data.reduce((result: { [x: string]: any; }, car: { carInfo: CarInfo; }) => {
         const carInfo = car.carInfo;
         const transformedCarInfo = transformCarInfo(carInfo);
 
@@ -106,13 +120,14 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
             const valuesArray = result[key];
             const value = transformedCarInfo[key];
 
-            if (!valuesArray.some((existingValue: any) => JSON.stringify(existingValue) === JSON.stringify(value))) {
+            if (value !== null && !valuesArray.some((existingValue: string | number) => JSON.stringify(existingValue) === JSON.stringify(value))) {
                 valuesArray.push(value);
             }
         });
 
         return result;
     }, {});
+
 
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
@@ -129,10 +144,10 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
                     <Col className='px-0  row filter_results_btn-wrapper'>
                         <div className='clear-btn'>
-                            {filteredParamaterCounter > 0 && (<Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
+                            {filteredParamaterCounter > 0 || inputChanged && (<Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
                                 clearFilteredValues();
                                 uncheckAllCheckboxes();
-                            }}></Button>)}
+                            }} />)}
                         </div>
 
                         <div className='show-all-btn'>
@@ -142,41 +157,54 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                 </Row>
 
                 <div className='accordion-wrapper'>
-                   
+
                     <Row className='center-xs price-range-row'>
                         <Col className='' xs={12}>
-                            <h4 className="price__block--title">Cena</h4>
-                            <Form className='d-flex justify-content-between main__range--wrapper'>
-                                <FormControl
-                                    className='main__price--input'
-                                    type='number'
-                                    placeholder='Min'
-                                    onChange={handleMinPriceChange} />
+                            <div>
+                                <h4 className="price__block--title">Cena</h4>
+                                {minPrice > maxPrice && <div className="alert alert-danger" role="alert" style={{ fontSize: "14px" }}>
+                                    Minimālā summma nevar būt lielāka par maximālo summmu!
+                                </div>}
+                            </div>
 
-                                <FormControl
-                                    className='main__price--input'
-                                    type='number'
-                                    placeholder='Max'
-                                    onChange={handleMaxPriceChange} />
+                            <Form className='main__range--wrapper'>
+                                <Form.Group className='d-flex justify-content-between' controlId="formMinMaxPrice">
+                                    <Form.Control
+                                        id="minPriceInput"
+                                        className='main__price--input'
+                                        type='number'
+                                        placeholder='Min'
+                                        onChange={handleMinPriceChange}
+                                    />
+
+                                    <Form.Control
+                                        id="maxPriceInput"
+                                        className='main__price--input'
+                                        type='number'
+                                        placeholder='Max'
+                                        onChange={handleMaxPriceChange}
+                                    />
+                                </Form.Group>
                             </Form>
                         </Col>
                     </Row>
 
                     <Accordion>
-                        {Object.keys(uniqueCarInfoValues).filter((key) => key !== "pdfFile").map((key, index) => (
-                            <Accordion.Item key={index} eventKey={index.toString()}>
-                                <Accordion.Header className='accordion-title'>{key}</Accordion.Header>
-                                <Accordion.Body>
-                                    {uniqueCarInfoValues[key].map((valueName: string | number | string[], valueIndex: number) => (
-                                        <Form key={valueIndex} className='form-item-wrapper'>
-                                            {valueName &&
-                                                <Form.Group className="" controlId={String(valueName)}>
+                        {Object.keys(uniqueCarInfoValues)
+                            .filter((key) => key !== "pdfFile")
+                            .map((key, index) => (
+                                <Accordion.Item eventKey={index.toString()} key={index}>
+                                    <Accordion.Header className='accordion-title'>{key}</Accordion.Header>
+                                    <Accordion.Body>
+                                        {uniqueCarInfoValues[key].map((valueName: string | number | string[], valueIndex) => (
+                                            <Form className='form-item-wrapper' key={valueIndex}>
+                                                <Form.Group className="" controlId={`${key}-${valueIndex}`}>
                                                     <Form.Check
                                                         type="checkbox"
-                                                        id={String(valueName)}
+                                                        id={`${key}-${valueIndex}`}
                                                         label={key === "Krāsa" ?
                                                             <label
-                                                                htmlFor={String(valueName)}
+                                                                htmlFor={`${key}-${valueIndex}`}
                                                                 className='form-check-label'>
                                                                 <span
                                                                     style={{
@@ -190,17 +218,17 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                                                                     }} />
                                                             </label> : String(valueName)}
                                                         value={valueName}
-                                                        name={String(valueName)}
+                                                        name={`${key}-${valueIndex}`}
                                                         onChange={() => {
                                                             filteredCategoryHandler(key, String(valueName));
                                                         }}
                                                     />
-                                                </Form.Group>}
-                                        </Form>
-                                    ))}
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        ))}
+                                                </Form.Group>
+                                            </Form>
+                                        ))}
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            ))}
                     </Accordion>
                 </div>
             </div>
