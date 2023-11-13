@@ -168,18 +168,18 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
 
                         <div className="share-icons-container d-flex justify-content-around">
                             <FacebookShareButton
-                                url={`https://pirktautomain.gatsbyjs.io/${slug}`}
+                                url={`https://pirkt-auto.netlify.app/${slug}`}
                                 quote={'Ko te es vēlos pateikt?'}
                                 hashtag="#mynewcar"
                             >
                                 <FacebookIcon size={40} round />
                             </FacebookShareButton>
 
-                            <WhatsappShareButton url={`https://pirktautomain.gatsbyjs.io/${slug}`}>
+                            <WhatsappShareButton url={`https://pirkt-auto.netlify.app/${slug}`}>
                                 <WhatsappIcon size={40} round />
                             </WhatsappShareButton>
 
-                            <TelegramShareButton url={`https://pirktautomain.gatsbyjs.io/${slug}`}>
+                            <TelegramShareButton url={`https://pirkt-auto.netlify.app/${slug}`}>
                                 <TelegramIcon size={40} round></TelegramIcon>
                             </TelegramShareButton>
 
@@ -189,7 +189,6 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                         </div>
                     </div>
                 )}
-
             </Container></div>
     );
 }
