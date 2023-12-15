@@ -7,6 +7,7 @@ import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
 import HeroSection from "../components/HeroSection";
 import SEO from "../components/SEO";
 import SiteVisiteSection from "../components/SiteVisiteSection";
+import SimpleHero from "../components/SimpleHeroSection";
 
 type BlogPageProps = {
   data: AllWpPosts;
@@ -43,13 +44,7 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
 
   return (
     <MainLayout>
-      <section className="blog__hero--section">
-        <div className="banner__text-wrap container">
-          <h1 className="banner__title">Jaunumi un <br /> noderīgas auto ziņas</h1>
-        </div>
-
-        <div className="white__gradient--bottom"></div>
-      </section>
+      <SimpleHero heroTitleFirstLine={"Jaunumi un"} heroTitleSecondLine={"noderīgas auto ziņas"}/>
 
       <section className="blog__tags--section container">
         <h2 className="tag-title">Rakstu kategorijas:</h2>

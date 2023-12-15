@@ -23,7 +23,9 @@ const AutoSwiperSection: FC<AutoSwiperSectionProps> = ({ onClickHandler }) => {
                 <div className="arrow-wrapper">
                     <Link to="/shop">
                         <p>Skatīt visus auto</p>
-                        <StaticImage className="arrow" src={"../images/bi_arrow-right-short.svg"} alt={"Arrow"} width={50} />
+                        <span className="arrow">
+                            <img src={ArrowRight} width={"28px"} height={"23px"} alt="arrow" className="d-inline-block" />
+                        </span>
                     </Link>
                 </div>
             </div>
@@ -33,7 +35,7 @@ const AutoSwiperSection: FC<AutoSwiperSectionProps> = ({ onClickHandler }) => {
                     <Swiper
                         spaceBetween={30}
                         slidesPerView={1}
-                        className='pb-5'
+                        className='mb-5'
                         navigation={true}
                         modules={[Pagination, Navigation]}
                         breakpoints={{
@@ -49,7 +51,8 @@ const AutoSwiperSection: FC<AutoSwiperSectionProps> = ({ onClickHandler }) => {
                     >
 
                         <button className="swiper-button-prev custom">
-                            <img src={ArrowRight} width={"28px"} height={"23px"} alt="arrow" /></button>
+                            <img src={ArrowRight} width={"28px"} height={"23px"} alt="arrow" />
+                        </button>
                         <div className="overlay left" />
 
                         {newestAutoData
@@ -69,7 +72,8 @@ const AutoSwiperSection: FC<AutoSwiperSectionProps> = ({ onClickHandler }) => {
                             )}
 
                         <button className="swiper-button-next custom">
-                            <img src={ArrowRight} width={"28px"} height={"23px"} alt="arrow" /></button>
+                            <img src={ArrowRight} width={"28px"} height={"23px"} alt="arrow" />
+                        </button>
                         <div className="overlay right" />
                     </Swiper>
                 </div>

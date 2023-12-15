@@ -10,8 +10,8 @@ const NotFoundPage: React.FC<PageProps> = () => {
         <MainLayout>
             <div className="container error-page">
                 <div className="wrapper">
-                    <h1>404</h1>
-                    <p>page not found</p>
+                    <h1 className="fs-1 fw-bold">404</h1>
+                    <p className="mb-5 fs-5 text-light text-capitalize">page not found</p>
                     <Link to="/">
                         <Button name={"Back to home page"} size={"medium"} type={"primary"} />
                     </Link>

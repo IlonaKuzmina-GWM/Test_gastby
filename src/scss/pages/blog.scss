@@ -1,43 +1,3 @@
-.blog__hero--section {
-  position: relative;
-  background: linear-gradient(180deg, $blue_primary, 60%, $white);
-
-  .banner__text-wrap {
-    color: $dark;
-    z-index: 1;
-    width: 80%;
-    padding: 150px 15px;
-
-    .banner__title {
-      position: relative;
-      font-size: 4rem;
-      font-weight: 700;
-      line-height: 4rem;
-      margin-bottom: 20px;
-    }
-
-    .banner__title::before {
-      content: "";
-      position: absolute;
-      bottom: -20px;
-      left: 0;
-      width: 0;
-      height: 10px;
-      background-color: $blue_primary;
-      transition: width 0.3s ease;
-      width: 40%;
-    }
-  }
-
-  .white__gradient--bottom {
-    position: absolute;
-    width: 100%;
-    height: 150px;
-    bottom: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $white 83.65%);
-  }
-}
-
 .blog__tags--section {
   margin-bottom: 44px;
 
@@ -155,27 +115,6 @@
   /*-------------------------------------------------*/
 
 @media only screen and (max-width: 769px) {
-  .blog__hero--section {
-    .banner__text-wrap {
-      width: 100%;
-      padding: 150px 15px 70px 15px;
-
-      .banner__title {
-        font-size: 2rem;
-        line-height: 2rem;
-      }
-
-      .banner__title::before {
-        bottom: -10px;
-        height: 6px;
-      }
-    }
-
-    .white__gradient--bottom {
-      height: 50px;
-    }
-  }
-
   .blog__tags--section {
     .tags__wrappe {
       display: flex;

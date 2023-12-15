@@ -211,6 +211,7 @@ query AllCarsDetails {
         dileris
         degvielasPaterins
         coIzmesuDaudzums
+        autoLinks
       }
       carEquipment {
         aizsardziba

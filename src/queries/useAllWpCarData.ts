@@ -38,6 +38,7 @@ export default function useAllWpCarData() {
             dileris
             degvielasPaterins
             coIzmesuDaudzums
+            autoLinks
           }
           carEquipment {
             aizsardziba

@@ -33,6 +33,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [singleCarData, setSibgleCarData] = useState();
     const [transformedCarEquipmentKeys, setTransformedCarEquipmentKeys] = useState({})
+    console.log(pageContext)
 
 
     useEffect(() => {
@@ -268,6 +269,7 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
                             carCondition={singleCarInformation.carInfo.autoStavoklis}
                             isElementorLocationFooterVisible={isElementorLocationFooterVisible} 
                             PDFFile={singleCarInformation.carInfo.pdfFile}
+                            autoLink={singleCarInformation.carInfo.autoLinks}
                             />
                     </div>
                 </div>

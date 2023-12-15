@@ -13,21 +13,22 @@
     position: relative;
     width: 300px;
 
+    .arrow img {
+      width: 100%;
+      height: auto;
+    }
+
     .arrow {
       margin-left: 20px;
       max-width: 50px;
-      width: 50px;
-      left: 0px;
+      width: 30px;
+      display: inline-block;
+      position: relative;
+      transition: transform 0.5s ease;
     }
 
     &:hover .arrow {
-      left: 20px;
-      transition: left 0.8s ease;
-    }
-
-    &:not(:hover) .arrow {
-      left: 0px;
-      transition: left 0.8s ease;
+      transform: translateX(10px);
     }
 
     a {
@@ -102,7 +103,7 @@
       height: 40px;
       width: 40px;
       left: 10px;
-      top: calc(50% - 20px);
+      top: calc(50% - 24px);
       z-index: 5;
       border: none;
       background-color: transparent;
@@ -118,7 +119,7 @@
       height: 40px;
       width: 40px;
       right: 10px;
-      top: calc(50% - 20px);
+      top: calc(50% - 24px);
       z-index: 5;
       border: none;
       background-color: transparent;

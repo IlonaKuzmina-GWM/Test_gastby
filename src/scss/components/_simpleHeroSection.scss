@@ -1,0 +1,10 @@
+.simple__hero-wrapper {
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+
+@media only screen and (max-width: 769px) {
+  .simple__hero-wrapper {
+    padding-bottom: 70px;
+  }
+}

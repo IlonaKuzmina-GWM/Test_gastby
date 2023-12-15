@@ -44,6 +44,7 @@ exports.createPages = async ({ graphql, actions }: any) => {
             dileris
             degvielasPaterins
             coIzmesuDaudzums
+            autoLinks
           }
           carEquipment {
             aizsardziba

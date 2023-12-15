@@ -51,7 +51,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         };
     }, []);
 
-    console.log(checkedValues)
+console.log(data)
 
     useEffect(() => {
         updateUrlWithSlugs();
@@ -320,6 +320,7 @@ query AllCarsDetails {
         dileris
         degvielasPaterins
         coIzmesuDaudzums
+        autoLinks
       }
       carEquipment {
             aizsardziba

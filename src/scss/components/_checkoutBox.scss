@@ -9,7 +9,7 @@
 
 .checkout-container {
   background: $white;
-  border-radius: 0.375rem;
+  border-radius:0 0 0.375rem 0.375rem;
   min-height: auto;
   max-height: calc(100vh - 72px);
   bottom: unset;

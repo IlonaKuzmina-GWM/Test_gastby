@@ -196,7 +196,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
                     <Accordion>
                         {Object.keys(uniqueCarInfoValues)
-                            .filter((key) => key !== "pdfFile")
+                            .filter((key) => key !== "pdfFile" && key !== "autoLinks")
                             .map((key, index) => (
                                 <Accordion.Item eventKey={index.toString()} key={index}>
                                     <Accordion.Header className='accordion-title'>{key}</Accordion.Header>

@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import React, { FC, useEffect, useState } from "react";
-import { Col, Container, Dropdown, Row } from "react-bootstrap";
+import { Col, Container, Dropdown, Nav, Row } from "react-bootstrap";
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, TelegramIcon, TelegramShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
 import ArrowLeft from "../images/icons/ArrowLeft.svg";
 import Envelope from "../images/icons/Envelope.svg";
@@ -22,9 +22,10 @@ type CheckoutBoxProps = {
     slug: string;
     mileage?: number | undefined;
     PDFFile?: PDFFile;
+    autoLink: string;
 }
 
-const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible, mileage, PDFFile }) => {
+const CheckoutBox: FC<CheckoutBoxProps> = ({ autoLink, title, slug, carType, price, brokerName, carCondition, isElementorLocationFooterVisible, mileage, PDFFile }) => {
     const [checkoutIconsUseed, setCheckoutIconsUseed] = useState(false);
     const [shareBlockShown, setShareBlockShown] = useState(false);
     const [questionsBlockShown, setQuestionsBlockShown] = useState(false)
@@ -64,8 +65,7 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
                 {smallScreen && (
                     <Row className="row-wrapper">
                         <Col className="btn-wrapper ">
-                            <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
-
+                            <Button name={"Apskatīt piedāvājumu"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
                         </Col>
                     </Row>
                 )}
@@ -96,13 +96,18 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ title, slug, carType, price, broker
 
                         <Row className="row-wrapper">
                             <Col className="btn-wrapper ">
-                                <Button name={"Esmu ieinteresēts"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
-                                <Link to={`/shop`} className="nav-link dealer">
+                                {/* <Button name={"Apskatīt piedāvājumu"} size={"small"} type={"primary"} onClickHandler={() => { }} /> */}
+
+                                <Nav.Link href={autoLink} className="">
+                                    <Button name={"Apskatīt piedāvājumu"} size={"small"} type={"primary"} onClickHandler={() => { }} />
+                                </Nav.Link>
+
+                                <div className="nav-link dealer">
                                     <div className="d-flex justify-content-center align-items-center">
                                         <img className="" src={PinsBroker} width={15} height={15} alt="pin" />
                                         <span className="">{brokerName}</span>
                                     </div>
-                                </Link>
+                                </div>
                             </Col>
                         </Row>
 

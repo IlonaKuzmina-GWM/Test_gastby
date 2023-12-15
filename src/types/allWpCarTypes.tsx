@@ -49,6 +49,7 @@ export type CarInfo = {
   degvielasPaterins: string;
   coIzmesuDaudzums: string;
   carGallery: CarGalleryImage[];
+  autoLinks: string;
 }
 
 export type CarEquipment = {

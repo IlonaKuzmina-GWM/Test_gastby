@@ -7,8 +7,8 @@
   border: 2px solid transparent;
 
   &:hover {
-    border: 2px solid $hover !important;
-    border-color: rgba(38, 105, 209, 1);
+    // border: 2px solid $hover !important;
+    // border-color: rgba(38, 105, 209, 1);
     -webkit-box-shadow: $hover_box_shadow;
     box-shadow: $hover_box_shadow;
     transition-duration: 0.15s;
