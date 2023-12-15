@@ -48,7 +48,6 @@ const Header = () => {
                                 <Link to="/shop" activeClassName="current" className="fs-5 px-4 link">Veikals</Link>
                                 <Link to="/about" activeClassName="current" className="fs-5 px-4 link">Par Mums</Link>
                                 <Link to="/blog" activeClassName="current" className="fs-5 px-4 link">Jaunumi</Link>
-                                <Link to="/contact" activeClassName="current" className="fs-5 px-4 link">Kontakti</Link>
                             </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>

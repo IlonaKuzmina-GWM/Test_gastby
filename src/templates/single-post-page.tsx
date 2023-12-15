@@ -1,11 +1,12 @@
 import { HeadFC } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import React, { FC, useEffect, useState } from "react";
-import { Carousel, Col, Container, Nav, Row } from "react-bootstrap";
-
+import { Card, Carousel, Col, Container, Nav, Row } from "react-bootstrap";
+import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, TelegramIcon, TelegramShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
 import MainLayout from "../layouts/MainLayout";
 import { WpPost } from "../types/allWpPostTypes";
 import SimpleHero from "../components/SimpleHeroSection";
+import useAllWpPostData from "../queries/useAllWpPostData";
 
 
 type SinglePostProps = {
@@ -13,7 +14,7 @@ type SinglePostProps = {
 };
 
 const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
-
+    const morePostsForYou = useAllWpPostData();
     const singlePostInformation = pageContext;
     console.log(singlePostInformation);
 
@@ -21,15 +22,71 @@ const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
         <MainLayout>
             <div className="container single__post-wrapper">
                 <div className="row">
-                    <div className="col-4">
-                        <h1 className="fs-1 fw-bold">{singlePostInformation.title}</h1>
-                        {/* <GatsbyImage image={singlePostInformation.featuredImage.node.gatsbyImage} alt={singlePostInformation.title} /> */}
+                    <div className="col-12  col-md-4">
+                        <h1 className="fs-1 fw-bold mb-2">{singlePostInformation.title}</h1>
+                        <GatsbyImage image={singlePostInformation.featuredImage.node.gatsbyImage} alt={singlePostInformation.title} />
+                        <div className="d-flex justify-content-around mt-5">
+                            <FacebookShareButton
+                                url={`https://pirkt-auto.netlify.app/${singlePostInformation.slug}`}
+                                quote={'Ko te es vēlos pateikt?'}
+                                hashtag="#mynewcar"
+                            >
+                                <FacebookIcon size={40} round />
+                            </FacebookShareButton>
+
+                            <WhatsappShareButton url={`https://pirkt-auto.netlify.app/${singlePostInformation.slug}`}>
+                                <WhatsappIcon size={40} round />
+                            </WhatsappShareButton>
+
+                            <TelegramShareButton url={`https://pirkt-auto.netlify.app/${singlePostInformation.slug}`}>
+                                <TelegramIcon size={40} round></TelegramIcon>
+                            </TelegramShareButton>
+
+                            <EmailShareButton url={'https://www.example.com'}>
+                                <EmailIcon size={40} round />
+                            </EmailShareButton>
+                        </div>
                     </div>
-                    <div className="col-8">
-                      <div className="post__content" dangerouslySetInnerHTML={{ __html: singlePostInformation.content }} />
+                    <div className="col-12 col-md-8">
+                        <div className="post__content" dangerouslySetInnerHTML={{ __html: singlePostInformation.content }} />
                     </div>
                 </div>
             </div>
+
+
+            <section className="blog__post--section container">
+                {morePostsForYou
+                    .filter((post: WpPost) => post.title !== singlePostInformation.title)
+                    .slice(0, 3)
+                    .map((post: WpPost, index: number) => {
+                        return (
+                            <Card className="blog__post--card" key={index}>
+                                <Nav.Link href={"/" + post.slug} >
+                                    <GatsbyImage
+                                        image={post.featuredImage.node.gatsbyImage}
+                                        alt={post.title}
+                                        loading="lazy"
+                                        className="card-img-top"
+                                    />
+                                    <Card.Body>
+                                        <Card.Title>{post.title}</Card.Title>
+                                        <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
+                                        <div className="read__more--wrapper">
+                                            <span className="read__more--btn" >Lasīt vairāk...</span>
+                                        </div>
+                                    </Card.Body>
+                                    <Card.Footer>
+                                        {post.tags.nodes.map((tag, tagIndex) => (
+                                            <React.Fragment key={tagIndex}>
+                                                <p className="tag">{tag.name}</p>
+                                            </React.Fragment>
+                                        ))}
+                                    </Card.Footer>
+                                </Nav.Link>
+                            </Card>
+                        )
+                    })}
+            </section>
         </MainLayout>
     );
 };
