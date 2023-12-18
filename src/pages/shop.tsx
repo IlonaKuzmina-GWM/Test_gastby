@@ -1,7 +1,7 @@
 import { HeadFC, graphql, navigate } from "gatsby";
 import React, { FC, useEffect, useState } from "react";
 import { useLocation } from "@reach/router";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import FilterCategories from "../components/FilterCategories";
 import ShopAutoCard from "../components/ShopAutoCard";
 import SortingList from "../components/SortingList";
@@ -35,9 +35,11 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
     const [sortingBy, setSortingBy] = useState<string>('');
     const locationurl = useLocation();
     const [filterUsed, setFilterUsed] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
 
     useEffect(() => {
+        setIsLoading(false);
         findDefaultMinAndMaxPrice();
         parseSlugsFromUrl();
         // setFilterUsed(location.state.filterUsed)
@@ -51,7 +53,9 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
         };
     }, []);
 
-console.log(data)
+    console.log('all data', data)
+    console.log('search results', searchResults)
+    console.log('checked values', checkedValues)
 
     useEffect(() => {
         updateUrlWithSlugs();
@@ -164,9 +168,9 @@ console.log(data)
         const carInfo = car.carInfo;
         const carPrice = carInfo.carPrice;
 
-        const keysMatches = Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key));
+        const keysMatches = !checkedValues || Object.keys(checkedValues).every((key) => Object.keys(carInfo).includes(key));
 
-        const valuesMatches = Object.entries(checkedValues).every(([key, values]) => {
+        const valuesMatches = !checkedValues || Object.entries(checkedValues).every(([key, values]) => {
             let carValues = carInfo[key];
 
             if (!Array.isArray(values) || !Array.isArray(carValues)) {
@@ -249,16 +253,19 @@ console.log(data)
                     </div>
 
                     <div className="shop-auto-cards-wrapper">
-                        {carsToRender && carsToRender.map((car: Car, index: number) => (
-                            <ShopAutoCard
-                                key={index}
-                                gatsbyImageData={car.featuredImage.node.gatsbyImage}
-                                slug={car.slug}
-                                title={car.title}
-                                carInfo={car.carInfo}
-                            />
-                        ))
-                        }
+                        {isLoading ?
+                            (<div className="d-flex justify-content-center align-items-center">
+                                <Spinner animation="border" variant="primary" />
+                            </div>)
+                            : (
+                                carsToRender && carsToRender.map((car: Car, index: number) => (
+                                    <ShopAutoCard
+                                        key={index}
+                                        gatsbyImageData={car.featuredImage.node.gatsbyImage}
+                                        slug={car.slug}
+                                        title={car.title}
+                                        carInfo={car.carInfo} />
+                                )))}
                     </div>
 
                     <Row xs={12} className="g-4 mt-5">

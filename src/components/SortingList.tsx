@@ -16,7 +16,7 @@ const SortingList: FC<SortingListProps> = ({ onClickHandler }) => {
                 id="sortDropDown"
                 value={sortingType}
                 onChange={(e) => { setSortingType(e.target.value); onClickHandler(e.target.value); }}>
-                <option value="">--</option>
+                <option value="">Tikko pievienotās</option>
                 <option value="descending price">Cena (no augstākās)</option>
                 <option value="ascending price">Cena (no zemākās)</option>
                 <option value="descending mileage">Nobraukums (no mazākā)</option>

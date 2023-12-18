@@ -22,28 +22,28 @@ const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
         <MainLayout>
             <div className="container single__post-wrapper">
                 <div className="row">
-                    <div className="col-12  col-md-4">
+                    <div className="col-12 col-md-4">
                         <h1 className="fs-1 fw-bold mb-2">{singlePostInformation.title}</h1>
                         <GatsbyImage image={singlePostInformation.featuredImage.node.gatsbyImage} alt={singlePostInformation.title} />
-                        <div className="d-flex justify-content-around mt-5">
+                        <div className="d-flex gap-4 my-3">
                             <FacebookShareButton
                                 url={`https://pirkt-auto.netlify.app/${singlePostInformation.slug}`}
-                                quote={'Ko te es vēlos pateikt?'}
+                                quote={'Interesants raskts-izlasi!'}
                                 hashtag="#mynewcar"
                             >
-                                <FacebookIcon size={40} round />
+                                <FacebookIcon size={30} round />
                             </FacebookShareButton>
 
                             <WhatsappShareButton url={`https://pirkt-auto.netlify.app/${singlePostInformation.slug}`}>
-                                <WhatsappIcon size={40} round />
+                                <WhatsappIcon size={30} round />
                             </WhatsappShareButton>
 
                             <TelegramShareButton url={`https://pirkt-auto.netlify.app/${singlePostInformation.slug}`}>
-                                <TelegramIcon size={40} round></TelegramIcon>
+                                <TelegramIcon size={30} round></TelegramIcon>
                             </TelegramShareButton>
 
                             <EmailShareButton url={'https://www.example.com'}>
-                                <EmailIcon size={40} round />
+                                <EmailIcon size={30} round />
                             </EmailShareButton>
                         </div>
                     </div>
@@ -54,38 +54,46 @@ const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
             </div>
 
 
-            <section className="blog__post--section container">
-                {morePostsForYou
-                    .filter((post: WpPost) => post.title !== singlePostInformation.title)
-                    .slice(0, 3)
-                    .map((post: WpPost, index: number) => {
-                        return (
-                            <Card className="blog__post--card" key={index}>
-                                <Nav.Link href={"/" + post.slug} >
-                                    <GatsbyImage
-                                        image={post.featuredImage.node.gatsbyImage}
-                                        alt={post.title}
-                                        loading="lazy"
-                                        className="card-img-top"
-                                    />
-                                    <Card.Body>
-                                        <Card.Title>{post.title}</Card.Title>
-                                        <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
-                                        <div className="read__more--wrapper">
-                                            <span className="read__more--btn" >Lasīt vairāk...</span>
-                                        </div>
-                                    </Card.Body>
-                                    <Card.Footer>
-                                        {post.tags.nodes.map((tag, tagIndex) => (
-                                            <React.Fragment key={tagIndex}>
-                                                <p className="tag">{tag.name}</p>
-                                            </React.Fragment>
-                                        ))}
-                                    </Card.Footer>
-                                </Nav.Link>
-                            </Card>
-                        )
-                    })}
+            <section className="container">
+                <div>
+                    <h2 className="fs-2">Līdzīgi raksti</h2>
+                </div>
+
+                <div className="blog__post--section">
+                    {morePostsForYou
+                        .filter((post: WpPost) => post.title !== singlePostInformation.title)
+                        .slice(0, 3)
+                        .map((post: WpPost, index: number) => {
+                            return (
+                                <Card className="blog__post--card" key={index}>
+                                    <Nav.Link href={"/" + post.slug} >
+                                        <GatsbyImage
+                                            image={post.featuredImage.node.gatsbyImage}
+                                            alt={post.title}
+                                            loading="lazy"
+                                            className="card-img-top"
+                                        />
+                                        <Card.Body>
+                                            <Card.Title>{post.title}</Card.Title>
+                                            <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
+                                            <div className="read__more--wrapper">
+                                                <span className="read__more--btn" >Lasīt vairāk...</span>
+                                            </div>
+                                        </Card.Body>
+                                        <Card.Footer>
+                                            {post.tags.nodes.map((tag, tagIndex) => (
+                                                <React.Fragment key={tagIndex}>
+                                                    <p className="tag">{tag.name}</p>
+                                                </React.Fragment>
+                                            ))}
+                                        </Card.Footer>
+                                    </Nav.Link>
+                                </Card>
+                            )
+                        })}
+                </div>
+
+
             </section>
         </MainLayout>
     );
