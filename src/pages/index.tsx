@@ -12,6 +12,7 @@ import HeroSection from '../components/HeroSection';
 import IntroIconSection from '../components/IntroIconSection';
 import SiteVisiteSection from '../components/SiteVisiteSection';
 import YourNextAutoSection from '../components/YourNextAutoSection';
+import SEO from '../components/SEO';
 
 type SearchFunction = (
   query: string,
@@ -147,7 +148,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)} />
           <button type="submit">
-            <StaticImage src={"../images/search.png"} alt={"Search"} />
+            <StaticImage src={"../images/search.png"} alt={"Search"} width={23} height={23}/>
           </button>
         </form>
       </HeroSection>
@@ -165,7 +166,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <title>Pirkt Auto</title>;
+export const Head: HeadFC = () => (<SEO/>);;
 
 export const query = graphql`
 query AllCarsDetails {

@@ -7,8 +7,6 @@ export default function HTML(props) {
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <meta name="title" content="Pirkt auto" />
-        <meta name="description" content="Pirkt auto" />
         <meta name="author" content="GWM" />
         <meta name="HandheldFriendly" content="true" />
         <meta name="MobileOptimized" content="320" />

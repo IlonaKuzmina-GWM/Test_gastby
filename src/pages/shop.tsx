@@ -7,6 +7,7 @@ import ShopAutoCard from "../components/ShopAutoCard";
 import SortingList from "../components/SortingList";
 import MainLayout from "../layouts/MainLayout";
 import { Car, MyQueryResult } from "../types/allWpCarTypes";
+import SEO from "../components/SEO";
 
 type ShopProps = {
     data: MyQueryResult;
@@ -52,10 +53,6 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             }
         };
     }, []);
-
-    console.log('all data', data)
-    console.log('search results', searchResults)
-    console.log('checked values', checkedValues)
 
     useEffect(() => {
         updateUrlWithSlugs();
@@ -228,10 +225,10 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
     return (
         <MainLayout>
-            <div className="shop-page-container">
-                <div className="filters-container flex-shrink-0 p-3 ">
-                    <div className="filter-title-line d-flex align-items-center mb-3 link-dark text-decoration-none">
-                        <button className="show-filters-btn" onClick={toggleFilters}>Show Filter</button>
+            <div className="shop-page-container d-flex flex-column flex-md-row my-0 mx-auto gap-3">
+                <div className="filters-container flex-shrink-0 px-3 py-2">
+                    <div className="d-flex align-items-center mb-0 link-dark text-decoration-none">
+                        <button className="show-filters-btn d-flex d-md-none" onClick={toggleFilters}>Show Filter</button>
                     </div>
 
                     <FilterCategories eventkey={0}
@@ -247,12 +244,12 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
                 </div>
 
                 <Container className="auto-cards-container">
-                    <div className="shop-first-info-row">
-                        <div><p className="small-info-text">"{carsToRender && carsToRender.length}" rezultāti</p></div>
+                    <div className="d-flex flex-column align-items-start flex-sm-row justify-content-between align-items-sm-center py-2">
+                        <div><p className="fs-6 mb-0">"{carsToRender && carsToRender.length}" rezultāti</p></div>
                         <SortingList onClickHandler={handleSortChange} />
                     </div>
 
-                    <div className="shop-auto-cards-wrapper">
+                    <div className="shop-auto-cards-wrapper d-grid gap-3">
                         {isLoading ?
                             (<div className="d-flex justify-content-center align-items-center">
                                 <Spinner animation="border" variant="primary" />
@@ -281,7 +278,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
 
 export default ShopPage;
 
-export const Head: HeadFC = () => <title>Pirkt Auto</title>;
+export const Head: HeadFC = () => (<SEO title="Pirkt auto- veikals"/>);
 
 export const query = graphql`
 query AllCarsDetails {

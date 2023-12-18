@@ -1,23 +1,10 @@
 .blog__tags--section {
-  margin-bottom: 44px;
-
-  .tag-title {
-    font-size: 32px;
-    line-height: 38px;
-    margin-bottom: 30px;
-  }
-
   .tag-item {
-    font-size: 18px;
     border: solid 1px $blue_primary;
     background-color: $blue_primary;
-    padding: 12px 24px;
     cursor: pointer;
     border-radius: 60px;
-    margin-right: 20px;
-    font-weight: 700;
     color: $white;
-    font-size: 16px;
     box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
 
     &:hover {
@@ -36,23 +23,14 @@
 }
 
 .blog__post--section {
-  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
-  margin-top: 24px;
-  margin-bottom: 80px;
 
   .blog__post--card {
-    border-radius: 25.8353px;
     box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
     height: 100%;
-    border: none;
   }
 
   .blog__post--card .nav-link {
-    border-radius: 25.8353px;
-    display: flex;
-    flex-direction: column;
     height: 100%;
 
     &:hover {
@@ -77,24 +55,9 @@
       object-fit: cover;
     }
 
-    .read__more--wrapper {
-      display: flex;
-      justify-content: flex-end;
-    }
-
     .card-footer {
-      background-color: $white;
-      display: flex;
-      gap: 15px;
-      margin-top: auto;
-      padding: 0 16px 16px;
-      border: none;
-
       .tag {
-        text-transform: uppercase;
         color: $blue_primary;
-        margin-bottom: 0;
-        font-size: 16px;
       }
     }
   }
@@ -115,26 +78,6 @@
   /*-------------------------------------------------*/
 
 @media only screen and (max-width: 769px) {
-  .blog__tags--section {
-    .tags__wrappe {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .tag-title {
-      font-size: 1.5rem;
-      line-height: 1.5rem;
-    }
-
-    .tag-item {
-      display: inline-block;
-      font-size: 16px;
-      padding: 5px 10px;
-      margin-right: 15px;
-      margin-bottom: 15px;
-    }
-  }
-
   .blog__post--section {
     grid-template-columns: 1fr;
   }

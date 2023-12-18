@@ -4,6 +4,7 @@ import { HeadFC } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import SiteVisiteSection from "../components/SiteVisiteSection";
 import SimpleHero from "../components/SimpleHeroSection";
+import SEO from "../components/SEO";
 
 const AboutUs = () => {
     return (
@@ -57,4 +58,4 @@ const AboutUs = () => {
 
 export default AboutUs;
 
-export const Head: HeadFC = () => <title>Pirkt Auto</title>;
+export const Head: HeadFC = () => (<SEO title="Pirkt auto - par mums"/>);

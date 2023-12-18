@@ -1,218 +1,114 @@
 .single-car__container {
-  position: relative;
-  flex-grow: 1;
-
   .single-car__wrapper {
-    box-sizing: border-box;
-    margin: 0;
     min-width: 0;
-    display: grid;
-    grid-gap: 0.75rem;
-    margin: 0;
-    grid-template-columns: unset;
-    -webkit-column-gap: unset;
-    column-gap: unset;
     width: auto;
     max-width: 1440px;
-    box-sizing: border-box;
-
-    h3 {
-      font-size: 22px;
-      margin-bottom: 20px;
-      line-height: 1.25;
-      font-weight: 600;
-    }
   }
 
   .left-side__content {
-    box-sizing: border-box;
-    margin: 0;
     min-width: 0;
     max-width: 780px;
-    padding-top: 0px;
-
-    .recommended-for-you-row,
-    .car-gallery-row {
-      padding: 20px 0 40px;
+  }
+  
+  .auto__description {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-weight: 600;
+      font-size: 18px;
+      text-align: justify;
+      line-height: 2rem;
     }
 
-    .specification-row,
-    .way-special-row,
-    .auto-description-row {
-      border-bottom: 1px solid #e0e0e0;
-      padding: 20px 0 40px;
+    p {
+      text-align: justify;
     }
 
-    .auto__description {
-      h1,
-      h2,
-      h3,
-      h4,
-      h5 {
-        font-weight: 600;
-        font-size: 18px;
-        text-align: justify;
-        line-height: 2rem;
-      }
-
-      p {
-        text-align: justify;
-      }
-
-      p + p {
-        padding-bottom: 10px;
-      }
-    }
-
-    .icon-wrapper {
-      border-radius: 15px;
-      padding: 30px 20px 0 0;
-      display: flex;
-      flex-direction: row;
-      column-gap: 20px;
-      justify-content: space-between;
-    }
-
-    .icon-wrapper_item {
-      display: flex;
-      flex-direction: row;
-      column-gap: 10px;
-      align-items: center;
-      min-width: 30%;
-    }
-
-    .icon-wrapper_item p {
-      margin: 0;
-      font-size: 15px;
-      display: block;
-      max-width: 70%;
-    }
-
-    .item {
-      width: 100%;
-      border-radius: 25px;
-      max-height: 500px;
-      height: 100%;
-    }
-
-    .carousel-caption {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid $white;
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      max-width: 70px;
-      top: 15px;
-      left: 15px;
-      bottom: unset;
-      padding: 5px 20px;
-      font-size: 16px;
-    }
-
-    .carousel-control-prev span,
-    .carousel-control-next span {
-      background-color: $blue_primary;
-      width: 30px;
-      height: 30px;
-      border-radius: 15px;
-      position: relative;
-    }
-
-    .carousel-control-next span {
-      background-image: url(/images/arrow-next.svg);
-    }
-
-    .carousel-control-prev span {
-      background-image: url(/images/arrow-prev.svg);
-    }
-
-    .carousel-indicators {
-      display: none;
-    }
-
-    .row-title {
-      border: 0 2px 0 0 solid aqua;
-    }
-
-    .category-icon-row {
-      row-gap: 20px;
-    }
-
-    .specification-row {
-      .specification-item {
-        h5 {
-          margin-bottom: 0;
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 1.25;
-          color: $text_secondary;
-        }
-
-        p {
-          font-size: 16px;
-        }
-      }
-
-      button {
-        margin-left: 12px;
-        margin-top: 15px;
-        display: flex;
-        flex-direction: row;
-        padding: 8px 45px;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 35px;
-
-        &:hover {
-          background-color: $hover;
-          border-color: $hover;
-        }
-      }
-
-      img {
-        margin: auto 8px;
-      }
-    }
-
-    .recommended-for-you-row {
-      .recommended-auto-cards-container {
-        box-sizing: border-box;
-        margin: 0px;
-        min-width: 0px;
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-        padding: 0 !important;
-      }
-
-      // .shop-auto-card {
-      //   border: 1px solid $blue_primary;
-      // }
+    p + p {
+      padding-bottom: 10px;
     }
   }
 
+  .icon-wrapper_item {
+    min-width: 30%;
+  }
+
+  .item {
+    width: 100%;
+    max-height: 500px;
+    height: 100%;
+  }
+
+  .carousel-caption {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    max-width: 70px;
+    top: 15px;
+    left: 15px;
+    bottom: unset;
+  }
+
+  .carousel-control-prev span,
+  .carousel-control-next span {
+    background-color: $blue_primary;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    position: relative;
+  }
+
+  .carousel-control-next span {
+    background-image: url(/images/arrow-next.svg);
+  }
+
+  .carousel-control-prev span {
+    background-image: url(/images/arrow-prev.svg);
+  }
+
+  .carousel-indicators {
+    display: none;
+  }
+
+  .specification-row {
+    button {
+      margin-left: 12px;
+      margin-top: 15px;
+      display: flex;
+      flex-direction: row;
+      padding: 8px 45px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 35px;
+
+      &:hover {
+        background-color: $hover;
+        border-color: $hover;
+      }
+    }
+  }
+
+  .recommended-auto-cards-container {
+    min-width: 0px;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .right-side__content {
-    box-sizing: border-box;
-    margin: 0 auto;
     min-width: 360px;
     width: 100%;
     max-width: -webkit-max-content;
     max-width: -moz-max-content;
     max-width: max-content;
-    opacity: 1;
     z-index: 9;
   }
 }
 
 @media screen and (min-width: 991px) {
   .single-car__container {
-    padding: 0;
-
     .single-car__wrapper {
-      margin: 0 15px;
       grid-template-columns: 2fr 1fr;
-      -webkit-column-gap: 3vw;
-      column-gap: 3vw;
     }
 
     .left-side__content {
@@ -226,7 +122,6 @@
   .single-car__container {
     .left-side__content {
       max-width: unset;
-
       margin-top: 76px;
     }
   }
@@ -234,37 +129,12 @@
 
 @media screen and (max-width: 768px) {
   .single-car__container {
-    .left-side__content {
-      .icon-wrapper {
-        flex-direction: column;
-        row-gap: 20px;
-        padding: 10px;
-      }
-
-      .specification-container {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .recommended-for-you-row {
-        .recommended-auto-cards-container {
-          display: flex;
-          flex-direction: column;
-          padding: 0 15px;
-        }
-
-        .shop-auto-card {
-          margin: 0;
-        }
-      }
+    .shop-auto-card {
+      margin: 0;
     }
 
     .right-side__content {
       min-width: 300px !important;
-
-      h5 {
-        font-size: 18px;
-      }
     }
   }
 }
