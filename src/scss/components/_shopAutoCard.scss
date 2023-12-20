@@ -1,14 +1,9 @@
 .shop-auto-card {
-  background: #ffffff;
   box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
-  border-radius: 10px;
   height: 100%;
   transition-duration: 0.15s;
-  border: 2px solid transparent;
 
   &:hover {
-    // border: 2px solid $hover !important;
-    // border-color: rgba(38, 105, 209, 1);
     -webkit-box-shadow: $hover_box_shadow;
     box-shadow: $hover_box_shadow;
     transition-duration: 0.15s;
@@ -16,16 +11,6 @@
 
   &:hover .shop-card-image img {
     transform: scale(1.1);
-  }
-
-  .card-body {
-    gap: 10px;
-  }
-
-  .shop-card-image {
-    border-radius: 10px 10px 0 0;
-    border: 1px solid transparent;
-    overflow: hidden;
   }
 
   .shop-card-image img {
@@ -37,46 +22,11 @@
     height: 100%;
   }
 
-  .card-title {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 0;
-  }
-
   .small-title {
-    color: $blue_primary;
-    text-transform: capitalize;
-    text-transform: uppercase;
     font-size: 12px;
-    font-weight: 300;
   }
 
   .mileage-container {
     font-size: 13px;
-    font-weight: 600;
   }
-
-  .price-container {
-    font-weight: 500;
-  }
-  .card-footer {
-    padding: 0;
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border: none;
-    margin: auto 0 0 0;
-
-    :first-child {
-      font-size: 16px;
-      color: $text_secondary;
-    }
-  }
-}
-
-@media only screen and (max-width: 768px) {
-}
-
-@media only screen and (max-width: 420px) {
 }

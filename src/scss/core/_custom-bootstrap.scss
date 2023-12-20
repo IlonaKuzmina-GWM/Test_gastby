@@ -4,4 +4,12 @@ $accordion-button-active-icon: url("data:image/svg+xml,<svg viewBox='0 0 25 25' 
 $accordion-button-active-bg: transparent;
 $accordion-button-active-color: black;
 
+
+$custom-primary-color: #2998ff;
+$primary: $custom-primary-color;
+
+$text_secondary: #495159;
+$secondary:$text_secondary;
+
+
 @import "~bootstrap/scss/bootstrap";

@@ -51,7 +51,7 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
 
         <div className="mb-5 d-flex flex-wrap gap-2">
           <span
-            className={`tag-item fs-6 fw-semibold  py-2 px-4 ${!filterPostsByTag ? 'active' : ''}`}
+            className={`tag-item fs-6 fw-semibold  py-2 px-4 border ${!filterPostsByTag ? 'active' : ''}`}
             onClick={() => { setFilterPostsByTag('') }}>Visas
           </span>
           {allTags && allTags.map((tag, index) => {
@@ -92,7 +92,7 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
                 <Card.Footer className="d-flex gap-3 mt-auto py-3 ps-4 border border-0 bg-white">
                   {post.tags.nodes.map((tag, tagIndex) => (
                     <React.Fragment key={tagIndex}>
-                      <p className="tag mb-0 fs-6 text-uppercase">{tag.name}</p>
+                      <p className="tag mb-0 fs-6 text-uppercase text-primary">{tag.name}</p>
                     </React.Fragment>
                   ))}
                 </Card.Footer>

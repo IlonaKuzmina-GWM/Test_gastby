@@ -5,21 +5,21 @@ import MainLayout from "../layouts/MainLayout"
 
 
 const NotFoundPage: React.FC<PageProps> = () => {
-  return (
-    <main >
-        <MainLayout>
-            <div className="container error-page">
-                <div className="wrapper">
-                    <h1 className="fs-1 fw-bold">404</h1>
-                    <p className="mb-5 fs-5 text-light text-capitalize">page not found</p>
-                    <Link to="/">
-                        <Button name={"Back to home page"} size={"medium"} type={"primary"} />
-                    </Link>
+    return (
+        <main >
+            <MainLayout>
+                <div className="container error-page text-primary">
+                    <div className="wrapper align-items-center bg-secondary rounded-5 py-5 px-0 ">
+                        <h1 className="fs-1 fw-bold">404</h1>
+                        <p className="mb-5 fs-5 text-light text-capitalize">page not found</p>
+                        <Link to="/">
+                            <Button name={"Back to home page"} size={"medium"} type={"primary"} />
+                        </Link>
+                    </div>
                 </div>
-            </div>
-        </MainLayout>
-    </main>
-  )
+            </MainLayout>
+        </main>
+    )
 }
 
 export default NotFoundPage

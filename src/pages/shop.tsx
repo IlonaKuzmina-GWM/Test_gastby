@@ -228,7 +228,7 @@ const ShopPage: FC<ShopProps> = ({ location, data }) => {
             <div className="shop-page-container d-flex flex-column flex-md-row my-0 mx-auto gap-3">
                 <div className="filters-container flex-shrink-0 px-3 py-2">
                     <div className="d-flex align-items-center mb-0 link-dark text-decoration-none">
-                        <button className="show-filters-btn d-flex d-md-none" onClick={toggleFilters}>Show Filter</button>
+                        <button className="show-filters-btn d-flex d-md-none text-primary border border-primary" onClick={toggleFilters}>Show Filter</button>
                     </div>
 
                     <FilterCategories eventkey={0}

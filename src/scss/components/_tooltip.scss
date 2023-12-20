@@ -1,5 +1,4 @@
 .tooltip-wrapper {
-  position: absolute;
   bottom: 20%;
   left: 10%;
 
@@ -14,25 +13,11 @@
     .white-dot {
       width: 16px;
       height: 16px;
-      background: $white;
-      margin: 10px auto;
-      border-radius: 50%;
     }
   }
 }
+
 .popover {
   background: rgba(255, 255, 255, 0.2);
-  border: 1px solid $white;
   backdrop-filter: blur(2px);
-  font-weight: 600;
-  font-size: 1.5rem;
-  line-height: 1.5rem;
-  text-align: center;
-  color: $white;
-}
-
-@media only screen and (max-width: 768px) {
-  .tooltip-wrapper {
-    display: none;
-  }
 }

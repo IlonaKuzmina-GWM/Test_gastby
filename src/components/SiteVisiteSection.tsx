@@ -4,10 +4,10 @@ import Button from "./Button";
 
 const SiteVisiteSection = () => {
     return (
-        <section className="site-visite-section">
-            <div className="container-lg wrapper">
-                <h2>Ready for a <span className="gold-text">Site visit ?</span></h2>
-                <p>Lorem ipsum dolo elit Lorem ipsum dolo</p>
+        <section className="bg-secondary text-center text-white py-5 px-0">
+            <div className="container-lg wrapper align-items-center">
+                <h2>Ready for a <span className="text-primary">Site visit ?</span></h2>
+                <p className="mt-1 mb-5 text-white">Lorem ipsum dolo elit Lorem ipsum dolo</p>
                 <Button name={"View Now"} size={"small"} type={"primary"} />
             </div>
         </section>

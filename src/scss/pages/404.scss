@@ -1,26 +1,18 @@
 .error-page {
-  color: $blue_primary;
-
   .wrapper {
     margin: 150px auto;
-    background: $dark;
-    border-radius: 60px;
-    padding: 100px 0px;
     max-width: 90%;
-    align-items: center;
   }
 }
 
 /*-------------------------------------------------*/
 /* =  769px
-  /*-------------------------------------------------*/
+/*-------------------------------------------------*/
 
 @media only screen and (max-width: 769px) {
   .error-page {
     .wrapper {
       margin: 130px auto;
-      border-radius: 60px;
-      padding: 100px 0px 100px 0px;
       max-width: 100%;
       .main-btn {
         padding: 10px 40px !important;
