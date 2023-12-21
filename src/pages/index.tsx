@@ -108,12 +108,19 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    const hasShownSplash = localStorage.getItem('hasShownSplash');
 
-    return () => clearTimeout(timer);
-  })
+    if (hasShownSplash) {
+      setLoading(false);
+    } else {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        localStorage.setItem('hasShownSplash', 'true');
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [])
 
   const [searchQuery, setSearchQuery] = useState('');
   const [, setSearchResults] = useState<Car[]>([]);
@@ -154,8 +161,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
       <div className='bg-secondary d-flex justify-content-center align-items-center'>
         <div className='splash-screen d-flex justify-content-center align-items-center flex-column'>
           <img src={SplashImageLogo} alt="Logo" width={250} />
-
-          <h1 className='splash-title text-white fw-bold fs-1 mt-5 text-center'>Labākais auto jebkurai gaumei! </h1>
+          <h1 className='splash-title text-white fw-bold fs-1 mt-5 text-center'>Labākais auto jebkurai gaumei!</h1>
         </div>
       </div>
     );
