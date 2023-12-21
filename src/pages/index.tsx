@@ -1,8 +1,10 @@
 import { useLocation } from '@reach/router';
+
 import { graphql, HeadFC, navigate } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import SplashImageLogo from "../images/Pirktauto_logo_vertical_invert.png";
 import "swiper/css/pagination";
 import MainLayout from "../layouts/MainLayout";
 import { Car, CarEquipment, CarInfo, MyQueryResult, PDFFile } from "../types/allWpCarTypes";
@@ -98,14 +100,24 @@ const searchCars: SearchFunction = (query, cars) => {
   });
 };
 
-
 type HomeProps = {
   data: MyQueryResult;
 };
 
 const IndexPage: React.FC<HomeProps> = ({ data }) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  })
+
   const [searchQuery, setSearchQuery] = useState('');
   const [, setSearchResults] = useState<Car[]>([]);
+
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
@@ -136,6 +148,19 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
     });
   };
 
+
+  if (loading) {
+    return (
+      <div className='bg-secondary d-flex justify-content-center align-items-center'>
+        <div className='splash-screen d-flex justify-content-center align-items-center flex-column'>
+          <img src={SplashImageLogo} alt="Logo" width={250} />
+
+          <h1 className='splash-title text-white fw-bold fs-1 mt-5 text-center'>Labākais auto jebkurai gaumei! </h1>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <MainLayout>
       <HeroSection
@@ -148,7 +173,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)} />
           <button type="submit">
-            <StaticImage src={"../images/search.png"} alt={"Search"} width={23} height={23}/>
+            <StaticImage src={"../images/search.png"} alt={"Search"} width={23} height={23} />
           </button>
         </form>
       </HeroSection>
@@ -166,7 +191,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
 
 export default IndexPage;
 
-export const Head: HeadFC = () => (<SEO/>);;
+export const Head: HeadFC = () => (<SEO />);;
 
 export const query = graphql`
 query AllCarsDetails {
