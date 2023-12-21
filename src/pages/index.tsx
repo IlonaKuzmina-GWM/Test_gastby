@@ -141,14 +141,14 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
     <MainLayout>
       <HeroSection
         autoCounter={data.allWpCar.nodes.length}>
-        <form className="hero-search-form" action="" onSubmit={handleSearch}>
+        <form className="hero-search-form d-flex justify-content-between border border-white rounded-5 p-1 text-white my-5 mx-auto" action="" onSubmit={handleSearch}>
           <input
             type="search"
             placeholder="Meklēt auto"
-            className="hero-search-input"
+            className="hero-search-input rounded-5 border-0 text-white bg-transparent m-0 py-2 pe-3 ps-3 fs-5"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)} />
-          <button type="submit">
+          <button type="submit" className='bg-secondary my-2 mx-2 rounded-circle border-0 py-2 px-2'>
             <StaticImage src={"../images/search.png"} alt={"Search"} width={23} height={23} />
           </button>
         </form>

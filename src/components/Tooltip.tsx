@@ -11,7 +11,7 @@ const TooltipBoot: FC<TooltipBootProps> = ({ text }) => {
 
     const popover = (
         <Popover id="popover-basic" className='popover border border-wight text-center text-white fs-4 fs-semibold'>
-            <Popover.Body className='text-white'>
+            <Popover.Body className='text-white lh-base'>
                 {text}
             </Popover.Body>
         </Popover>
@@ -24,7 +24,9 @@ const TooltipBoot: FC<TooltipBootProps> = ({ text }) => {
                 overlay={
                     popover}
                 trigger={['hover', 'focus']}>
-                <Button variant="light"><div className='white-dot bg-white mx-auto my-1 rounded-circle'></div></Button>
+                <Button variant="light">
+                    <div className='white-dot bg-white mx-auto my-1 rounded-circle'></div>
+                </Button>
             </OverlayTrigger>
         </div>);
 }

@@ -11,5 +11,8 @@ $primary: $custom-primary-color;
 $text_secondary: #495159;
 $secondary:$text_secondary;
 
+$custom_light-color: #DDF0FF;
+$light:$custom_light-color;
+
 
 @import "~bootstrap/scss/bootstrap";
