@@ -16,6 +16,8 @@ type SinglePostProps = {
 const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
     const morePostsForYou = useAllWpPostData();
     const singlePostInformation = pageContext;
+
+    console.log(morePostsForYou)
     console.log(singlePostInformation);
 
     return (
@@ -59,14 +61,21 @@ const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
                     <h2 className="fs-2">Līdzīgi raksti</h2>
                 </div>
 
-                <div className="blog__post--section">
+                <div className="blog__post--section container d-grid gap-4 mt-4 mb-5">
                     {morePostsForYou
+                        .filter((post: WpPost) =>
+                            post.tags.nodes.some((tag) =>
+                                singlePostInformation.tags.nodes.some(
+                                    (singleTag) => singleTag.name === tag.name
+                                )
+                            )
+                        )
                         .filter((post: WpPost) => post.title !== singlePostInformation.title)
                         .slice(0, 3)
                         .map((post: WpPost, index: number) => {
                             return (
-                                <Card className="blog__post--card" key={index}>
-                                    <Nav.Link href={"/" + post.slug} >
+                                <Card className="blog__post--card border border-0 rounded-5" key={index}>
+                                    <Nav.Link href={"/" + post.slug} className="rounded-5 d-flex flex-column">
                                         <GatsbyImage
                                             image={post.featuredImage.node.gatsbyImage}
                                             alt={post.title}
@@ -76,14 +85,14 @@ const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
                                         <Card.Body>
                                             <Card.Title>{post.title}</Card.Title>
                                             <div dangerouslySetInnerHTML={{ __html: post.excerpt.slice(0, 100) + "..." }} />
-                                            <div className="read__more--wrapper">
+                                            <div className="read__more--wrapper read__more--wrapper d-flex justify-content-end">
                                                 <span className="read__more--btn" >Lasīt vairāk...</span>
                                             </div>
                                         </Card.Body>
-                                        <Card.Footer>
+                                        <Card.Footer className="d-flex gap-3 mt-auto py-3 ps-4 border border-0 bg-white">
                                             {post.tags.nodes.map((tag, tagIndex) => (
                                                 <React.Fragment key={tagIndex}>
-                                                    <p className="tag">{tag.name}</p>
+                                                    <p className="tag mb-0 fs-6 text-uppercase text-primary">{tag.name}</p>
                                                 </React.Fragment>
                                             ))}
                                         </Card.Footer>
@@ -92,8 +101,6 @@ const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
                             )
                         })}
                 </div>
-
-
             </section>
         </MainLayout>
     );

@@ -1,5 +1,5 @@
 .header {
-  background-color: white;
+  // background-color: white;
   // box-shadow: 0px 6.45883px 12.9177px rgba(41, 41, 41, 0.08);
 
   a,
@@ -13,11 +13,11 @@
 
   .header__logo {
     max-width: 160px;
-    vertical-align: middle;
+    // vertical-align: middle;
   }
 
   .current {
-    color: $hover;
+    color: $blue_primary;
   }
 }
 
@@ -36,10 +36,10 @@
 }
 
 @media only screen and (max-width: 991px) {
-  .header_toggle-btn {
-    border: $dark solid 1px;
-    border: none;
-  }
+  // .header_toggle-btn {
+  //   border: $dark solid 1px;
+  //   border: none;
+  // }
 
   .offcanvas {
     background-color: $green;

@@ -67,10 +67,10 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
     type CarInfoProperty = keyof Replacements;
 
-
     type Replacements = {
         [key: string]: string;
     };
+
     const replacements: Replacements = {
         "atrumkarba": "Ātrumkārba",
         "atrasanasVieta": "Atrašanās vieta",
@@ -129,7 +129,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
         return result;
     }, {});
 
-
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
             <div className='filters-accordion-wrapper'>
@@ -145,10 +144,6 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
                     <Col className='px-0  row filter_results_btn-wrapper'>
                         <div className='clear-btn'>
-                            {/* {filteredParamaterCounter > 0 || inputChanged && (<Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
-                                clearFilteredValues();
-                                uncheckAllCheckboxes();
-                            }} />)} */}
                             {filterUsed && <Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
                                 clearFilteredValues();
                                 uncheckAllCheckboxes();
@@ -162,21 +157,20 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                 </Row>
 
                 <div className='accordion-wrapper'>
-
-                    <Row className='center-xs price-range-row'>
+                    <Row className='center-xs price-range-row mb-3'>
                         <Col className='' xs={12}>
                             <div>
-                                <h4 className="price__block--title">Cena</h4>
+                                <h4 className="pe-2 fs-6">Cena</h4>
                                 {minPrice > maxPrice && <div className="alert alert-danger" role="alert" style={{ fontSize: "14px" }}>
                                     Minimālā summma nevar būt lielāka par maximālo summmu!
                                 </div>}
                             </div>
 
-                            <Form className='main__range--wrapper'>
-                                <Form.Group className='d-flex justify-content-between'>
+                            <Form className='d-flex mb-2'>
+                                <Form.Group className='d-flex justify-content-between gap-2'>
                                     <Form.Control
                                         id="minPriceInput"
-                                        className='main__price--input'
+                                        className='rounded-1 p-2'
                                         type='number'
                                         placeholder='Min'
                                         onChange={handleMinPriceChange}
@@ -184,7 +178,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
                                     <Form.Control
                                         id="maxPriceInput"
-                                        className='main__price--input'
+                                        className='rounded-1 p-2'
                                         type='number'
                                         placeholder='Max'
                                         onChange={handleMaxPriceChange}
@@ -199,7 +193,7 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                             .filter((key) => key !== "pdfFile" && key !== "autoLinks")
                             .map((key, index) => (
                                 <Accordion.Item eventKey={index.toString()} key={index}>
-                                    <Accordion.Header className='accordion-title'>{key}</Accordion.Header>
+                                    <Accordion.Header className='accordion-title lh-1 lw-medium text-secondary'>{key}</Accordion.Header>
                                     <Accordion.Body>
                                         {uniqueCarInfoValues[key].map((valueName: string | number | string[], valueIndex) => (
                                             <Form className='form-item-wrapper' key={valueIndex}>

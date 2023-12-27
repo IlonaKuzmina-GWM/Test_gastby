@@ -22,7 +22,7 @@ const YourNextAutoSection: FC<YourNextAutoSectionProps> = ({ onClickHandler }) =
                         formats={['auto', 'webp', 'avif']}
                         placeholder="blurred"
                     />
-                    <p className="z-1 d-block text-light fs-1 fw-semibold">Jauni auto</p>
+                    <p className="z-1 d-block text-white fs-1 fw-semibold">Jauni auto</p>
                 </div>
 
                 <div className="d-flex item col-md-4 mb-5 py-0 px-3 position-relative text-center overflow-hidden justify-content-center align-items-center rounded-5 bg-secondary">
@@ -34,7 +34,7 @@ const YourNextAutoSection: FC<YourNextAutoSectionProps> = ({ onClickHandler }) =
                         formats={['auto', 'webp', 'avif']}
                         placeholder="blurred"
                     />
-                    <p className="z-1 d-block text-light fs-1 fw-semibold">Kaut kādi auto</p>
+                    <p className="z-1 d-block text-white fs-1 fw-semibold">Kaut kādi auto</p>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@ const YourNextAutoSection: FC<YourNextAutoSectionProps> = ({ onClickHandler }) =
                         formats={['auto', 'webp', 'avif']}
                         placeholder="blurred"
                     />
-                    <p className="z-1 d-block text-light fs-1 fw-semibold">Elektriskie auto</p>
+                    <p className="z-1 d-block text-white fs-1 fw-semibold">Elektriskie auto</p>
                 </div>
 
                 <div className="d-flex item col-md-7 mb-5 py-0 px-3 position-relative text-center overflow-hidden justify-content-center align-items-center rounded-5 bg-secondary" onClick={() => onClickHandler("mazlietots")}>
@@ -60,7 +60,7 @@ const YourNextAutoSection: FC<YourNextAutoSectionProps> = ({ onClickHandler }) =
                         formats={['auto', 'webp', 'avif']}
                         placeholder="blurred"
                     />
-                    <p className="z-1 d-block text-light fs-1 fw-semibold">Mazlietoti auto</p>
+                    <p className="z-1 d-block text-white fs-1 fw-semibold">Mazlietoti auto</p>
                 </div>
             </div>
         </section>

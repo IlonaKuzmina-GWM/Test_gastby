@@ -51,13 +51,13 @@ const Blog: FC<BlogPageProps> = ({ data }) => {
 
         <div className="mb-5 d-flex flex-wrap gap-2">
           <span
-            className={`tag-item fs-6 fw-semibold  py-2 px-4 border ${!filterPostsByTag ? 'active' : ''}`}
+            className={`tag-item fs-6 fw-semibold rounded-5 text-white py-2 px-4 border ${!filterPostsByTag ? 'active' : ''}`}
             onClick={() => { setFilterPostsByTag('') }}>Visas
           </span>
           {allTags && allTags.map((tag, index) => {
             return <span
               key={index}
-              className={`tag-item fs-6 fw-semibold py-2 px-4 ${tag === filterPostsByTag ? 'active' : ''}`}
+              className={`tag-item fs-6 fw-semibold rounded-5 text-white py-2 px-4 ${tag === filterPostsByTag ? 'active' : ''}`}
               onClick={() => { setFilterPostsByTag(tag); handleTagClick(tag) }}>
               {tag}
             </span>

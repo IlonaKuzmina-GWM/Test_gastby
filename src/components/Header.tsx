@@ -23,13 +23,13 @@ const Header = () => {
         <div>
             <Navbar
                 expand={"lg"}
-                className={`fixed-top header ${scrolled ? "scrolled" : ""}`}>
+                className={`fixed-top header bg-white ${scrolled ? "scrolled" : ""}`}>
                 <Container fluid>
                     <Navbar.Brand href="/">
-                        <StaticImage className="header__logo" src="../images/Pirktauto_logo_horizontal_color.png" alt="logo" width={200} height={25} placeholder="blurred" />
+                        <StaticImage className="header__logo align-middle" src="../images/Pirktauto_logo_horizontal_color.png" alt="logo" width={200} height={25} placeholder="blurred" />
                     </Navbar.Brand>
                     
-                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="header_toggle-btn"/>
+                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="header_toggle-btn border-0"/>
 
                     <Navbar.Offcanvas
                         id={`offcanvasNavbar-expand-lg`}
