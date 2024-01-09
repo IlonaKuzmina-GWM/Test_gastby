@@ -33,6 +33,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1",
     "react-share": "^4.4.1",
     "sass": "^1.69.4",
     "swiper": "^10.3.0"

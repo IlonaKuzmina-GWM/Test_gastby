@@ -1,49 +1,23 @@
 .wrapper-checkout {
-  box-sizing: border-box;
-  display: block;
-  margin: 0;
   min-width: 0;
   width: 100%;
   max-width: 43%;
 }
 
 .checkout-container {
-  background: $white;
-  border-radius:0 0 0.375rem 0.375rem;
   min-height: auto;
   max-height: calc(100vh - 72px);
   bottom: unset;
-  box-sizing: border-box;
   margin: 0px 0px 60px 3.5vw;
-  display: flex;
-  flex-direction: column;
   height: max-content;
-  overflow: hidden auto;
-  position: fixed;
   top: 72px;
   right: 84px;
   width: 416px;
   min-width: 360px;
   max-width: 30%;
-  padding: 24px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: rgba(58, 58, 58, 0.08) 0px 4px 5px, rgba(80, 80, 80, 0.13) 0px 12px 30px;
-
-  .colapse-button {
-    display: none;
-  }
-
-  .row-wrapper {
-    margin-top: 24px;
-  }
-
-  h5 {
-    font-size: 22px;
-    line-height: 29px;
-    font-weight: 600;
-    margin-bottom: -5px;
-  }
 
   .version-type-wrapper {
     font-size: 14px;
@@ -53,65 +27,22 @@
     width: 100%;
   }
 
-  .back-arrow {
-    cursor: pointer;
-    padding: 10px 10px 10px 0;
-  }
-
   .checkout-icons-container {
-    justify-content: space-around;
-
     a {
       color: $text_secondary;
-      text-decoration: none;
     }
 
     .icon-item {
-      cursor: pointer;
-      margin-bottom: 10px;
-
       .text-center {
-        margin-bottom: 0;
-        margin-top: 3px;
         font-size: 14px;
       }
     }
   }
 
-  .condision-row,
-  .mileage-row {
-    margin-bottom: 10px;
-
-    .title {
-      color: $text_secondary;
-    }
-
-    .content {
-      text-align: end;
-    }
-
-    p {
-      margin-bottom: 0;
-      font-weight: 500;
-      font-size: 16px;
-    }
-  }
-
   .questions-block-container .link {
-    box-sizing: border-box;
-    margin: 0;
-    min-width: 0;
-    text-decoration: none;
-
     .link-wrapper {
-      box-sizing: border-box;
-      margin: 0px;
       min-width: 0px;
-      display: flex;
-      padding: 16px;
-      cursor: pointer;
       background-color: $light_blue;
-      border-radius: 15px;
       color: $dark;
       transition: all 0.3s;
       box-shadow: -1px 3px 3px 0 rgba(80, 80, 80, 0.2);
@@ -120,21 +51,6 @@
         background: $hover;
         box-shadow: $hover_box_shadow;
       }
-    }
-  }
-
-  .dealer {
-    margin: 24px auto 0;
-    border-bottom: solid 1px rgb(224, 224, 224);
-
-    img {
-      margin-right: 8px;
-    }
-  }
-
-  .share-block-container {
-    .share-icons-container {
-      justify-content: space-around;
     }
   }
 }
@@ -153,31 +69,11 @@
     box-shadow: 0 -12px 30px rgba(58, 58, 58, 0.2) !important;
 
     .colapse-button {
-      display: block;
-      margin: 0 auto;
       width: 20%;
       height: 5px;
       color: $blue_primary;
       background-color: $blue_primary;
       border: $blue_primary 2px solid;
-      border-radius: 25px;
-    }
-
-    .checkout-car-title-row {
-      margin-top: 24px;
-    }
-
-    .checkout-icons-container .icon-item {
-      cursor: pointer;
-    }
-
-    .questions-block-container,
-    .link-wrapper {
-      justify-content: center;
-    }
-
-    .share-icons-container {
-      justify-content: space-around;
     }
   }
 }
@@ -201,8 +97,6 @@
 
 @media only screen and (max-width: 768px) {
   .checkout-icons-container {
-    flex-direction: row;
-
     .icon-item {
       width: 33%;
     }

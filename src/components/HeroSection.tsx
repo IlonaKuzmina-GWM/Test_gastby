@@ -15,7 +15,7 @@ const HeroSection: FC<HeroSectionProps> = ({ autoCounter, children }) => {
                 alt="Hero Background"
                 layout="fullWidth"
                 placeholder="none"
-                className="hero-background"
+                className="hero-background position-absolute"
                 loading="lazy"
             />
             <div className="hero-content text-center text-white z-1">
@@ -44,7 +44,7 @@ const HeroSection: FC<HeroSectionProps> = ({ autoCounter, children }) => {
                 <p className="m-0">auto tavai <br /> izvēlei</p>
             </div>
 
-            <div className="white-gradient"></div>
+            <div className="white-gradient position-absolute"></div>
         </section>
     );
 }

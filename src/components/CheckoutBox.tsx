@@ -47,23 +47,23 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ autoLink, title, slug, carType, pri
     }, []);
 
     return (
-        <div className="wrapper-checkout">
-            <Container className="checkout-container" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
+        <div className="wrapper-checkout d-block m-0">
+            <Container className="checkout-container bg-white d-flex flex-column position-fixed p-3" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
                 <button
-                    className="colapse-button"
+                    className="colapse-button my-0 mx-auto d-block d-lg-none rounded-3"
                     onClick={toggleCheckoutIcons} />
-                <Row className="checkout-car-title-row">
+                <Row className="checkout-car-title-row mt-2">
                     <Col xs={8} className="mb-2">
-                        <h5>{title}</h5>
+                        <h5 className="mb-0 fw-semibold fs-5 lh-base">{title}</h5>
                         <span className="version-type-wrapper">{carType}</span>
                     </Col>
                     <Col xs={4} className="text-end">
-                        <h5>€ {price}</h5>
+                        <h5 className="mb-0 fw-semibold fs-5 lh-base">€ {price}</h5>
                     </Col>
                 </Row>
 
                 {smallScreen && (
-                    <Row className="row-wrapper">
+                    <Row className="row-wrapper mt-3">
                         <Col className="btn-wrapper ">
                             <Button name={"Apskatīt piedāvājumu"} size={"small"} type={"primary"} onClickHandler={() => { }}></Button>
                         </Col>
@@ -72,29 +72,29 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ autoLink, title, slug, carType, pri
 
                 {!checkoutIconsUseed && (
                     <>
-                        <div className="row-wrapper">
+                        <div className="row-wrapper mt-3">
                             {mileage && (
-                                <Row className="mileage-row">
+                                <Row className="mileage-row mb-2 ">
                                     <Col xs={8}>
-                                        <p className="title">Nobraukums</p>
+                                        <p className="title mb-0 fw-medium">Nobraukums</p>
                                     </Col>
                                     <Col xs={4}>
-                                        <p className="content"> {mileage} km</p>
+                                        <p className="content text-end  mb-0"> {mileage} km</p>
                                     </Col>
                                 </Row>)}
 
-                            <Row className="condision-row">
+                            <Row className="condision-row mb-2">
                                 <Col xs={8}>
-                                    <p className="title">Stāvoklis</p>
+                                    <p className="title  mb-0 fw-medium">Stāvoklis</p>
                                 </Col>
                                 <Col xs={4}>
-                                    <p className="content"> {carCondition}</p>
+                                    <p className="content text-end  mb-0"> {carCondition}</p>
                                 </Col>
                             </Row>
                         </div>
 
 
-                        <Row className="row-wrapper">
+                        <Row className="row-wrapper mt-3">
                             <Col className="btn-wrapper ">
                                 {/* <Button name={"Apskatīt piedāvājumu"} size={"small"} type={"primary"} onClickHandler={() => { }} /> */}
 
@@ -102,34 +102,34 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ autoLink, title, slug, carType, pri
                                     <Button name={"Apskatīt piedāvājumu"} size={"small"} type={"primary"} onClickHandler={() => { }} />
                                 </Nav.Link>
 
-                                <div className="nav-link dealer">
+                                <div className="nav-link dealer mt-4 my-auto mb-1 border-bottom">
                                     <div className="d-flex justify-content-center align-items-center">
-                                        <img className="" src={PinsBroker} width={15} height={15} alt="pin" />
+                                        <img className="me-1" src={PinsBroker} width={15} height={15} alt="pin" />
                                         <span className="">{brokerName}</span>
                                     </div>
                                 </div>
                             </Col>
                         </Row>
 
-                        <Row className="row-wrapper">
+                        <Row className="row-wrapper mt-3">
                             <Dropdown.Divider />
-                            <Row md={3} className="checkout-icons-container d-flex">
-                                {PDFFile && (<div className="d-flex flex-column align-items-center icon-item" >
+                            <Row md={3} className="checkout-icons-container d-flex justify-content-around flex-colum flex-md-row ">
+                                {PDFFile && (<div className="d-flex flex-column align-items-center icon-item mb-2 pointer" >
                                     <a href={PDFFile.mediaItemUrl} download={PDFFile.filename} target="_blank">
                                         <img className="" src={PDF} width={25} height={25} alt="pin" />
-                                        <p className="text-center">PDF</p>
+                                        <p className="text-center mb-0 mt-1">PDF</p>
                                     </a>
                                 </div>)}
 
 
-                                <div className="d-flex flex-column align-items-center icon-item" onClick={() => { setCheckoutIconsUseed(true); setShareBlockShown(true); }}>
+                                <div className="d-flex flex-column align-items-center icon-item mb-2 pointer" onClick={() => { setCheckoutIconsUseed(true); setShareBlockShown(true); }}>
                                     <img className="" src={Share} width={25} height={25} alt="pin" />
-                                    <p className="text-center">Dalīties</p>
+                                    <p className="text-center mb-0 mt-1">Dalīties</p>
                                 </div>
 
-                                <div className="d-flex flex-column align-items-center icon-item" onClick={() => { setQuestionsBlockShown(true); setCheckoutIconsUseed(true); }}>
+                                <div className="d-flex flex-column align-items-center icon-item mb-2 pointer" onClick={() => { setQuestionsBlockShown(true); setCheckoutIconsUseed(true); }}>
                                     <img className="" src={Questions} width={25} height={25} alt="pin" />
-                                    <p className="text-center">Jautājumi</p>
+                                    <p className="text-center mb-0 mt-1">Jautājumi</p>
                                 </div>
                             </Row>
                         </Row>
@@ -139,23 +139,23 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ autoLink, title, slug, carType, pri
 
                 {questionsBlockShown && (
                     <div className="questions-block-container">
-                        <div className="d-flex align-items-center back-arrow mb-3" onClick={() => { setQuestionsBlockShown(false), setCheckoutIconsUseed(false) }}>
+                        <div className="d-flex align-items-center back-arrow mb-3 py-2 pe-2 pe-auto pointer" onClick={() => { setQuestionsBlockShown(false), setCheckoutIconsUseed(false) }}>
                             <img className="" src={ArrowLeft} width={15} height={15} alt="pin" />
                             <span>Atpakaļ</span>
                         </div>
 
-                        <h5>Jautājumi?</h5>
+                        <h5 className="mb-0 fw-semibold fs-5 lh-base">Jautājumi?</h5>
 
-                        <a href="tel:123-456-7890" className="link ">
-                            <div className="mt-3 link-wrapper d-flex align-items-center">
+                        <a href="tel:123-456-7890" className="link m-0">
+                            <div className="mt-3 p-3 link-wrapper d-flex align-items-center justify-content-center justify-content-lg-start rounded-4 pointer">
                                 <img src={Phone} alt="Phone" className="me-2" width={20} height={20} />
                                 <span>123-456-7890</span>
                             </div>
                         </a>
 
 
-                        <a href="mailto:email@example.com" className="link">
-                            <div className="mt-3 link-wrapper d-flex align-items-center">
+                        <a href="mailto:email@example.com" className="link m-0">
+                            <div className="mt-3 p-3 link-wrapper d-flex align-items-center justify-content-center justify-content-lg-start rounded-4 pointer">
                                 <img src={Envelope} alt="Mail" className="me-2" width={20} height={20} />
                                 <span>info@info.lv</span>
                             </div>

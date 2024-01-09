@@ -131,26 +131,26 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
 
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen className={`filters-accordion ${showFilters ? 'show' : ''}`}>
-            <div className='filters-accordion-wrapper'>
+            <div className='filters-accordion-wrapper relative'>
 
-                <div className='close-filters-btn-wrapper' onClick={onCloseFilters}>
-                    <StaticImage className='close-filters-btn' src={"../images/cancel.svg"} alt={"Cancel"} width={30} height={30} />
+                <div className='close-filters-btn-wrapper d-flex d-md-none justify-content-end d-md-none' onClick={onCloseFilters}>
+                    <StaticImage className='close-filters-btn d-block float-end pointer' src={"../images/cancel.svg"} alt={"Cancel"} width={30} height={30} />
                 </div>
 
-                <Row className='filter-results mb-3 px-3 justify-content-between align-items-center border-bottom'>
+                <Row className='filter-results mb-3 px-3 pb-2 justify-content-between align-items-center border-bottom flex-column flex-md-row gap-3'>
                     <Col className='px-0 clear_results'>
-                        <span>{filteredParamaterCounter === 1 ? 'izvēlēts' : 'izvēlēti'} "{filteredParamaterCounter}" {filteredParamaterCounter === 1 ? 'parametrs' : 'parametri'}</span>
+                        <span className=''>{filteredParamaterCounter === 1 ? 'izvēlēts' : 'izvēlēti'} "{filteredParamaterCounter}" {filteredParamaterCounter === 1 ? 'parametrs' : 'parametri'}</span>
                     </Col>
 
-                    <Col className='px-0  row filter_results_btn-wrapper'>
-                        <div className='clear-btn'>
+                    <Col className='px-0 filter_results_btn-wrapper d-flex flex-row justify-content-between gap-3'>
+                        <div className='clear-btn d-flex justify-content-end p-0'>
                             {filterUsed && <Button name={'Notīrīt izvēli'} size={'small'} type={'outline'} onClickHandler={() => {
                                 clearFilteredValues();
                                 uncheckAllCheckboxes();
                             }} />}
                         </div>
 
-                        <div className='show-all-btn'>
+                        <div className='show-all-btn d-md-none d-flex '>
                             <Button name={'Apskatīt atlasītos auto'} size={'small'} type={'primary'} onClickHandler={onCloseFilters}></Button>
                         </div>
                     </Col>
@@ -194,17 +194,18 @@ const FilterCategories: FC<FilterCategoriesProps> = ({
                             .map((key, index) => (
                                 <Accordion.Item eventKey={index.toString()} key={index}>
                                     <Accordion.Header className='accordion-title lh-1 lw-medium text-secondary'>{key}</Accordion.Header>
-                                    <Accordion.Body>
+                                    <Accordion.Body className='ps-2'>
                                         {uniqueCarInfoValues[key].map((valueName: string | number | string[], valueIndex) => (
-                                            <Form className='form-item-wrapper' key={valueIndex}>
+                                            <Form className='form-item-wrapper px-2 py-2' key={valueIndex}>
                                                 <Form.Group className="" controlId={`${key}-${valueIndex}`}>
                                                     <Form.Check
                                                         type="checkbox"
+                                                        className='relative mb-0 pointer'
                                                         id={`${key}-${valueIndex}`}
                                                         label={key === "Krāsa" ?
                                                             <label
                                                                 htmlFor={`${key}-${valueIndex}`}
-                                                                className='form-check-label'>
+                                                                className='form-check-label pointer'>
                                                                 <span
                                                                     style={{
                                                                         display: "inline-block",

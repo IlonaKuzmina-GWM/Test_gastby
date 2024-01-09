@@ -141,7 +141,7 @@ const IndexPage: React.FC<HomeProps> = ({ data }) => {
     <MainLayout>
       <HeroSection
         autoCounter={data.allWpCar.nodes.length}>
-        <form className="hero-search-form d-flex justify-content-between border border-white rounded-5 p-1 text-white my-5 mx-auto" action="" onSubmit={handleSearch}>
+        <form className="hero-search-form pointer d-flex justify-content-between border border-white rounded-5 p-1 text-white my-5 mx-auto" action="" onSubmit={handleSearch}>
           <input
             type="search"
             placeholder="Meklēt auto"

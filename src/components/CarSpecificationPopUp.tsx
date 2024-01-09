@@ -27,26 +27,20 @@ const CarSpecificationPopUp: FC<carSpecificationPopUpProps> = ({ carEquipment, o
     const filteredKeys = useMemo(() => Object.keys(carEquipment).filter((header) => carEquipment[header].length > 0), [carEquipment]);
 
     return (
-        <div className="popup-overlay" onClick={handleOverlayClick}>
-            <div className="popup-content">
-                <div className='popup-image_wrapper' onClick={() => onCloseHandler(false)}>
-                    <StaticImage
-                        className='popup-close-button'
-                        src={"../images/cancel.svg"}
-                        alt={"Cancel"}
-                        width={50}
-                        height={50}
-                    />
+        <div className="popup-overlay position-fixed d-flex align-items-center justify-content-center" onClick={handleOverlayClick}>
+            <div className="popup-content bg-white py-5 px-3 rounded-4 position-relative overflow-y-auto">
+                <div className='popup-image_wrapper position-absolute' onClick={() => onCloseHandler(false)}>
+                    <StaticImage className='popup-close-button d-block float-end pointer' src={"../images/cancel.svg"} alt={"Cancel"} width={20} height={20} />
                 </div>
 
                 <Accordion defaultActiveKey={['0']} alwaysOpen>
                     {filteredKeys.map((header, index) => (
-                        <Accordion.Item eventKey={index.toString()} key={index}>
-                            <Accordion.Header>{header.toUpperCase()}</Accordion.Header>
-                            <Accordion.Body>
-                                <ul>
+                        <Accordion.Item eventKey={index.toString()} key={index} className='border-0 border-bottom'>
+                            <Accordion.Header className=''>{header.toUpperCase()}</Accordion.Header>
+                            <Accordion.Body className='py-3 px-2'>
+                                <ul className='mb-0'>
                                     {carEquipment[header].map((item: string, itemIndex: number) => (
-                                        <li key={itemIndex}>{item}</li>
+                                        <li className='fs-6' key={itemIndex}>{item}</li>
                                     ))}
                                 </ul>
                             </Accordion.Body>

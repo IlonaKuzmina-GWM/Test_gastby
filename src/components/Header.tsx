@@ -28,8 +28,8 @@ const Header = () => {
                     <Navbar.Brand href="/">
                         <StaticImage className="header__logo align-middle" src="../images/Pirktauto_logo_horizontal_color.png" alt="logo" width={200} height={25} placeholder="blurred" />
                     </Navbar.Brand>
-                    
-                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="header_toggle-btn border-0"/>
+
+                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="header_toggle-btn border-0" />
 
                     <Navbar.Offcanvas
                         id={`offcanvasNavbar-expand-lg`}
@@ -48,6 +48,10 @@ const Header = () => {
                                 <Link to="/shop" activeClassName="current" className="fs-5 px-4 link">Veikals</Link>
                                 <Link to="/about" activeClassName="current" className="fs-5 px-4 link">Par Mums</Link>
                                 <Link to="/blog" activeClassName="current" className="fs-5 px-4 link">Jaunumi</Link>
+                                {/* <Nav.Link href="/" className={`fs-5 px-4 link ${location.pathname === '/' ? 'active' : ''}`}>Sākums</Nav.Link>
+                                <Nav.Link href="/shop" className="fs-5 px-4 link">Veikals</Nav.Link>
+                                <Nav.Link href="/about" className="fs-5 px-4 link">Par Mums</Nav.Link>
+                                <Nav.Link href="/blog" className="fs-5 px-4 link">Jaunumi</Nav.Link> */}
                             </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
