@@ -33,8 +33,6 @@ const SingleCar: FC<SingleCarProps> = ({ pageContext }) => {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [singleCarData, setSibgleCarData] = useState();
     const [transformedCarEquipmentKeys, setTransformedCarEquipmentKeys] = useState({})
-    console.log(pageContext)
-
 
     useEffect(() => {
 

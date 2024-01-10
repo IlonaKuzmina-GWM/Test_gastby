@@ -47,8 +47,8 @@ const CheckoutBox: FC<CheckoutBoxProps> = ({ autoLink, title, slug, carType, pri
     }, []);
 
     return (
-        <div className="wrapper-checkout d-block m-0">
-            <Container className="checkout-container bg-white d-flex flex-column position-fixed p-3" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
+        <div className="wrapper-checkout m-0" style={{ display: isElementorLocationFooterVisible ? 'none' : 'block' }}>
+            <Container className="checkout-container bg-white d-flex flex-column position-fixed p-3" >
                 <button
                     className="colapse-button my-0 mx-auto d-block d-lg-none rounded-3"
                     onClick={toggleCheckoutIcons} />

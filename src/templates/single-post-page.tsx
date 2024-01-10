@@ -25,9 +25,6 @@ const SinglePost: FC<SinglePostProps> = ({ pageContext }) => {
         )
     )
 
-    console.log(morePostsFofYouByCurreentCategory)
-    console.log(morePostsForYou)
-
     const renderRelatedPosts = (posts: WpPost[]) => {
         return posts
             .filter((post: WpPost) => post.title !== singlePostInformation.title)
